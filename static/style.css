@@ -324,37 +324,37 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .badge-edu{border-color:var(--amber);color:var(--amber);background:rgba(232,163,61,.08)}
 .btn-cert{
   font-family:'IBM Plex Mono',monospace;
-  font-size:16.5px;
+  font-size:12.5px;
   font-weight:600;
   letter-spacing:.02em;
-  border:2px solid var(--green);
-  border-radius:6px;
-  padding:13px 28px;
+  border:1px solid var(--green);
+  border-radius:4px;
+  padding:6px 14px;
   color:var(--green);
-  background:rgba(76,175,125,.12);
+  background:rgba(76,175,125,.1);
   display:inline-flex;
   align-items:center;
-  gap:11px;
-  transition:all .2s ease;
+  gap:7px;
+  transition:all .18s ease;
   text-decoration:none;
   line-height:1;
   white-space:nowrap;
 }
 .btn-cert svg{
-  width:19px;
-  height:19px;
+  width:13px;
+  height:13px;
   flex-shrink:0;
-  transition:transform .2s ease;
+  transition:transform .18s ease;
 }
 .btn-cert:hover{
   background:var(--green);
   color:#0a0e13;
-  box-shadow:0 0 24px rgba(76,175,125,.45);
+  box-shadow:0 0 14px rgba(76,175,125,.35);
   text-decoration:none;
-  transform:translateY(-2px);
+  transform:translateY(-1px);
 }
 .btn-cert:hover svg{
-  transform:scale(1.15);
+  transform:scale(1.1);
 }
 
 /* WORK GRID (PROJECTS & HOME LABS SIDE-BY-SIDE — UNIFORM BOX SIZES) */
@@ -988,7 +988,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
     height:auto !important;
   }
   .badge{ font-size:10px !important; padding:3px 8px !important }
-  .btn-cert{ font-size:14px !important; font-weight:600 !important; padding:9px 18px !important; gap:8px !important; border-width:1.5px !important; border-radius:6px !important }
+  .btn-cert{ font-size:12px !important; font-weight:600 !important; padding:5px 12px !important; gap:6px !important; border-width:1px !important; border-radius:4px !important }
 
   /* --- PROJECT BOXES: COMPACT --- */
   .proj{
@@ -1209,15 +1209,6 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   }
   .modal-box{
     max-width:960px;
-  }
-  .btn-cert{
-    font-size:18px;
-    padding:15px 32px;
-    gap:12px;
-  }
-  .btn-cert svg{
-    width:21px;
-    height:21px;
   }
 }
 
