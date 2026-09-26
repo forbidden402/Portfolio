@@ -317,17 +317,17 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .badge-edu{border-color:var(--amber);color:var(--amber);background:rgba(232,163,61,.08)}
 .btn-cert{
   font-family:'IBM Plex Mono',monospace;
-  font-size:14px;
+  font-size:15px;
   font-weight:600;
   letter-spacing:.02em;
-  border:1px solid var(--green);
-  border-radius:5px;
-  padding:9px 18px;
+  border:1.5px solid var(--green);
+  border-radius:6px;
+  padding:10px 22px;
   color:var(--green);
-  background:rgba(76,175,125,.12);
+  background:rgba(76,175,125,.14);
   display:inline-flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
   transition:all .18s ease;
   text-decoration:none;
   line-height:1;
@@ -335,7 +335,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .btn-cert:hover{
   background:var(--green);
   color:#0a0e13;
-  box-shadow:0 0 18px rgba(76,175,125,.35);
+  box-shadow:0 0 20px rgba(76,175,125,.4);
   text-decoration:none;
   transform:translateY(-1px);
 }
@@ -929,7 +929,13 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   .tool-list li, .theory-list li{ font-size:12px !important; padding:6px 0 !important; line-height:1.55 !important }
   .tool-list code{ font-size:11px !important; padding:1px 4px !important }
 
-  /* --- CERTS & EDUCATION (NO BOX) --- */
+  /* --- CERTS & EDUCATION (NO BOX & COMPACT SPACE) --- */
+  #education, #certs{
+    padding:8px 0 12px !important;
+  }
+  #education .sec-head, #certs .sec-head{
+    margin-bottom:6px !important;
+  }
   .cert-row{
     padding:0 !important;
     border:none !important;
@@ -937,20 +943,20 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
     border-radius:0 !important;
     flex-direction:column !important;
     align-items:flex-start !important;
-    gap:10px !important;
+    gap:0 !important;
   }
   .cert-row .cname{ font-size:14.5px !important }
-  .cert-row .cdesc{ font-size:12.5px !important; margin-top:3px !important; line-height:1.5 !important }
+  .cert-row .cdesc{ font-size:12.5px !important; margin-top:2px !important; line-height:1.45 !important }
   .cert-actions{
     display:flex !important;
     flex-direction:row !important;
     align-items:center !important;
     gap:10px !important;
     width:auto !important;
-    margin-top:4px !important;
+    margin-top:8px !important;
   }
   .badge{ font-size:10px !important; padding:3px 8px !important }
-  .btn-cert{ font-size:13px !important; padding:8px 16px !important; gap:7px !important }
+  .btn-cert{ font-size:14px !important; font-weight:600 !important; padding:9px 18px !important; gap:8px !important; border-width:1.5px !important; border-radius:6px !important }
 
   /* --- PROJECT BOXES: COMPACT --- */
   .proj{
@@ -1099,6 +1105,14 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   }
 
   h2{ font-size:15px !important }
+
+  /* Compact space for education & certs */
+  #education, #certs{
+    padding:6px 0 8px !important;
+  }
+  #education .sec-head, #certs .sec-head{
+    margin-bottom:4px !important;
+  }
 
   /* Skills: 1-col on tiny phones */
   .skill-grid{ grid-template-columns:1fr !important }
