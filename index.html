@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>forbidden402 — SOC / Cybersecurity Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand">forbidden<span>402</span>@soc:~$</div>
+    <nav class="nav">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#certs">certs</a>
+      <a href="#projects">projects</a>
+      <a href="#homelabs">home labs</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-bottom:1px solid var(--line)">
+    <div class="prompt-line">$ whoami<span class="cursor"></span></div>
+    <h1>SOC Analyst / Blue Team &amp; Threat Intel</h1>
+    <div class="role">Cybersecurity learner — home-lab attack simulation, endpoint &amp; network detection, threat intel tooling</div>
+    <p class="tagline">I build the tools I use to investigate — a threat-intel aggregator, a packet-level intrusion detector, and a home lab where I run real attacks against my own systems and then find them in the logs. TryHackMe SOC Level 1 certified, working from MITRE ATT&amp;CK and the Cyber Kill Chain.</p>
+  </section>
+
+  <!-- 00 ABOUT -->
+  <section id="about">
+    <div class="sec-head"><span class="sec-tag">00</span><h2>About Me</h2></div>
+    <div class="about-card">
+      <p class="about-p">I'm <strong>forbidden402</strong> — a self-taught cybersecurity enthusiast focused on the <strong>blue team</strong> side of the house: SOC analysis, threat intelligence, network forensics, and endpoint detection. My background is hands-on by design; I learn by building the tools I actually need, then using them against real attack traffic I generate myself in a home lab.</p>
+      <p class="about-p">I hold the <strong>TryHackMe SOC Level 1</strong> path certification and map all my work to <strong>MITRE ATT&amp;CK</strong> and the <strong>Cyber Kill Chain</strong>. My current stack spans Python / FastAPI backends, Splunk SPL, Sysmon telemetry, Wireshark / Scapy packet analysis, and a growing set of threat-intel APIs (VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar). I run Fedora Linux as my daily driver with a hardened network stack (DNS-over-TLS, WireGuard VPN).</p>
+      <p class="about-p">Right now I'm actively building <strong>ThreatScan</strong> — a privacy-first threat intelligence platform — and looking for my first SOC / blue-team role where I can bring those practical skills to a real team.</p>
+    </div>
+  </section>
+
+  <!-- 01 SKILLS -->
+  <section id="skills">
+    <div class="sec-head"><span class="sec-tag">01</span><h2>Skills &amp; Tooling</h2></div>
+    <div class="skill-grid">
+      <div class="skill-cat">
+        <h3>SYSTEMS</h3>
+        <ul><li>Linux administration &amp; networking</li><li>Windows fundamentals</li><li>Linux firewall (iptables/nftables) config</li><li>Windows Firewall rule configuration</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>DETECTION &amp; LOGS</h3>
+        <ul><li>Sysmon telemetry &amp; event IDs</li><li>Splunk search &amp; correlation (SPL)</li><li>Log analysis / Windows Event Viewer</li><li>Wireshark packet &amp; stream analysis</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>THREAT INTEL / OSINT</h3>
+        <ul><li>VirusTotal investigation</li><li>AbuseIPDB reputation checks</li><li>Shodan reconnaissance</li><li>Nmap basic scanning</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>FRAMEWORKS</h3>
+        <ul><li>MITRE ATT&amp;CK mapping</li><li>Cyber Kill Chain</li><li>Alert triage &amp; investigation</li><li>Incident response basics</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 CERTS -->
+  <section id="certs">
+    <div class="sec-head"><span class="sec-tag">02</span><h2>Certifications</h2></div>
+    <div class="cert-row">
+      <div>
+        <div class="cname"><a href="https://tryhackme.com/certificate/THM-BOBFF5XOHL" target="_blank" rel="noopener">TryHackMe — SOC Level 1 Path</a></div>
+        <div class="cdesc">Covers log analysis, SIEM fundamentals, phishing triage, and network/endpoint monitoring for a Tier-1 SOC analyst role.</div>
+        <div style="margin-top:8px"><a class="cert-link" href="https://tryhackme.com/certificate/THM-BOBFF5XOHL" target="_blank" rel="noopener">→ view certificate</a></div>
+      </div>
+      <span class="badge">COMPLETED</span>
+    </div>
+  </section>
+
+  <!-- 03 PROJECTS & 04 HOME LABS (SIDE BY SIDE GRID) -->
+  <section class="work-section">
+    <div class="work-grid">
+
+      <!-- Column 1: Projects -->
+      <div class="work-col" id="projects">
+        <div class="sec-head"><span class="sec-tag">03</span><h2>Projects</h2></div>
+
+        <!-- ThreatScan -->
+        <article class="proj">
+          <div class="proj-head">
+            <div>
+              <div class="proj-title">ThreatScan</div>
+              <div class="proj-desc">A privacy-first Threat Intelligence Platform — one dashboard to query URLs, IPs, domains and files across VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar and ThreatFox, then export unified SOC reports.</div>
+            </div>
+            <span class="proj-status">ACTIVE BUILD</span>
+          </div>
+          <div class="stack-row">
+            <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Vanilla JS/HTML/CSS</span>
+            <span class="chip">VirusTotal API</span><span class="chip">AbuseIPDB</span><span class="chip">Shodan</span>
+            <span class="chip">OTX</span><span class="chip">YARA</span><span class="chip">PE parsing</span>
+          </div>
+          <div class="proj-links">
+            <a class="btn-live" href="https://threat-intelligence-7eza.onrender.com/" target="_blank" rel="noopener">→ visit the site</a>
+            <a href="https://github.com/forbidden402/Threat-Intelligence" target="_blank" rel="noopener">→ source</a>
+          </div>
+          <button class="toggle-btn" data-target="d1">Expand full build &amp; architecture detail</button>
+          <div class="proj-detail" id="d1">
+            <h4>WHAT IT DOES</h4>
+            <p>ThreatScan is a unified TIP for SOC analysts and incident responders. It runs four analysis engines from one dashboard: a <strong>URL Analyzer</strong> for phishing/malicious link triage, an <strong>Infrastructure Analyzer</strong> for IP/DNS/domain perimeter checks, a <strong>File &amp; Hash Analyzer</strong> for uploads up to 32MB or hash lookups, and a <strong>Reports</strong> module that consolidates every scan into exportable PDF/DOCX records.</p>
+            <h4>HOW I BUILT IT</h4>
+            <p>Backend is FastAPI split into engine-specific routers: <code>file_analyzer/</code>, <code>ip_dns_domain_analyzer/</code>, <code>url_analyzer/</code>, plus shared <code>core/</code>, <code>auth/</code>, <code>threat_feeds/</code> and <code>reports/</code> modules. Frontend is dependency-free plain HTML/CSS/JS calling the FastAPI backend directly.</p>
+            <h4>PRIVACY / SECURITY MODEL</h4>
+            <p>Built zero-trust and ephemeral: sessions, cached scan data and temp files are wiped 24 hours after creation. Third-party API keys live only in the browser's local storage — never written to server disk.</p>
+          </div>
+        </article>
+
+        <!-- NIDS -->
+        <article class="proj">
+          <div class="proj-head">
+            <div>
+              <div class="proj-title">Network Intrusion Detection System</div>
+              <div class="proj-desc">A real-time, self-hosted NIDS with deep packet inspection, a live SOC dashboard, entity/IP forensic profiles, and OSINT-backed threat lookups — built to watch a home network the way a Tier-1 analyst watches a SIEM.</div>
+            </div>
+            <span class="proj-status">ALPHA / POC</span>
+          </div>
+          <div class="stack-row">
+            <span class="chip">Python 3.10+</span><span class="chip">Flask</span><span class="chip">Scapy</span>
+            <span class="chip">SQLite</span><span class="chip">Chart.js</span><span class="chip">HTML5/CSS3</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/forbidden402/Network-Intrusion-Detection-System" target="_blank" rel="noopener">→ source</a>
+          </div>
+          <button class="toggle-btn" data-target="d2">Expand full build &amp; architecture detail</button>
+          <div class="proj-detail" id="d2">
+            <h4>WHAT IT DOES</h4>
+            <p>Monitors a live network segment and flags suspicious activity in real time. Ships with a live telemetry dashboard, network topology map, per-IP forensic entity profiles, threat-intel IP lookup, and CSV export for SIEM ingestion.</p>
+            <h4>THE DETECTION ENGINE</h4>
+            <ul>
+              <li><strong>Capture (L2–L3):</strong> raw frames via Scapy with optional promiscuous mode.</li>
+              <li><strong>Dissection (L4):</strong> TCP/UDP/ICMP headers parsed for port-based anomalies — stealth scans and sensitive-port access flagged here.</li>
+              <li><strong>Inspection (L7):</strong> application payload opened to extract DNS queries, HTTP URIs, ICMP content — real DPI, not just header stats.</li>
+              <li>Every IP gets its own entity profile: geolocation, ISP, abuse score, risk level, and full telemetry history.</li>
+            </ul>
+            <h4>LIMITATIONS</h4>
+            <p>Can't inspect TLS payloads without SSL-stripping, needs root for raw sockets, throughput bound by host CPU — scoped to LAN / home-lab monitoring.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Column 2: Home Labs -->
+      <div class="work-col" id="homelabs">
+        <div class="sec-head"><span class="sec-tag">04</span><h2>Home Labs</h2></div>
+
+        <!-- Home Lab -->
+        <article class="proj">
+          <div class="proj-head">
+            <div>
+              <div class="proj-title">SOC Home Lab — Attack Simulation &amp; Detection</div>
+              <div class="proj-desc">A full adversary-simulation-to-detection exercise: delivered a Meterpreter payload against a Windows 10 VM, dumped credentials with Mimikatz, then hunted and killed the same activity using Sysmon and Splunk.</div>
+            </div>
+            <span class="proj-status">COMPLETED</span>
+          </div>
+          <div class="stack-row">
+            <span class="chip">VMware</span><span class="chip">Kali Linux</span><span class="chip">Windows 10</span>
+            <span class="chip">Metasploit</span><span class="chip">Mimikatz</span><span class="chip">Sysmon</span>
+            <span class="chip">Splunk</span><span class="chip">Wireshark</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/forbidden402/SOC-Home_lab-s" target="_blank" rel="noopener">→ source</a>
+          </div>
+          <button class="toggle-btn" data-target="d3">Expand full attack &amp; detection walkthrough</button>
+          <div class="proj-detail" id="d3">
+            <h4>ENVIRONMENT</h4>
+            <table class="ioc-table">
+              <tr><td>Attacker</td><td>Kali Linux — Python3 http.server, Metasploit v6.5.3-dev</td></tr>
+              <tr><td>Victim</td><td>Windows 10 Pro Build 19045, VMware Virtual Platform</td></tr>
+              <tr><td>Payload</td><td>stageless.exe — x64 Meterpreter reverse-TCP, stageless</td></tr>
+              <tr><td>C2 port</td><td>4444 (windows/x64/meterpreter_reverse_tcp)</td></tr>
+              <tr><td>Delivery port</td><td>8080 (Python http.server)</td></tr>
+            </table>
+            <h4>DETECTION — HOW I FOUND IT</h4>
+            <ul>
+              <li><strong>Sysmon Event ID 15</strong> — Edge tagged the download with Zone.Identifier ADS, ZoneId=3.</li>
+              <li><strong>Sysmon Event ID 1</strong> — rebuilt process tree: <code>explorer.exe → stageless.exe → cmd.exe</code>.</li>
+              <li><strong>Sysmon Event ID 3/22</strong> — confirmed reverse-TCP callback to Kali IP on port 4444.</li>
+              <li><strong>Sysmon Event ID 11</strong> — caught <code>stageless.exe</code> writing <code>mimikatz.exe</code> into <code>C:\Users\Public</code>.</li>
+              <li><strong>VirusTotal</strong> — flagged by 45/71 vendors.</li>
+            </ul>
+            <h4>KEY IOCs</h4>
+            <table class="ioc-table">
+              <tr><td>SHA256</td><td>DB33E46C6ADFC98F5D834F727C087E112BBFA9CBAA805458D127387BE01E97</td></tr>
+              <tr><td>Delivery URL</td><td>http://192.168.133.142:8080/stageless.exe</td></tr>
+              <tr><td>C2</td><td>192.168.133.142:4444</td></tr>
+              <tr><td>Dropped tool</td><td>C:\Users\Public\mimikatz.exe</td></tr>
+            </table>
+          </div>
+        </article>
+
+        <!-- Dotfiles & Fedora config -->
+        <article class="proj">
+          <div class="proj-head">
+            <div>
+              <div class="proj-title">niri + Noctalia Dotfiles &amp; Fedora config</div>
+              <div class="proj-desc">My personal Linux workstation configuration — a hardened, tiling-window-manager setup for Fedora used as my day-to-day analysis and lab-building environment.</div>
+            </div>
+            <span class="proj-status">PERSONAL CONFIG</span>
+          </div>
+          <div class="stack-row">
+            <span class="chip">Fedora Linux</span><span class="chip">niri (Wayland)</span><span class="chip">Noctalia shell</span>
+            <span class="chip">Ghostty</span><span class="chip">systemd-resolved</span><span class="chip">ProtonVPN / WireGuard</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/forbidden402/niri_V4_noctalia-dotfiles" target="_blank" rel="noopener">→ source</a>
+          </div>
+          <button class="toggle-btn" data-target="d4">Expand configuration detail</button>
+          <div class="proj-detail" id="d4">
+            <h4>WHAT IT IS</h4>
+            <p>Full dotfiles for Fedora running <strong>niri</strong> (scrollable-tiling Wayland compositor), <strong>Noctalia</strong> shell, <strong>Ghostty</strong> terminal, fastfetch, Bibata cursors — the environment I actually work and build labs in.</p>
+            <h4>NETWORK HARDENING</h4>
+            <ul>
+              <li><strong>DNS-over-TLS:</strong> systemd-resolved with Quad9 primary, Cloudflare fallback.</li>
+              <li><strong>ProtonVPN fix:</strong> NetworkManager dispatcher script sets MTU 1400 + 25s WireGuard keepalive on <code>proton0</code>.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 05 CONTACT -->
+  <section id="contact" style="border-bottom:none">
+    <div class="sec-head"><span class="sec-tag">05</span><h2>Contact</h2></div>
+    <div class="contact-box">
+      <p>Open to SOC / blue-team opportunities and always building something in the home lab. Reach me on any of the platforms below.</p>
+      <div class="contact-links">
+
+        <a class="btn contact-btn" href="https://github.com/forbidden402" target="_blank" rel="noopener">
+          <span class="contact-icon-row">
+            <svg class="contact-icon contact-icon-gh" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <span class="contact-platform">GitHub</span>
+          </span>
+          <span class="contact-handle">github.com/forbidden402</span>
+        </a>
+
+        <a class="btn contact-btn" href="https://t.me/network_error403" target="_blank" rel="noopener">
+          <span class="contact-icon-row">
+            <svg class="contact-icon contact-icon-tg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <span class="contact-platform">Telegram</span>
+          </span>
+          <span class="contact-handle">@network_error403</span>
+        </a>
+
+        <a class="btn contact-btn" href="https://discord.com/users/1202244509967056957" target="_blank" rel="noopener">
+          <span class="contact-icon-row">
+            <svg class="contact-icon contact-icon-dc" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.078.078 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            <span class="contact-platform">Discord</span>
+          </span>
+          <span class="contact-handle">forbidden402</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
