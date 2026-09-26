@@ -291,6 +291,9 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 }
 
 /* CERTS & EDUCATION (NO BOX) */
+#education, #certs{
+  min-height:0;
+}
 .cert-row{
   display:flex;
   justify-content:space-between;
@@ -300,9 +303,12 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   padding:0;
   gap:16px;
   flex-wrap:wrap;
+  min-height:0;
 }
 .cert-info{
-  flex:1 1 300px;
+  flex:1 1 auto;
+  min-width:0;
+  min-height:0;
 }
 .cert-row .cname{font-weight:600;font-size:16.5px;color:var(--text)}
 .cert-row .cdesc{color:var(--muted);font-size:14px;margin-top:4px;line-height:1.55}
@@ -312,6 +318,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   align-items:center;
   gap:12px;
   flex-shrink:0;
+  min-height:0;
 }
 .badge{font-family:'IBM Plex Mono';font-size:11px;padding:5px 10px;border:1px solid var(--green);color:var(--green);white-space:nowrap;border-radius:4px;line-height:1}
 .badge-edu{border-color:var(--amber);color:var(--amber);background:rgba(232,163,61,.08)}
@@ -932,6 +939,8 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   /* --- CERTS & EDUCATION (NO BOX & COMPACT SPACE) --- */
   #education, #certs{
     padding:8px 0 12px !important;
+    min-height:0 !important;
+    height:auto !important;
   }
   #education .sec-head, #certs .sec-head{
     margin-bottom:6px !important;
@@ -941,9 +950,19 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
     border:none !important;
     background:transparent !important;
     border-radius:0 !important;
+    display:flex !important;
     flex-direction:column !important;
     align-items:flex-start !important;
+    justify-content:flex-start !important;
+    min-height:0 !important;
+    height:auto !important;
     gap:0 !important;
+  }
+  .cert-info{
+    flex:none !important;
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
   }
   .cert-row .cname{ font-size:14.5px !important }
   .cert-row .cdesc{ font-size:12.5px !important; margin-top:2px !important; line-height:1.45 !important }
@@ -954,6 +973,9 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
     gap:10px !important;
     width:auto !important;
     margin-top:8px !important;
+    flex:none !important;
+    min-height:0 !important;
+    height:auto !important;
   }
   .badge{ font-size:10px !important; padding:3px 8px !important }
   .btn-cert{ font-size:14px !important; font-weight:600 !important; padding:9px 18px !important; gap:8px !important; border-width:1.5px !important; border-radius:6px !important }
@@ -1109,6 +1131,8 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   /* Compact space for education & certs */
   #education, #certs{
     padding:6px 0 8px !important;
+    min-height:0 !important;
+    height:auto !important;
   }
   #education .sec-head, #certs .sec-head{
     margin-bottom:4px !important;
