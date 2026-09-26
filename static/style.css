@@ -683,39 +683,43 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 
 /* CONTACT */
 .contact-box{border:1px solid var(--line);border-radius:6px;padding:32px;text-align:left;background:var(--panel)}
-.contact-box p{color:var(--muted);margin-bottom:24px;max-width:640px;font-size:15px;line-height:1.65}
-.contact-links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.contact-box p{color:var(--muted);margin-bottom:24px;max-width:600px;font-size:15px;line-height:1.65}
+.contact-links{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
 .contact-btn{
   display:flex;
-  flex-direction:row;
+  flex-direction:column;
   align-items:center;
-  gap:14px;
-  padding:16px 18px;
-  min-height:72px;
-  line-height:1.4;
+  justify-content:center;
+  gap:10px;
+  padding:20px 12px;
+  min-height:90px;
   background:var(--panel2);
   border:1px solid var(--line);
-  border-left-width:3px;
+  border-top-width:3px;
   border-radius:6px;
   transition:border-color .18s ease, background .18s ease, transform .18s ease;
   text-decoration:none;
 }
 .contact-btn:hover{
   background:#18222d;
-  transform:translateY(-2px);
+  transform:translateY(-3px);
   text-decoration:none;
 }
-/* Platform accent colours on left border */
-.contact-btn-gh{ border-left-color:#555 }
-.contact-btn-gh:hover{ border-left-color:#e6edf3; border-color:#e6edf3 }
-.contact-btn-tg{ border-left-color:#1a7aab }
-.contact-btn-tg:hover{ border-left-color:#2AABEE; border-color:#2AABEE }
-.contact-btn-dc{ border-left-color:#3c4499 }
-.contact-btn-dc:hover{ border-left-color:#5865F2; border-color:#5865F2 }
+/* Platform accent colours on top border */
+.contact-btn-gh{ border-top-color:#555 }
+.contact-btn-gh:hover{ border-top-color:#e6edf3; border-color:#e6edf3 }
+.contact-btn-tg{ border-top-color:#1a7aab }
+.contact-btn-tg:hover{ border-top-color:#2AABEE; border-color:#2AABEE }
+.contact-btn-dc{ border-top-color:#3c4499 }
+.contact-btn-dc:hover{ border-top-color:#5865F2; border-color:#5865F2 }
 /* Icon circle */
 .contact-icon-circle{
-  width:36px;
-  height:36px;
+  width:38px;
+  height:38px;
   border-radius:50%;
   background:var(--panel);
   border:1px solid var(--line);
@@ -726,15 +730,36 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   transition:border-color .18s ease;
 }
 .contact-btn:hover .contact-icon-circle{ border-color:currentColor }
-.contact-icon-row{display:flex;align-items:center;gap:8px}
 .contact-icon{width:17px;height:17px;flex-shrink:0}
 .contact-icon-gh{color:#e6edf3}
 .contact-icon-tg{color:#2AABEE}
 .contact-icon-dc{color:#5865F2}
-.contact-text{ display:flex; flex-direction:column; gap:3px; min-width:0 }
-.contact-platform{font-size:10.5px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono';white-space:nowrap}
-.contact-handle{font-size:13px;color:var(--text);font-family:'IBM Plex Mono';overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.contact-btn:hover .contact-handle{color:var(--amber)}
+.contact-platform{font-size:11px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono';white-space:nowrap;text-align:center}
+.contact-btn:hover .contact-platform{color:var(--text)}
+
+/* CERT BUTTON — matches project card button style */
+.btn-cert{
+  font-family:'IBM Plex Mono';
+  font-size:12px;
+  font-weight:500;
+  border:1px solid var(--green);
+  border-radius:4px;
+  padding:6px 14px;
+  color:var(--green);
+  background:rgba(76,175,125,.08);
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  transition:all .18s ease;
+  text-decoration:none;
+}
+.btn-cert:hover{
+  background:var(--green);
+  color:#0a0e13;
+  box-shadow:0 0 16px rgba(76,175,125,.3);
+  text-decoration:none;
+  transform:translateY(-1px);
+}
 
 /* ================================================================
    RESPONSIVE DESIGN — SMALL / MEDIUM / LARGE / 4K
@@ -832,33 +857,36 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   .btn-icon{ width:13px; height:13px }
   .toggle-btn{ padding:10px 14px; font-size:11px; min-height:36px }
 
-  /* --- CONTACT: clean stacked rows on mobile --- */
+  /* --- CONTACT: always 3 in one row, compact on mobile --- */
   .contact-box{ padding:18px 14px }
-  .contact-box p{ font-size:13.5px; margin-bottom:14px }
-  .contact-links{
-    grid-template-columns:1fr;
-    gap:10px;
-  }
+  .contact-box p{ font-size:13px; margin-bottom:12px }
+  .contact-links{ gap:8px }
   .contact-btn{
-    padding:13px 14px;
-    gap:12px;
-    min-height:58px;
+    padding:14px 8px;
+    min-height:76px;
+    gap:8px;
   }
-  .contact-icon-circle{
-    width:34px;
-    height:34px;
-  }
-  .contact-icon{ width:16px; height:16px }
-  .contact-platform{ font-size:10px }
-  .contact-handle{ font-size:12.5px }
+  .contact-icon-circle{ width:32px; height:32px }
+  .contact-icon{ width:15px; height:15px }
+  .contact-platform{ font-size:9.5px; letter-spacing:.05em }
 
-  /* --- MODAL --- */
+  /* --- MODAL: compact on mobile --- */
   .modal-backdrop{ padding:8px }
-  .modal-box{ max-height:95vh; border-radius:6px; width:calc(100% - 0px) }
-  .modal-header{ padding:12px 14px; gap:8px }
-  .modal-title{ font-size:14px }
+  .modal-box{ max-height:92vh; border-radius:6px }
+  .modal-header{ padding:10px 12px; gap:8px }
+  .modal-title{ font-size:13.5px }
   .modal-sec-tag{ display:none }
-  .modal-body{ padding:14px 14px; font-size:13px }
+  .modal-body{
+    padding:12px 14px;
+    font-size:12.5px;
+    line-height:1.55;
+  }
+  .modal-body h4{ font-size:12px; margin:14px 0 6px }
+  .modal-body p{ margin-bottom:8px; font-size:12.5px }
+  .modal-body ul{ margin:6px 0 8px 16px }
+  .modal-body li{ margin-bottom:4px; font-size:12.5px }
+  .modal-body code{ font-size:11.5px; padding:1px 5px }
+  .modal-close{ font-size:11px; padding:5px 9px }
 }
 
 /* ── SMALL PHONES (≤ 480px) ──────────────────────── */
