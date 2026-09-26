@@ -2,6 +2,7 @@
   --bg:#0a0e13; --panel:#10161d; --panel2:#141b23; --line:#232d37;
   --text:#dbe4ea; --muted:#7c8a97; --amber:#e8a33d; --green:#4caf7d;
   --red:#d6584f; --blue:#5b9fd6;
+  --topbar-h:52px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -9,7 +10,7 @@
 *,*::before,*::after{box-sizing:inherit;margin:0;padding:0}
 html{
   scroll-behavior:smooth;
-  scroll-padding-top:84px;
+  scroll-padding-top:calc(var(--topbar-h) + 16px);
   overflow-x:hidden;
 }
 body{
@@ -29,28 +30,32 @@ a{color:var(--amber);text-decoration:none}
 a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 
-/* RESPONSIVE CONTAINER SYSTEM (FITS MOBILE, DESKTOP, AND ULTRAWIDE 4K) */
+/* RESPONSIVE CONTAINER */
 .wrap{
   width:100%;
   max-width:1440px;
   margin:0 auto;
   padding:0 clamp(16px, 3.5vw, 64px);
+  padding-top:var(--topbar-h) !important;    /* offset for fixed topbar */
 }
 .topbar{
-  position:sticky;
+  position:fixed !important;
   top:0;
-  top:env(safe-area-inset-top,0px);
-  z-index:20;
-  background:rgba(10,14,19,.92);
-  backdrop-filter:blur(6px);
+  left:0;
+  right:0;
+  height:var(--topbar-h);
+  z-index:70;          /* always above sidebar drawer and overlay */
+  background:rgba(10,14,19,.98);
+  backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
   width:100%;
 }
 .topbar-in{
   width:100%;
+  height:100%;
   max-width:1440px;
   margin:0 auto;
-  padding:14px clamp(16px, 3.5vw, 64px);
+  padding:0 clamp(16px, 3.5vw, 64px);
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -115,10 +120,13 @@ a:hover{text-decoration:underline}
 .sidebar-overlay{
   display:none;
   position:fixed;
-  inset:0;
+  top:var(--topbar-h);
+  left:0;
+  right:0;
+  bottom:0;
   background:rgba(5,8,12,.72);
   backdrop-filter:blur(4px);
-  z-index:49;
+  z-index:60;
   opacity:0;
   transition:opacity .25s ease;
 }
@@ -130,30 +138,40 @@ a:hover{text-decoration:underline}
 /* SIDEBAR DRAWER */
 .sidebar{
   position:fixed;
-  top:0;
+  top:var(--topbar-h);
   left:0;
   bottom:0;
   width:260px;
+  height:calc(100vh - var(--topbar-h));
+  height:calc(100dvh - var(--topbar-h));
   background:var(--panel);
   border-right:1px solid var(--line);
-  z-index:50;
+  z-index:65;
   display:flex;
   flex-direction:column;
   transform:translateX(-100%);
-  transition:transform .28s cubic-bezier(.16,1,.3,1);
+  transition:transform .25s cubic-bezier(.16,1,.3,1);
   will-change:transform;
 }
 .sidebar.open{
   transform:translateX(0);
 }
 .sidebar-header{
+  height:var(--topbar-h);
+  min-height:var(--topbar-h);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:16px 18px;
+  padding:0 18px;
   border-bottom:1px solid var(--line);
   background:var(--panel2);
   flex-shrink:0;
+}
+.sidebar-sec-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--green);
+  letter-spacing:.08em;
 }
 .sidebar-close{
   background:none;
@@ -243,12 +261,51 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .skill-cat li::before{content:"▸ ";color:var(--green)}
 
 /* CERTS */
-.cert-row{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:6px;padding:20px 28px;gap:16px;flex-wrap:wrap;background:var(--panel)}
+.cert-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:20px 28px;
+  gap:16px;
+  flex-wrap:wrap;
+  background:var(--panel);
+}
+.cert-info{
+  flex:1 1 300px;
+}
 .cert-row .cname{font-weight:600;font-size:16.5px}
 .cert-row .cdesc{color:var(--muted);font-size:14px;margin-top:4px}
-.badge{font-family:'IBM Plex Mono';font-size:11px;padding:4px 10px;border:1px solid var(--green);color:var(--green);white-space:nowrap;border-radius:4px}
-.cert-link{font-family:'IBM Plex Mono';font-size:12px;color:var(--green)}
-.cert-link:hover{color:var(--amber)}
+.cert-actions{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  flex-shrink:0;
+}
+.badge{font-family:'IBM Plex Mono';font-size:11px;padding:5px 10px;border:1px solid var(--green);color:var(--green);white-space:nowrap;border-radius:4px;line-height:1}
+.btn-cert{
+  font-family:'IBM Plex Mono';
+  font-size:12px;
+  font-weight:500;
+  border:1px solid var(--green);
+  border-radius:4px;
+  padding:5px 12px;
+  color:var(--green);
+  background:rgba(76,175,125,.08);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:all .18s ease;
+  text-decoration:none;
+  line-height:1;
+}
+.btn-cert:hover{
+  background:var(--green);
+  color:#0a0e13;
+  box-shadow:0 0 16px rgba(76,175,125,.3);
+  text-decoration:none;
+}
 
 /* WORK GRID (PROJECTS & HOME LABS SIDE-BY-SIDE — UNIFORM BOX SIZES) */
 .work-section{padding:54px 0;border-bottom:1px solid var(--line)}
@@ -682,83 +739,59 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 }
 
 /* CONTACT */
-.contact-box{border:1px solid var(--line);border-radius:6px;padding:32px;text-align:left;background:var(--panel)}
-.contact-box p{color:var(--muted);margin-bottom:24px;max-width:600px;font-size:15px;line-height:1.65}
-.contact-links{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-.contact-btn{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:20px 12px;
-  min-height:90px;
-  background:var(--panel2);
+.contact-box{
   border:1px solid var(--line);
-  border-top-width:3px;
   border-radius:6px;
-  transition:border-color .18s ease, background .18s ease, transform .18s ease;
-  text-decoration:none;
-}
-.contact-btn:hover{
-  background:#18222d;
-  transform:translateY(-3px);
-  text-decoration:none;
-}
-/* Platform accent colours on top border */
-.contact-btn-gh{ border-top-color:#555 }
-.contact-btn-gh:hover{ border-top-color:#e6edf3; border-color:#e6edf3 }
-.contact-btn-tg{ border-top-color:#1a7aab }
-.contact-btn-tg:hover{ border-top-color:#2AABEE; border-color:#2AABEE }
-.contact-btn-dc{ border-top-color:#3c4499 }
-.contact-btn-dc:hover{ border-top-color:#5865F2; border-color:#5865F2 }
-/* Icon circle */
-.contact-icon-circle{
-  width:38px;
-  height:38px;
-  border-radius:50%;
+  padding:24px 28px;
+  text-align:left;
   background:var(--panel);
-  border:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-  transition:border-color .18s ease;
 }
-.contact-btn:hover .contact-icon-circle{ border-color:currentColor }
-.contact-icon{width:17px;height:17px;flex-shrink:0}
-.contact-icon-gh{color:#e6edf3}
-.contact-icon-tg{color:#2AABEE}
-.contact-icon-dc{color:#5865F2}
-.contact-platform{font-size:11px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;font-family:'IBM Plex Mono';white-space:nowrap;text-align:center}
-.contact-btn:hover .contact-platform{color:var(--text)}
-
-/* CERT BUTTON — matches project card button style */
-.btn-cert{
-  font-family:'IBM Plex Mono';
-  font-size:12px;
-  font-weight:500;
-  border:1px solid var(--green);
-  border-radius:4px;
-  padding:6px 14px;
-  color:var(--green);
-  background:rgba(76,175,125,.08);
+.contact-box p{
+  color:var(--muted);
+  margin-bottom:18px;
+  max-width:600px;
+  font-size:15px;
+  line-height:1.65;
+}
+.contact-links{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:24px;
+  flex-wrap:nowrap;
+}
+.contact-link{
   display:inline-flex;
   align-items:center;
-  gap:7px;
-  transition:all .18s ease;
+  gap:8px;
+  background:none;
+  border:none;
+  padding:4px 0;
+  color:var(--text);
+  font-family:'IBM Plex Mono', monospace;
+  font-size:14px;
   text-decoration:none;
+  transition:color .18s ease, transform .18s ease;
 }
-.btn-cert:hover{
-  background:var(--green);
-  color:#0a0e13;
-  box-shadow:0 0 16px rgba(76,175,125,.3);
+.contact-link:hover{
   text-decoration:none;
   transform:translateY(-1px);
+}
+.contact-gh:hover{ color:#e6edf3 }
+.contact-tg:hover{ color:#2AABEE }
+.contact-dc:hover{ color:#5865F2 }
+
+.contact-icon{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+  transition:transform .18s ease;
+}
+.contact-gh .contact-icon{ color:#e6edf3 }
+.contact-tg .contact-icon{ color:#2AABEE }
+.contact-dc .contact-icon{ color:#5865F2 }
+.contact-link:hover .contact-icon{
+  transform:scale(1.1);
 }
 
 /* ================================================================
@@ -773,153 +806,279 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 
 /* ── MEDIUM / TABLET LANDSCAPE (≤ 960px) ─────────── */
 @media(max-width:960px){
-  .work-grid{ grid-template-columns:1fr; gap:24px }
-  /* Kill all fixed min-heights so cards fit their content */
-  .proj,.proj-head,.proj-desc,.stack-row,.proj-links{ min-height:0 }
-  /* Contact: reduce padding so 3-col fits */
-  .contact-btn{ padding:13px 14px; gap:12px; min-height:64px }
-  .contact-icon-circle{ width:34px; height:34px }
-  .contact-handle{ font-size:12.5px }
+  .work-grid{ grid-template-columns:1fr; gap:20px }
+  /* Remove desktop fixed min-heights */
+  .proj,.proj-head,.proj-desc,.stack-row,.proj-links{ min-height:auto !important; min-height:0 !important }
 }
 
-/* ── MOBILE (≤ 768px) ────────────────────────────── */
+/* ── MOBILE / COMPACT SCREENS (≤ 768px) ───────────── */
 @media(max-width:768px){
+  :root{
+    --topbar-h:46px;
+  }
 
-  /* --- TOPBAR: single compact row, hamburger left, brand right --- */
-  html{ scroll-padding-top:48px }
+  html{
+    scroll-padding-top:calc(var(--topbar-h) + 12px) !important;
+  }
+
+  /* --- TOPBAR: FIXED ALL THE TIME, PRECISE HEIGHT --- */
+  .topbar{
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+    right:0 !important;
+    height:var(--topbar-h) !important;
+    z-index:70 !important;
+  }
   .topbar-in{
-    flex-direction:row;
-    align-items:center;
-    justify-content:space-between;
-    padding:8px 14px;
-    gap:0;
-    height:44px;          /* fixed topbar height — nothing overlaps body */
+    height:100% !important;
+    padding:0 14px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:12px !important;
   }
-  .nav{ display:none }
-  .hamburger{ display:flex }
-  .brand{ font-size:12.5px; white-space:nowrap }
+  .nav{ display:none !important }
+  .hamburger{ display:flex !important }
+  .brand{ font-size:13px; white-space:nowrap }
 
-  /* --- WRAP padding --- */
-  .wrap{ padding:0 14px }
+  /* --- SIDEBAR DRAWER: EXACT HEIGHT MATCH WITH TOPBAR --- */
+  .sidebar{
+    top:var(--topbar-h) !important;
+    height:calc(100vh - var(--topbar-h)) !important;
+    height:calc(100dvh - var(--topbar-h)) !important;
+    z-index:65 !important;
+  }
+  .sidebar-header{
+    height:var(--topbar-h) !important;
+    min-height:var(--topbar-h) !important;
+    padding:0 16px !important;
+  }
+  .sidebar-overlay{
+    top:var(--topbar-h) !important;
+    z-index:60 !important;
+  }
 
-  /* --- SECTION spacing --- */
-  section{ padding:24px 0 }
-  .work-section{ padding:24px 0 }
-  .sec-head{ margin-bottom:14px }
-  h2{ font-size:17px }
-  .sec-tag{ font-size:11px }
+  /* --- WRAP: ALWAYS OFFSET FOR FIXED TOPBAR --- */
+  .wrap{
+    padding-left:14px !important;
+    padding-right:14px !important;
+    padding-top:var(--topbar-h) !important;
+  }
 
-  /* --- HERO --- */
-  .hero{ padding:24px 0 18px }
-  h1{ font-size:clamp(20px,5.5vw,28px); margin-bottom:8px; line-height:1.2 }
-  .role{ font-size:13.5px; margin-bottom:10px }
-  .tagline{ font-size:13.5px; line-height:1.6; margin-bottom:16px }
-  .prompt-line{ font-size:13px; margin-bottom:10px }
+  /* --- SECTION SPACING: COMPACT --- */
+  section{ padding:20px 0 !important }
+  .work-section{ padding:20px 0 !important }
+  .sec-head{ margin-bottom:12px !important }
+  h2{ font-size:16px !important }
+  .sec-tag{ font-size:10.5px !important }
 
-  /* --- ABOUT --- */
-  .about-card{ padding:16px 14px }
-  .about-p{ font-size:13.5px; margin-bottom:10px; line-height:1.65 }
+  /* --- HERO: COMPACT --- */
+  .hero{ padding:20px 0 14px !important }
+  h1{ font-size:clamp(19px,5vw,25px) !important; margin-bottom:6px !important; line-height:1.2 !important }
+  .role{ font-size:13px !important; margin-bottom:8px !important }
+  .tagline{ font-size:13px !important; line-height:1.5 !important; margin-bottom:12px !important }
+  .prompt-line{ font-size:12.5px !important; margin-bottom:8px !important }
 
-  /* --- SKILLS: 2-col compact --- */
-  .skill-grid{ grid-template-columns:1fr 1fr }
-  .skill-cat{ min-height:auto; padding:14px 14px }
-  .skill-cat h3{ font-size:11px; margin-bottom:8px }
-  .skill-cat li{ font-size:12px; padding:3px 0 }
+  /* --- ABOUT BOX: COMPACT --- */
+  .about-card{ padding:14px 14px !important; border-radius:5px !important }
+  .about-p{ font-size:13px !important; margin-bottom:8px !important; line-height:1.55 !important }
 
-  /* --- CERTS --- */
+  /* --- SKILLS BOXES: COMPACT 2-COL --- */
+  .skill-grid{ grid-template-columns:1fr 1fr !important; border-radius:5px !important }
+  .skill-cat{ min-height:auto !important; min-height:0 !important; padding:10px 12px !important }
+  .skill-cat h3{ font-size:11px !important; margin-bottom:6px !important }
+  .skill-cat li{ font-size:12px !important; padding:2px 0 !important }
+
+  /* --- CERTS BOX: VIEW CERTIFICATE AND COMPLETED SIDE BY SIDE --- */
   .cert-row{
-    padding:12px 14px;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
+    padding:12px 14px !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:8px !important;
+    border-radius:5px !important;
   }
-  .cert-row .cname{ font-size:14px }
-  .cert-row .cdesc{ font-size:12.5px }
+  .cert-row .cname{ font-size:14px !important }
+  .cert-row .cdesc{ font-size:12px !important }
+  .cert-actions{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    gap:10px !important;
+    width:auto !important;
+    margin-top:2px !important;
+  }
+  .badge{ font-size:10px !important; padding:3px 8px !important }
+  .btn-cert{ font-size:11.5px !important; padding:4px 10px !important }
 
-  /* --- PROJECT CARDS --- */
+  /* --- PROJECT BOXES: COMPACT --- */
   .proj{
-    min-height:0;
-    margin-bottom:14px;
-    /* Disable hover lift on touch — prevents layout jump */
+    min-height:auto !important;
+    min-height:0 !important;
+    margin-bottom:12px !important;
+    border-radius:5px !important;
     transition:border-color .2s ease, box-shadow .2s ease;
   }
   .proj:hover{ transform:none }
-  .proj-meta-row{ gap:6px; flex-wrap:wrap; margin-bottom:8px }
-  .proj-tag{ font-size:10px }
-  .proj-status{ font-size:9.5px; padding:2px 7px }
-  .proj-head{ min-height:0; padding:14px 14px 10px }
-  .proj-title{ font-size:14.5px; margin-bottom:6px }
-  .proj-desc{ min-height:0; font-size:13px; line-height:1.55 }
-  .stack-row{ min-height:0; padding:0 14px 12px; gap:5px }
-  .chip{ font-size:10px; padding:2px 6px }
-  .proj-links{ min-height:0; padding:0 14px 12px; gap:6px; flex-wrap:wrap }
-  .btn-live,.btn-source{ font-size:11.5px; padding:5px 10px; gap:5px }
-  .btn-icon{ width:13px; height:13px }
-  .toggle-btn{ padding:10px 14px; font-size:11px; min-height:36px }
-
-  /* --- CONTACT: always 3 in one row, compact on mobile --- */
-  .contact-box{ padding:18px 14px }
-  .contact-box p{ font-size:13px; margin-bottom:12px }
-  .contact-links{ gap:8px }
-  .contact-btn{
-    padding:14px 8px;
-    min-height:76px;
-    gap:8px;
+  .proj-head{
+    min-height:auto !important;
+    min-height:0 !important;
+    padding:12px 14px 8px !important;
   }
-  .contact-icon-circle{ width:32px; height:32px }
-  .contact-icon{ width:15px; height:15px }
-  .contact-platform{ font-size:9.5px; letter-spacing:.05em }
+  .proj-meta-row{ gap:5px !important; flex-wrap:wrap !important; margin-bottom:6px !important }
+  .proj-tag{ font-size:9.5px !important }
+  .proj-status{ font-size:9px !important; padding:2px 6px !important }
+  .status-pulse{ width:5px !important; height:5px !important }
+  .proj-title{ font-size:14.5px !important; margin-bottom:4px !important }
+  .proj-desc{
+    min-height:auto !important;
+    min-height:0 !important;
+    font-size:12.5px !important;
+    line-height:1.45 !important;
+    margin-bottom:6px !important;
+  }
+  .stack-row{
+    min-height:auto !important;
+    min-height:0 !important;
+    padding:0 14px 8px !important;
+    gap:4px !important;
+  }
+  .chip{ font-size:9.5px !important; padding:2px 5px !important }
+  .proj-links{
+    min-height:auto !important;
+    min-height:0 !important;
+    padding:0 14px 8px !important;
+    gap:6px !important;
+    flex-wrap:wrap !important;
+  }
+  .btn-live,.btn-source{ font-size:11px !important; padding:4px 9px !important; gap:4px !important }
+  .btn-icon{ width:12px !important; height:12px !important }
+  .toggle-btn{ padding:8px 14px !important; font-size:10.5px !important; min-height:32px !important }
 
-  /* --- MODAL: compact on mobile --- */
-  .modal-backdrop{ padding:8px }
-  .modal-box{ max-height:92vh; border-radius:6px }
-  .modal-header{ padding:10px 12px; gap:8px }
-  .modal-title{ font-size:13.5px }
-  .modal-sec-tag{ display:none }
+  /* --- CONTACT BOX: SOCIAL MEDIA LINKS IN SAME LINE, NO BOXES --- */
+  .contact-box{
+    padding:14px 14px !important;
+    border-radius:5px !important;
+  }
+  .contact-box p{
+    font-size:13px !important;
+    margin-bottom:12px !important;
+  }
+  .contact-links{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    gap:18px !important;
+    flex-wrap:nowrap !important;
+  }
+  .contact-link{
+    font-size:12.5px !important;
+    gap:6px !important;
+    padding:2px 0 !important;
+  }
+  .contact-icon{
+    width:16px !important;
+    height:16px !important;
+  }
+
+  /* --- EXPAND VIEW (MODAL): COMPACT AND SMALL ON SMALL SCREENS --- */
+  .modal-backdrop{
+    padding:12px !important;
+  }
+  .modal-box{
+    width:100% !important;
+    max-width:480px !important;      /* smaller compact box width */
+    max-height:75vh !important;       /* compact height, does not take over entire screen */
+    border-radius:6px !important;
+  }
+  .modal-header{
+    padding:8px 12px !important;
+    gap:6px !important;
+  }
+  .modal-title{
+    font-size:13px !important;
+  }
+  .modal-status{
+    font-size:9.5px !important;
+    padding:1px 6px !important;
+  }
+  .modal-sec-tag{ display:none !important }
+  .modal-close{
+    font-size:11px !important;
+    padding:4px 8px !important;
+  }
   .modal-body{
-    padding:12px 14px;
-    font-size:12.5px;
-    line-height:1.55;
+    padding:10px 12px !important;
+    font-size:12px !important;
+    line-height:1.45 !important;
   }
-  .modal-body h4{ font-size:12px; margin:14px 0 6px }
-  .modal-body p{ margin-bottom:8px; font-size:12.5px }
-  .modal-body ul{ margin:6px 0 8px 16px }
-  .modal-body li{ margin-bottom:4px; font-size:12.5px }
-  .modal-body code{ font-size:11.5px; padding:1px 5px }
-  .modal-close{ font-size:11px; padding:5px 9px }
+  .modal-body h4{
+    font-size:11.5px !important;
+    margin:10px 0 4px !important;
+  }
+  .modal-body p{
+    font-size:12px !important;
+    margin-bottom:6px !important;
+  }
+  .modal-body ul{
+    margin:4px 0 6px 14px !important;
+    font-size:12px !important;
+  }
+  .modal-body li{
+    margin-bottom:3px !important;
+  }
+  .modal-body code, .modal-body .kv{
+    font-size:11px !important;
+    padding:1px 4px !important;
+  }
+  .modal-body .ioc-table td{
+    padding:4px 6px !important;
+    font-size:11px !important;
+  }
 }
 
 /* ── SMALL PHONES (≤ 480px) ──────────────────────── */
 @media(max-width:480px){
-  .wrap{ padding:0 12px }
-  h2{ font-size:16px }
-
-  /* Skills: 1-col on very small phones */
-  .skill-grid{ grid-template-columns:1fr }
-  .skill-cat{ padding:12px 13px }
-  .skill-cat h3{ font-size:10.5px }
-  .skill-cat li{ font-size:11.5px }
-
-  /* Cards */
-  .proj-head{ padding:12px 12px 8px }
-  .proj-title{ font-size:14px }
-  .proj-desc{ font-size:12.5px }
-  .stack-row{ padding:0 12px 10px; gap:4px }
-  .chip{ font-size:9.5px; padding:2px 5px }
-  .proj-links{ padding:0 12px 10px; gap:8px; flex-direction:column }
-  .btn-live,.btn-source{
-    width:100%;
-    justify-content:center;
-    padding:7px 12px;
+  :root{
+    --topbar-h:44px;
   }
-  .toggle-btn{ padding:9px 12px; font-size:10.5px }
 
-  /* Contact: tighter on tiny phones */
-  .contact-box{ padding:14px 12px }
-  .contact-btn{ padding:11px 12px; gap:10px; min-height:52px }
-  .contact-icon-circle{ width:30px; height:30px }
-  .contact-icon{ width:14px; height:14px }
-  .contact-handle{ font-size:12px }
+  .wrap{
+    padding-left:12px !important;
+    padding-right:12px !important;
+    padding-top:var(--topbar-h) !important;
+  }
+
+  h2{ font-size:15px !important }
+
+  /* Skills: 1-col on tiny phones */
+  .skill-grid{ grid-template-columns:1fr !important }
+  .skill-cat{ padding:10px 11px !important }
+  .skill-cat h3{ font-size:10.5px !important }
+  .skill-cat li{ font-size:11.5px !important }
+
+  /* Contact in same line with compact gap */
+  .contact-links{
+    gap:14px !important;
+  }
+  .contact-link{
+    font-size:12px !important;
+    gap:5px !important;
+  }
+  .contact-icon{
+    width:15px !important;
+    height:15px !important;
+  }
+
+  /* Modal expand compact */
+  .modal-box{
+    max-width:100% !important;
+    max-height:76vh !important;
+  }
+  .modal-body{
+    padding:8px 10px !important;
+    font-size:11.5px !important;
+  }
 
   /* Modal tables → stacked card rows */
   .modal-body .ioc-table,
@@ -927,20 +1086,20 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   .modal-body .ioc-table tr,
   .modal-body .ioc-table td{ display:block; width:100% !important }
   .modal-body .ioc-table tr{
-    margin-bottom:10px;
-    border-bottom:1px solid var(--line);
-    padding-bottom:6px;
+    margin-bottom:8px !important;
+    border-bottom:1px solid var(--line) !important;
+    padding-bottom:4px !important;
   }
-  .modal-body .ioc-table td{ border-bottom:none; padding:2px 0 }
+  .modal-body .ioc-table td{ border-bottom:none !important; padding:2px 0 !important }
   .modal-body .ioc-table td:first-child{
-    font-size:10.5px;
+    font-size:10px !important;
     text-transform:uppercase;
     letter-spacing:.06em;
     color:var(--amber);
     margin-bottom:2px;
     white-space:normal;
   }
-  .modal-body .ioc-table td:last-child{ font-size:12px; color:var(--text) }
+  .modal-body .ioc-table td:last-child{ font-size:11.5px !important; color:var(--text) }
 }
 
 /* ULTRA-WIDE & 4K DISPLAYS (>= 1600px) */
