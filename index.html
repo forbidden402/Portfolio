@@ -92,11 +92,12 @@
         <!-- ThreatScan -->
         <article class="proj">
           <div class="proj-head">
-            <div>
-              <div class="proj-title">ThreatScan</div>
-              <div class="proj-desc">A privacy-first Threat Intelligence Platform — one dashboard to query URLs, IPs, domains and files across VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar and ThreatFox, then export unified SOC reports.</div>
+            <div class="proj-meta-row">
+              <span class="proj-tag">// 01 · THREAT INTEL PLATFORM</span>
+              <span class="proj-status status-active"><span class="status-pulse"></span>ACTIVE BUILD</span>
             </div>
-            <span class="proj-status">ACTIVE BUILD</span>
+            <div class="proj-title">ThreatScan</div>
+            <div class="proj-desc">A privacy-first Threat Intelligence Platform — one dashboard to query URLs, IPs, domains and files across VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar and ThreatFox, then export unified SOC reports.</div>
           </div>
           <div class="stack-row">
             <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Vanilla JS/HTML/CSS</span>
@@ -104,10 +105,19 @@
             <span class="chip">OTX</span><span class="chip">YARA</span><span class="chip">PE parsing</span>
           </div>
           <div class="proj-links">
-            <a class="btn-live" href="https://threat-intelligence-7eza.onrender.com/" target="_blank" rel="noopener">→ visit the site</a>
-            <a href="https://github.com/forbidden402/Threat-Intelligence" target="_blank" rel="noopener">→ source</a>
+            <a class="btn-live" href="https://threat-intelligence-7eza.onrender.com/" target="_blank" rel="noopener">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              visit the site
+            </a>
+            <a class="btn-source" href="https://github.com/forbidden402/Threat-Intelligence" target="_blank" rel="noopener">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              source
+            </a>
           </div>
-          <button class="toggle-btn" data-target="d1">Expand full build &amp; architecture detail</button>
+          <button class="toggle-btn" data-target="d1">
+            <span>▸ Expand build &amp; architecture spec</span>
+            <span class="btn-arrow">↗</span>
+          </button>
           <div class="proj-detail" id="d1">
             <h4>WHAT IT DOES</h4>
             <p>ThreatScan is a unified TIP for SOC analysts and incident responders. It runs four analysis engines from one dashboard: a <strong>URL Analyzer</strong> for phishing/malicious link triage, an <strong>Infrastructure Analyzer</strong> for IP/DNS/domain perimeter checks, a <strong>File &amp; Hash Analyzer</strong> for uploads up to 32MB or hash lookups, and a <strong>Reports</strong> module that consolidates every scan into exportable PDF/DOCX records.</p>
@@ -121,20 +131,27 @@
         <!-- NIDS -->
         <article class="proj">
           <div class="proj-head">
-            <div>
-              <div class="proj-title">Network Intrusion Detection System</div>
-              <div class="proj-desc">A real-time, self-hosted NIDS with deep packet inspection, a live SOC dashboard, entity/IP forensic profiles, and OSINT-backed threat lookups — built to watch a home network the way a Tier-1 analyst watches a SIEM.</div>
+            <div class="proj-meta-row">
+              <span class="proj-tag">// 02 · NETWORK DETECTION &amp; DPI</span>
+              <span class="proj-status status-alpha"><span class="status-pulse"></span>ALPHA / POC</span>
             </div>
-            <span class="proj-status">ALPHA / POC</span>
+            <div class="proj-title">Network Intrusion Detection System</div>
+            <div class="proj-desc">A real-time, self-hosted NIDS with deep packet inspection, a live SOC dashboard, entity/IP forensic profiles, and OSINT-backed threat lookups — built to watch a home network the way a Tier-1 analyst watches a SIEM.</div>
           </div>
           <div class="stack-row">
             <span class="chip">Python 3.10+</span><span class="chip">Flask</span><span class="chip">Scapy</span>
             <span class="chip">SQLite</span><span class="chip">Chart.js</span><span class="chip">HTML5/CSS3</span>
           </div>
           <div class="proj-links">
-            <a href="https://github.com/forbidden402/Network-Intrusion-Detection-System" target="_blank" rel="noopener">→ source</a>
+            <a class="btn-source" href="https://github.com/forbidden402/Network-Intrusion-Detection-System" target="_blank" rel="noopener">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              source
+            </a>
           </div>
-          <button class="toggle-btn" data-target="d2">Expand full build &amp; architecture detail</button>
+          <button class="toggle-btn" data-target="d2">
+            <span>▸ Expand build &amp; architecture spec</span>
+            <span class="btn-arrow">↗</span>
+          </button>
           <div class="proj-detail" id="d2">
             <h4>WHAT IT DOES</h4>
             <p>Monitors a live network segment and flags suspicious activity in real time. Ships with a live telemetry dashboard, network topology map, per-IP forensic entity profiles, threat-intel IP lookup, and CSV export for SIEM ingestion.</p>
@@ -158,11 +175,12 @@
         <!-- Home Lab -->
         <article class="proj">
           <div class="proj-head">
-            <div>
-              <div class="proj-title">SOC Home Lab — Attack Simulation &amp; Detection</div>
-              <div class="proj-desc">A full adversary-simulation-to-detection exercise: delivered a Meterpreter payload against a Windows 10 VM, dumped credentials with Mimikatz, then hunted and killed the same activity using Sysmon and Splunk.</div>
+            <div class="proj-meta-row">
+              <span class="proj-tag">// LAB 01 · ADVERSARY SIMULATION</span>
+              <span class="proj-status status-completed"><span class="status-pulse"></span>COMPLETED</span>
             </div>
-            <span class="proj-status">COMPLETED</span>
+            <div class="proj-title">SOC Home Lab — Attack Simulation &amp; Detection</div>
+            <div class="proj-desc">A full adversary-simulation-to-detection exercise: delivered a Meterpreter payload against a Windows 10 VM, dumped credentials with Mimikatz, then hunted and killed the same activity using Sysmon and Splunk.</div>
           </div>
           <div class="stack-row">
             <span class="chip">VMware</span><span class="chip">Kali Linux</span><span class="chip">Windows 10</span>
@@ -170,9 +188,15 @@
             <span class="chip">Splunk</span><span class="chip">Wireshark</span>
           </div>
           <div class="proj-links">
-            <a href="https://github.com/forbidden402/SOC-Home_lab-s" target="_blank" rel="noopener">→ source</a>
+            <a class="btn-source" href="https://github.com/forbidden402/SOC-Home_lab-s" target="_blank" rel="noopener">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              source
+            </a>
           </div>
-          <button class="toggle-btn" data-target="d3">Expand full attack &amp; detection walkthrough</button>
+          <button class="toggle-btn" data-target="d3">
+            <span>▸ Expand attack &amp; detection walkthrough</span>
+            <span class="btn-arrow">↗</span>
+          </button>
           <div class="proj-detail" id="d3">
             <h4>ENVIRONMENT</h4>
             <table class="ioc-table">
@@ -203,20 +227,27 @@
         <!-- Dotfiles & Fedora config -->
         <article class="proj">
           <div class="proj-head">
-            <div>
-              <div class="proj-title">niri + Noctalia Dotfiles &amp; Fedora config</div>
-              <div class="proj-desc">My personal Linux workstation configuration — a hardened, tiling-window-manager setup for Fedora used as my day-to-day analysis and lab-building environment.</div>
+            <div class="proj-meta-row">
+              <span class="proj-tag">// LAB 02 · WORKSTATION HARDENING</span>
+              <span class="proj-status status-config"><span class="status-pulse"></span>PERSONAL CONFIG</span>
             </div>
-            <span class="proj-status">PERSONAL CONFIG</span>
+            <div class="proj-title">niri + Noctalia Dotfiles &amp; Fedora config</div>
+            <div class="proj-desc">My personal Linux workstation configuration — a hardened, tiling-window-manager setup for Fedora used as my day-to-day analysis and lab-building environment.</div>
           </div>
           <div class="stack-row">
             <span class="chip">Fedora Linux</span><span class="chip">niri (Wayland)</span><span class="chip">Noctalia shell</span>
             <span class="chip">Ghostty</span><span class="chip">systemd-resolved</span><span class="chip">ProtonVPN / WireGuard</span>
           </div>
           <div class="proj-links">
-            <a href="https://github.com/forbidden402/niri_V4_noctalia-dotfiles" target="_blank" rel="noopener">→ source</a>
+            <a class="btn-source" href="https://github.com/forbidden402/niri_V4_noctalia-dotfiles" target="_blank" rel="noopener">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              source
+            </a>
           </div>
-          <button class="toggle-btn" data-target="d4">Expand configuration detail</button>
+          <button class="toggle-btn" data-target="d4">
+            <span>▸ Expand configuration detail</span>
+            <span class="btn-arrow">↗</span>
+          </button>
           <div class="proj-detail" id="d4">
             <h4>WHAT IT IS</h4>
             <p>Full dotfiles for Fedora running <strong>niri</strong> (scrollable-tiling Wayland compositor), <strong>Noctalia</strong> shell, <strong>Ghostty</strong> terminal, fastfetch, Bibata cursors — the environment I actually work and build labs in.</p>
