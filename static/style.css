@@ -261,12 +261,35 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .about-p strong{color:var(--amber)}
 
 /* SKILLS & KNOWLEDGE 2-COL FULL WIDTH — UNIFORM BOX SIZE */
-.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.skill-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .skill-cat{background:var(--panel);padding:22px 24px;min-height:160px;display:flex;flex-direction:column}
-.skill-cat h3{font-family:'IBM Plex Mono';font-size:13px;color:var(--amber);margin-bottom:12px}
+.skill-cat h3{font-family:'IBM Plex Mono';font-size:13px;color:var(--amber);margin-bottom:12px;letter-spacing:.04em}
 .skill-cat ul{list-style:none;font-size:14px;color:var(--text);flex:1}
-.skill-cat li{padding:4px 0;color:var(--muted)}
-.skill-cat li::before{content:"▸ ";color:var(--green)}
+.skill-cat ul:not(.tool-list) li{padding:4px 0;color:var(--muted)}
+.skill-cat ul:not(.tool-list) li::before{content:"▸ ";color:var(--green)}
+
+/* TOOL LIST & PRACTICAL USAGE */
+.tool-list{list-style:none;padding:0;margin:0}
+.tool-list li{
+  padding:8px 0;
+  line-height:1.65;
+  color:var(--muted);
+  font-size:13.5px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.tool-list li:last-child{border-bottom:none;padding-bottom:0}
+.tool-list li:first-child{padding-top:0}
+.tool-list li::before{content:none !important}
+.tool-list strong{color:var(--amber);font-weight:600}
+.tool-list code{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  background:rgba(76,175,125,.1);
+  color:var(--green);
+  border:1px solid rgba(76,175,125,.25);
+  padding:1px 5px;
+  border-radius:3px;
+}
 
 /* CERTS & EDUCATION (NO BOX) */
 .cert-row{
@@ -818,6 +841,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 /* ── MEDIUM / TABLET LANDSCAPE (≤ 960px) ─────────── */
 @media(max-width:960px){
   .nav{ gap:14px; font-size:12px }
+  .skill-grid{ grid-template-columns:1fr }
   .work-grid{ grid-template-columns:1fr; gap:20px }
   /* Remove desktop fixed min-heights */
   .proj,.proj-head,.proj-desc,.stack-row,.proj-links{ min-height:auto !important; min-height:0 !important }
@@ -896,11 +920,13 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   .about-card{ padding:14px 14px !important; border-radius:5px !important }
   .about-p{ font-size:13px !important; margin-bottom:8px !important; line-height:1.55 !important }
 
-  /* --- SKILLS BOXES: COMPACT 2-COL --- */
-  .skill-grid{ grid-template-columns:1fr 1fr !important; border-radius:5px !important }
-  .skill-cat{ min-height:auto !important; min-height:0 !important; padding:10px 12px !important }
-  .skill-cat h3{ font-size:11px !important; margin-bottom:6px !important }
+  /* --- SKILLS BOXES: COMPACT --- */
+  .skill-grid{ grid-template-columns:1fr !important; border-radius:5px !important }
+  .skill-cat{ min-height:auto !important; min-height:0 !important; padding:12px 14px !important }
+  .skill-cat h3{ font-size:11px !important; margin-bottom:8px !important }
   .skill-cat li{ font-size:12px !important; padding:2px 0 !important }
+  .tool-list li{ font-size:12px !important; padding:6px 0 !important; line-height:1.55 !important }
+  .tool-list code{ font-size:11px !important; padding:1px 4px !important }
 
   /* --- CERTS & EDUCATION (NO BOX) --- */
   .cert-row{
