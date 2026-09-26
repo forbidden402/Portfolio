@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/style.css?v=2.3">
+<link rel="stylesheet" href="/static/style.css?v=2.4">
 </head>
 <body>
 
@@ -17,30 +17,33 @@
 <!-- SIDEBAR DRAWER (mobile) -->
 <nav class="sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
   <div class="sidebar-header">
+    <span class="sidebar-sec-label">// NAVIGATION</span>
     <button class="sidebar-close" id="sidebar-close" aria-label="Go back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       <span>back</span>
     </button>
-    <span class="sidebar-sec-label">// NAVIGATION</span>
   </div>
   <div class="sidebar-nav">
     <a href="#about" class="sidebar-link">
       <span class="sidebar-num">00</span>about
     </a>
+    <a href="#education" class="sidebar-link">
+      <span class="sidebar-num">01</span>education
+    </a>
     <a href="#skills" class="sidebar-link">
-      <span class="sidebar-num">01</span>skills
+      <span class="sidebar-num">02</span>skills
     </a>
     <a href="#certs" class="sidebar-link">
-      <span class="sidebar-num">02</span>certs
+      <span class="sidebar-num">03</span>certs
     </a>
     <a href="#projects" class="sidebar-link">
-      <span class="sidebar-num">03</span>projects
+      <span class="sidebar-num">04</span>projects
     </a>
     <a href="#homelabs" class="sidebar-link">
-      <span class="sidebar-num">04</span>home labs
+      <span class="sidebar-num">05</span>home labs
     </a>
     <a href="#contact" class="sidebar-link">
-      <span class="sidebar-num">05</span>contact
+      <span class="sidebar-num">06</span>contact
     </a>
   </div>
   <div class="sidebar-footer">
@@ -57,6 +60,7 @@
     <div class="brand">forbidden<span>402</span>@soc:~$</div>
     <nav class="nav">
       <a href="#about">about</a>
+      <a href="#education">education</a>
       <a href="#skills">skills</a>
       <a href="#certs">certs</a>
       <a href="#projects">projects</a>
@@ -73,45 +77,74 @@
     <div class="prompt-line">$ whoami<span class="cursor"></span></div>
     <h1>SOC Analyst / Blue Team &amp; Threat Intel</h1>
     <div class="role">Cybersecurity learner — home-lab attack simulation, endpoint &amp; network detection, threat intel tooling</div>
-    <p class="tagline">I build the tools I use to investigate — a threat-intel aggregator, a packet-level intrusion detector, and a home lab where I run real attacks against my own systems and then find them in the logs. TryHackMe SOC Level 1 certified, working from MITRE ATT&amp;CK and the Cyber Kill Chain.</p>
+    <p class="tagline">I build security tools and controlled home-lab environments to learn blue-team concepts, experiment with security data, and develop practical cybersecurity skills.</p>
   </section>
 
   <!-- 00 ABOUT -->
   <section id="about">
     <div class="sec-head"><span class="sec-tag">00</span><h2>About Me</h2></div>
     <div class="about-card">
-      <p class="about-p">I'm <strong>forbidden402</strong> — a self-taught cybersecurity enthusiast focused on the <strong>blue team</strong> side of the house: SOC analysis, threat intelligence, network forensics, and endpoint detection. My background is hands-on by design; I learn by building the tools I actually need, then using them against real attack traffic I generate myself in a home lab.</p>
-      <p class="about-p">I hold the <strong>TryHackMe SOC Level 1</strong> path certification and map all my work to <strong>MITRE ATT&amp;CK</strong> and the <strong>Cyber Kill Chain</strong>. My current stack spans Python / FastAPI backends, Splunk SPL, Sysmon telemetry, Wireshark / Scapy packet analysis, and a growing set of threat-intel APIs (VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar). I run Fedora Linux as my daily driver with a hardened network stack (DNS-over-TLS, WireGuard VPN).</p>
-      <p class="about-p">Right now I'm actively building <strong>ThreatScan</strong> — a privacy-first threat intelligence platform — and looking for my first SOC / blue-team role where I can bring those practical skills to a real team.</p>
+      <p class="about-p">I'm a cybersecurity learner focused on the <strong>blue-team side of security</strong>, with interests in SOC operations, threat intelligence, network security, endpoint security, and malware.</p>
+      <p class="about-p">I learn through hands-on projects by building security tools and controlled home-lab environments to explore cybersecurity concepts, work with security data, and develop practical skills.</p>
+      <p class="about-p">I have foundational hands-on experience with <strong>Python, Splunk/SPL, Sysmon, Wireshark, Linux, Windows, and threat-intelligence tools and platforms</strong>.</p>
+      <p class="about-p">I have knowledge of <strong>MITRE ATT&amp;CK, the Cyber Kill Chain, malware fundamentals, Indicators of Compromise (IoCs), network security, endpoint security, threat intelligence, and incident investigation concepts</strong>.</p>
+      <p class="about-p">I hold the <strong>TryHackMe SOC Level 1</strong> certification and continue developing my cybersecurity skills through personal projects, security labs, and practical experimentation.</p>
     </div>
   </section>
 
-  <!-- 01 SKILLS -->
+  <!-- 01 EDUCATION -->
+  <section id="education">
+    <div class="sec-head"><span class="sec-tag">01</span><h2>Education</h2></div>
+    <div class="cert-row">
+      <div class="cert-info">
+        <div class="cname">Bachelor of Computer Applications (BCA)</div>
+        <div class="cdesc">Graduated — 2024</div>
+      </div>
+      <div class="cert-actions">
+        <span class="badge badge-edu">GRADUATED — 2024</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 SKILLS -->
   <section id="skills">
-    <div class="sec-head"><span class="sec-tag">01</span><h2>Skills &amp; Tooling</h2></div>
+    <div class="sec-head"><span class="sec-tag">02</span><h2>Skills &amp; Knowledge</h2></div>
     <div class="skill-grid">
       <div class="skill-cat">
-        <h3>SYSTEMS</h3>
-        <ul><li>Linux administration &amp; networking</li><li>Windows fundamentals</li><li>Linux firewall (iptables/nftables) config</li><li>Windows Firewall rule configuration</li></ul>
+        <h3>SKILLS</h3>
+        <ul>
+          <li>Python</li>
+          <li>Splunk / SPL</li>
+          <li>Sysmon</li>
+          <li>Wireshark</li>
+          <li>Linux</li>
+          <li>Windows Security</li>
+          <li>Threat Intelligence Tools</li>
+          <li>Security Monitoring</li>
+          <li>Network Security</li>
+        </ul>
       </div>
       <div class="skill-cat">
-        <h3>DETECTION &amp; LOGS</h3>
-        <ul><li>Sysmon telemetry &amp; event IDs</li><li>Splunk search &amp; correlation (SPL)</li><li>Log analysis / Windows Event Viewer</li><li>Wireshark packet &amp; stream analysis</li></ul>
-      </div>
-      <div class="skill-cat">
-        <h3>THREAT INTEL / OSINT</h3>
-        <ul><li>VirusTotal investigation</li><li>AbuseIPDB reputation checks</li><li>Shodan reconnaissance</li><li>Nmap basic scanning</li></ul>
-      </div>
-      <div class="skill-cat">
-        <h3>FRAMEWORKS</h3>
-        <ul><li>MITRE ATT&amp;CK mapping</li><li>Cyber Kill Chain</li><li>Alert triage &amp; investigation</li><li>Incident response basics</li></ul>
+        <h3>KNOWLEDGE</h3>
+        <ul>
+          <li>SOC Operations</li>
+          <li>Blue Team Concepts</li>
+          <li>Threat Intelligence</li>
+          <li>MITRE ATT&amp;CK</li>
+          <li>Cyber Kill Chain</li>
+          <li>Malware Fundamentals</li>
+          <li>Indicators of Compromise (IoCs)</li>
+          <li>Endpoint Security Concepts</li>
+          <li>Network Security Concepts</li>
+          <li>Incident Investigation Concepts</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 02 CERTS -->
+  <!-- 03 CERTS -->
   <section id="certs">
-    <div class="sec-head"><span class="sec-tag">02</span><h2>Certifications</h2></div>
+    <div class="sec-head"><span class="sec-tag">03</span><h2>Certifications</h2></div>
     <div class="cert-row">
       <div class="cert-info">
         <div class="cname">TryHackMe — SOC Level 1 Path</div>
@@ -127,13 +160,13 @@
     </div>
   </section>
 
-  <!-- 03 PROJECTS & 04 HOME LABS (SIDE BY SIDE GRID) -->
+  <!-- 04 PROJECTS & 05 HOME LABS (SIDE BY SIDE GRID) -->
   <section class="work-section">
     <div class="work-grid">
 
       <!-- Column 1: Projects -->
       <div class="work-col" id="projects">
-        <div class="sec-head"><span class="sec-tag">03</span><h2>Projects</h2></div>
+        <div class="sec-head"><span class="sec-tag">04</span><h2>Projects</h2></div>
 
         <!-- ThreatScan -->
         <article class="proj">
@@ -216,7 +249,7 @@
 
       <!-- Column 2: Home Labs -->
       <div class="work-col" id="homelabs">
-        <div class="sec-head"><span class="sec-tag">04</span><h2>Home Labs</h2></div>
+        <div class="sec-head"><span class="sec-tag">05</span><h2>Home Labs</h2></div>
 
         <!-- Home Lab -->
         <article class="proj">
@@ -309,9 +342,9 @@
     </div>
   </section>
 
-  <!-- 05 CONTACT -->
+  <!-- 06 CONTACT -->
   <section id="contact" style="border-bottom:none">
-    <div class="sec-head"><span class="sec-tag">05</span><h2>Contact</h2></div>
+    <div class="sec-head"><span class="sec-tag">06</span><h2>Contact</h2></div>
     <div class="contact-box">
       <p>Open to SOC / blue-team opportunities and always building something in the home lab. Reach me on any of the platforms below.</p>
       <div class="contact-links">

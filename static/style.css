@@ -260,8 +260,8 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .about-p:last-child{margin-bottom:0}
 .about-p strong{color:var(--amber)}
 
-/* SKILLS 4-COL FULL WIDTH — UNIFORM BOX SIZE */
-.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+/* SKILLS & KNOWLEDGE 2-COL FULL WIDTH — UNIFORM BOX SIZE */
+.skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .skill-cat{background:var(--panel);padding:22px 24px;min-height:160px;display:flex;flex-direction:column}
 .skill-cat h3{font-family:'IBM Plex Mono';font-size:13px;color:var(--amber);margin-bottom:12px}
 .skill-cat ul{list-style:none;font-size:14px;color:var(--text);flex:1}
@@ -292,6 +292,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   flex-shrink:0;
 }
 .badge{font-family:'IBM Plex Mono';font-size:11px;padding:5px 10px;border:1px solid var(--green);color:var(--green);white-space:nowrap;border-radius:4px;line-height:1}
+.badge-edu{border-color:var(--amber);color:var(--amber);background:rgba(232,163,61,.08)}
 .btn-cert{
   font-family:'IBM Plex Mono';
   font-size:12px;
@@ -810,12 +811,13 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 
 /* ── TABLETS (≤ 1024px) ──────────────────────────── */
 @media(max-width:1024px){
-  .skill-grid{ grid-template-columns:repeat(2,1fr) }
+  .skill-grid{ grid-template-columns:1fr 1fr }
   .skill-cat{ min-height:auto }
 }
 
 /* ── MEDIUM / TABLET LANDSCAPE (≤ 960px) ─────────── */
 @media(max-width:960px){
+  .nav{ gap:14px; font-size:12px }
   .work-grid{ grid-template-columns:1fr; gap:20px }
   /* Remove desktop fixed min-heights */
   .proj,.proj-head,.proj-desc,.stack-row,.proj-links{ min-height:auto !important; min-height:0 !important }
@@ -1048,6 +1050,11 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
     padding:4px 6px !important;
     font-size:11px !important;
   }
+}
+
+/* ── COMPACT PHONES (≤ 560px) ────────────────────── */
+@media(max-width:560px){
+  .skill-grid{ grid-template-columns:1fr !important }
 }
 
 /* ── SMALL PHONES (≤ 480px) ──────────────────────── */
