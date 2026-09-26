@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>niri + Noctalia Dotfiles | forbidden402</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=5.1" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=1.4" fetchpriority="high">
+</head>
+<body>
+
+<!-- CYBER PAGE PRELOADER -->
+<div class="cs-loader-overlay" id="page-loader" aria-hidden="true">
+  <div class="cs-loader-box">
+    <div class="cs-loader-header">
+      <span class="cs-loader-tag">// TELEMETRY FEED · WORKSTATION HARDENING</span>
+      <span class="cs-loader-status"><span class="status-pulse"></span>INITIALIZING</span>
+    </div>
+    <div class="cs-loader-body">
+      <div class="cs-loader-cmd"><span class="cs-prompt">$</span> load dossier --config niri-dotfiles</div>
+      <div class="cs-progress-track">
+        <div class="cs-progress-fill" id="loader-progress-bar"></div>
+      </div>
+      <div class="cs-loader-meta">
+        <span class="cs-loader-detail" id="loader-status-text">STATUS: 200 OK · VERIFYING INTEGRITY</span>
+        <span class="cs-loader-pct" id="loader-pct-text">100%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-wrap">
+
+  <!-- TOP NAV -->
+  <nav class="cs-nav" aria-label="Breadcrumb navigation">
+    <a href="/#homelabs" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to portfolio
+    </a>
+    <span class="cs-nav-tag">// LAB 02 · WORKSTATION HARDENING</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="cs-meta-row">
+      <span class="cs-tag">// LINUX SECURITY &amp; ENVIRONMENT HARDENING</span>
+      <span class="proj-status status-config"><span class="status-pulse"></span>PERSONAL CONFIG</span>
+    </div>
+    <h1 class="cs-title">niri + Noctalia Dotfiles &amp; Hardened Fedora Setup</h1>
+    <p class="cs-subtitle">
+      A customized, scrollable-tiling Wayland workstation running on Fedora Linux. Configured as an optimized day-to-day security analysis, lab-building, and threat-hunting cockpit with encrypted DNS, custom kernel parameters, and automated VPN fail-safes.
+    </p>
+    <div class="cs-actions">
+      <a class="btn-source" href="https://github.com/forbidden402/niri_V4_noctalia-dotfiles" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        view github dotfiles repository
+      </a>
+    </div>
+  </header>
+
+  <!-- METADATA GRID -->
+  <div class="attr-grid">
+    <div class="attr-item">
+      <span class="attr-label">Operating System</span>
+      <span class="attr-value">Fedora Linux (Workstation)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Wayland Compositor</span>
+      <span class="attr-value">niri (Scrollable Tiling)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Shell &amp; Terminal</span>
+      <span class="attr-value">Noctalia Shell + Ghostty</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">DNS Privacy</span>
+      <span class="attr-value">DNS-over-TLS (systemd-resolved)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">VPN Protocol</span>
+      <span class="attr-value">ProtonVPN (WireGuard)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Primary Usage</span>
+      <span class="attr-value">Security Analysis &amp; Home Lab Development</span>
+    </div>
+  </div>
+
+  <main class="cs-content">
+
+    <!-- 01 WORKSTATION SETUP -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">01</span>
+        <h2>Workstation Philosophy &amp; Tooling</h2>
+      </div>
+      <p>
+        Rather than relying on resource-heavy desktop environments, this setup pairs Fedora with <strong>niri</strong>—an infinite horizontal scrollable-tiling Wayland compositor—and <strong>Ghostty</strong> for high-throughput GPU-accelerated terminal emulation. The result is zero desktop bloat with instantaneous workspace navigation between SIEM dashboards, packet capture consoles, and code editors.
+      </p>
+    </section>
+
+    <!-- 02 NETWORK HARDENING -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">02</span>
+        <h2>Network &amp; DNS Hardening</h2>
+      </div>
+      <ul>
+        <li><strong>DNS-over-TLS (DoT):</strong> Configured native <code>systemd-resolved</code> with Quad9 (<code>9.9.9.9#dns.quad9.net</code>) as primary strict encrypted DNS provider, preventing local ISP tampering or passive metadata collection.</li>
+        <li><strong>WireGuard MTU Tuning:</strong> Created custom NetworkManager dispatcher scripts enforcing MTU 1400 and a 25-second persistent keepalive on the <code>proton0</code> tunnel interface to eliminate fragmentation and silent drops.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <a href="/#homelabs" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to overview
+    </a>
+    <a href="/pages/soc-home-lab.html" class="btn-back">
+      view SOC Home Lab case study →
+    </a>
+  </footer>
+
+</div>
+
+<script src="/static/loader.js?v=1.1" defer></script>
+</body>
+</html>

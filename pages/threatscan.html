@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ThreatScan (v2.1.1) — Threat Intelligence Platform | forbidden402</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=5.1" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=1.4" fetchpriority="high">
+</head>
+<body>
+
+<!-- CYBER PAGE PRELOADER -->
+<div class="cs-loader-overlay" id="page-loader" aria-hidden="true">
+  <div class="cs-loader-box">
+    <div class="cs-loader-header">
+      <span class="cs-loader-tag">// TELEMETRY FEED · THREATSCAN v2.1.1</span>
+      <span class="cs-loader-status"><span class="status-pulse"></span>INITIALIZING</span>
+    </div>
+    <div class="cs-loader-body">
+      <div class="cs-loader-cmd"><span class="cs-prompt">$</span> load dossier --platform threatscan</div>
+      <div class="cs-progress-track">
+        <div class="cs-progress-fill" id="loader-progress-bar"></div>
+      </div>
+      <div class="cs-loader-meta">
+        <span class="cs-loader-detail" id="loader-status-text">STATUS: 200 OK · VERIFYING INTEGRITY</span>
+        <span class="cs-loader-pct" id="loader-pct-text">100%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-wrap">
+
+  <!-- TOP NAV -->
+  <nav class="cs-nav" aria-label="Breadcrumb navigation">
+    <a href="/#projects" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to portfolio
+    </a>
+    <span class="cs-nav-tag">// PROJECT 01 · THREAT INTEL PLATFORM</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="cs-meta-row">
+      <span class="cs-tag">// APPLICATION ARCHITECTURE &amp; OSINT TOOLING</span>
+      <span class="proj-status status-active"><span class="status-pulse"></span>LATEST RELEASE · v2.1.1</span>
+    </div>
+    <h1 class="cs-title">ThreatScan — Privacy-First Threat Intelligence Platform (v2.1.1)</h1>
+    <p class="cs-subtitle">
+      A modern, zero-trust Threat Intelligence Platform (TIP) engineered for SOC analysts and incident responders. Correlates multi-source telemetry across URLs, IP addresses, domains, and files with automated forensic reporting and a strict ephemeral privacy model.
+    </p>
+    <div class="cs-actions">
+      <a class="btn-live" href="https://threat-intelligence-7eza.onrender.com/" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        launch live platform (render)
+      </a>
+      <a class="btn-source" href="https://github.com/forbidden402/Threat-Intelligence" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        github source code
+      </a>
+    </div>
+  </header>
+
+  <!-- METADATA GRID -->
+  <div class="attr-grid">
+    <div class="attr-item">
+      <span class="attr-label">Backend Framework</span>
+      <span class="attr-value">Python 3.9+ / FastAPI / Uvicorn</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Frontend Stack</span>
+      <span class="attr-value">Vanilla HTML5 / CSS3 / JavaScript</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Platform Version</span>
+      <span class="attr-value">v2.1.1 (Current Build)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Supported Feeds</span>
+      <span class="attr-value">VirusTotal, AbuseIPDB, Shodan, OTX, abuse.ch (ThreatFox, MalwareBazaar, URLhaus)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Static Binary Inspection</span>
+      <span class="attr-value">File Hash Lookup via VirusTotal &amp; MalwareBazaar</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Privacy Model</span>
+      <span class="attr-value">Zero-Disk Storage / 24h Purge / X-Api-Keys</span>
+    </div>
+  </div>
+
+  <main class="cs-content">
+
+    <!-- 01 ABOUT v2.1.1 -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">01</span>
+        <h2>ThreatScan v2.1.1 — Current Build</h2>
+      </div>
+      <p>
+        ThreatScan is a privacy-first Threat Intelligence Platform built for SOC analysts and incident responders. v2.1.1 is the current stable release — a fully modular, async FastAPI backend that correlates multi-source threat telemetry across URLs, IP addresses, domains, and files under a single interface, with zero server-side key storage and a 10-minute Redis/in-memory result cache.
+      </p>
+
+      <h3 style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber);margin:24px 0 10px;letter-spacing:.04em">// URL ANALYZER</h3>
+      <p>Accepts any raw URL, normalises it, resolves all A/AAAA records, and fans out to a concurrent pipeline of threat feeds and active probes:</p>
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead><tr><th>Source</th><th>Type</th><th>What It Retrieves</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">VirusTotal API v3</td><td>Optional API Key</td><td>Multi-engine malware/phishing verdict — malicious, suspicious, harmless counts across all AV vendors plus community reputation score.</td></tr>
+            <tr><td class="mono">OpenPhish</td><td>Free Feed</td><td>Real-time phishing URL database — exact-match URL check against the current feed.</td></tr>
+            <tr><td class="mono">URLhaus (abuse.ch)</td><td>Free Feed</td><td>Exact URL lookup + host-level lookup against active malware distribution URLs. Returns malware family, tags, and submission date.</td></tr>
+            <tr><td class="mono">ThreatFox (abuse.ch)</td><td>Free Feed</td><td>IOC lookup for C2 infrastructure, malware payloads, and botnet URLs.</td></tr>
+            <tr><td class="mono">Feodo Tracker</td><td>Free Feed</td><td>Banking trojan and botnet C2 blocklist — Emotet, Dridex, TrickBot infrastructure.</td></tr>
+            <tr><td class="mono">AlienVault OTX</td><td>Optional API Key</td><td>Pulse-based threat intelligence — pulse count, malware families, and attack categories for the domain.</td></tr>
+            <tr><td class="mono">Google Safe Browsing</td><td>Optional API Key</td><td>Lookup v4 API — classifies URLs as MALWARE, SOCIAL_ENGINEERING, or UNWANTED_SOFTWARE.</td></tr>
+            <tr><td class="mono">IPQualityScore</td><td>Optional API Key</td><td>Fraud score (0–100) per resolved IP, plus phishing, malware, and proxy/VPN flags.</td></tr>
+            <tr><td class="mono">threatYeti (alphaMountain)</td><td>Optional API Key</td><td>Domain threat rating and category classification for brand protection use cases.</td></tr>
+            <tr><td class="mono">urlscan.io Browser Sandbox</td><td>Optional API Key</td><td>Remote headless browser rendering — screenshot, DOM analysis, outbound requests, and redirect chain report URL.</td></tr>
+            <tr><td class="mono">Shodan InternetDB</td><td>Free (Passive)</td><td>No-key passive lookup — open ports, reverse hostnames, CVE IDs, CPE strings, and tags per resolved IP.</td></tr>
+            <tr><td class="mono">Shodan Full Host Lookup</td><td>Optional API Key</td><td>Full banner-level intelligence — service fingerprints, org, ISP, and historical data merged into IP intelligence.</td></tr>
+            <tr><td class="mono">GreyNoise</td><td>Optional API Key</td><td>Internet scanner classification per resolved IP — malicious, benign, or unknown with actor and tag metadata.</td></tr>
+            <tr><td class="mono">crt.sh / CT Logs</td><td>Free (Passive)</td><td>Certificate Transparency subdomain enumeration — total cert count and 30-day issuance velocity (high rate flags fast-flux infrastructure).</td></tr>
+            <tr><td class="mono">Live TCP Port Scan</td><td>Active Probe</td><td>Direct TCP connection test across all resolved IPs for common service ports.</td></tr>
+            <tr><td class="mono">SSL/TLS Handshake</td><td>Active Probe</td><td>Certificate chain — issuer CN, hostname match, expiry, self-signed detection.</td></tr>
+            <tr><td class="mono">Live HTTP Probe</td><td>Active Probe</td><td>Full redirect chain, final status code, server header, content-type, response time (ms), and page title.</td></tr>
+            <tr><td class="mono">GeoLite2</td><td>Local DB</td><td>Offline geolocation for every resolved public IP — country, city, ASN, org.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:12px">The engine computes a composite <strong>risk score (0–100)</strong> weighted across all sources: AbuseIPDB abuse percentage, VirusTotal malicious vendor count, IPsum level-3 listing (+30 pts), GreyNoise malicious classification (+20), CT log velocity (capped at +20), SSL expiry/self-signed flags, Shodan CVE count, and SSL Labs grade (C or below). Risk levels: <strong>clean · low · suspicious · high · critical</strong>.</p>
+
+      <h3 style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber);margin:24px 0 10px;letter-spacing:.04em">// IP · DOMAIN · DNS ANALYZER</h3>
+      <p>Unified infrastructure analyzer accepting bare IPs or domains. Runs full DNS resolution (A, AAAA, MX, NS, TXT, CNAME, SOA records), DNSSEC validation, RDAP/WHOIS registration lookup, CDN fingerprinting via <strong>MurmurHash3 favicon hashing</strong>, and an SSL Labs deep TLS audit grading A–F with individual CVE checks: Heartbleed, POODLE, BEAST, FREAK, DROWN, ROBOT, Logjam, Ticketbleed. Certificate Transparency velocity scoring flags domains with &gt;10 certificates issued in 30 days as potential fast-flux or phishing kit infrastructure. The same full threat feed stack as the URL analyzer runs in parallel across all resolved IPs.</p>
+
+      <h3 style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber);margin:24px 0 10px;letter-spacing:.04em">// FILE &amp; HASH ANALYZER</h3>
+      <ul>
+        <li><strong>File Upload:</strong> Reads the raw binary, computes MD5, SHA-1, and SHA-256 hashes locally. Runs local YARA matching against compiled rule files — gracefully disabled if the YARA engine is unavailable at runtime. Automatically forwards the SHA-256 to the hash cloud lookup pipeline.</li>
+        <li><strong>Hash Lookup:</strong> Cross-references the submitted hash against <strong>MalwareBazaar</strong> and <strong>ThreatFox</strong> (both abuse.ch). A single shared abuse.ch Auth-Key covers both services as a fallback. Returns malware family, tags, file type, and first-seen metadata.</li>
+      </ul>
+
+      <h3 style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber);margin:24px 0 10px;letter-spacing:.04em">// REPORTS ENGINE</h3>
+      <p>Generates a unique per-investigation report ID for every scan and exports structured <strong>PDF</strong> (ReportLab) and <strong>DOCX</strong> (python-docx) reports containing: composite threat score, risk reason table (source → finding → weight → severity), DNS records, IP intelligence, port inventory (live + passive), TLS summary, RDAP registration, subdomain list, and full provider status matrix.</p>
+
+      <h3 style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber);margin:24px 0 10px;letter-spacing:.04em">// CACHING &amp; PRIVACY MODEL</h3>
+      <ul>
+        <li><strong>Redis-first with in-memory fallback:</strong> Scan results are cached for <strong>10 minutes</strong>. On Redis failure the app silently falls back to a process-level in-memory store — no crash, no degraded UX. Cache entries are session-scoped so different analysts' results never collide.</li>
+        <li><strong>Zero server-side key storage:</strong> All third-party API keys (VirusTotal, AbuseIPDB, Shodan, OTX, IPQS, etc.) live exclusively in the analyst's browser local storage. They travel per-request as encrypted request headers and are <strong>never written to server disk or stored in the cache</strong>.</li>
+      </ul>
+    </section>
+
+    <!-- 02 ROADMAP: v3.5 -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">02</span>
+        <h2>Roadmap · v3.5 — Next Release</h2>
+      </div>
+      <p>
+        v3.5 is currently in active development and will expand ThreatScan into a full-spectrum static malware analysis and email forensics platform. The following features are planned for this major release:
+      </p>
+
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Category</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">PE Shannon Entropy</td>
+              <td>Static Analysis</td>
+              <td>Section-level entropy scoring on PE binaries — detects packed, encrypted, or polymorphic payloads without execution. Sections above threshold (&ge; 7.0) are flagged with severity level and included in report export.</td>
+            </tr>
+            <tr>
+              <td class="mono">Archive Sandboxing</td>
+              <td>File Analysis</td>
+              <td>Automatic extraction and inspection of password-protected ZIP, RAR, and 7z archives using configurable wordlists — a delivery vector commonly bypassed by AV solutions.</td>
+            </tr>
+            <tr>
+              <td class="mono">Email Threat Analyzer</td>
+              <td>Email Forensics</td>
+              <td>Full email file parsing: SPF, DKIM, DMARC header validation; sender IP reputation via AbuseIPDB; embedded URL detonation against URLhaus and VirusTotal; attachment hash scanning with malware verdict.</td>
+            </tr>
+            <tr>
+              <td class="mono">YARA Engine</td>
+              <td>Static Analysis</td>
+              <td>Analyst-supplied YARA rule sets applied against uploaded binaries and extracted archive contents. Match results (rule name, strings, offsets) exported to the forensic report.</td>
+            </tr>
+            <tr>
+              <td class="mono">v3.5 Report Schema</td>
+              <td>Reporting</td>
+              <td>Enhanced PDF and DOCX export templates with entropy charts, YARA match tables, email forensic summaries, and multi-engine IOC verdicts in a single artefact.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <span class="cs-tag">// IN DEVELOPMENT · NOT YET RELEASED</span>
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <a href="/#projects" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to overview
+    </a>
+    <a href="/pages/soc-home-lab.html" class="btn-back">
+      next case study: SOC Home Lab →
+    </a>
+  </footer>
+
+</div>
+
+<script src="/static/loader.js?v=1.1" defer></script>
+</body>
+</html>

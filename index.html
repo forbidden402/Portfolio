@@ -9,7 +9,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=3.6" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=5.1" fetchpriority="high">
+<script>
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-anim');
+  if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  var _nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation') : [];
+  var _isReload = _nav.length > 0 ? _nav[0].type === 'reload' : (window.performance && performance.navigation && performance.navigation.type === 1);
+  if(_isReload) {
+    if(window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }
+</script>
 </head>
 <body>
 
@@ -59,7 +69,7 @@
     <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <div class="brand">forbidden<span>402</span>@soc:~$</div>
+    <a href="#" class="brand" aria-label="Go to top">forbidden<span>402</span>@soc:~$</a>
     <nav class="nav">
       <a href="#about">about</a>
       <a href="#education">education</a>
@@ -76,14 +86,19 @@
 
   <!-- HERO -->
   <section class="hero" style="border-bottom:1px solid var(--line)">
-    <div class="prompt-line">$ whoami<span class="cursor"></span></div>
-    <h1>Aspiring SOC Analyst | Blue Team &amp; Cybersecurity</h1>
-    <div class="role">Cybersecurity learner — home-lab attack simulation, endpoint &amp; network detection, threat intel tooling</div>
-    <p class="tagline">I build security tools and controlled home-lab environments to learn blue-team concepts, experiment with security data, and develop practical cybersecurity skills.</p>
+    <div class="prompt-line">
+      <span class="prompt-prefix">$ </span><span class="typing-text" id="whoami-text"></span><span class="cursor blink" id="whoami-cursor"></span>
+      <noscript><span style="color:var(--green);font-weight:600">whoami</span></noscript>
+    </div>
+    <div class="hero-body anim-reveal" id="hero-body">
+      <h1>Aspiring SOC Analyst | Blue Team &amp; Cybersecurity</h1>
+      <div class="role">Cybersecurity learner — home-lab attack simulation, endpoint &amp; network detection, threat intel tooling</div>
+      <p class="tagline">I build security tools and controlled home-lab environments to learn blue-team concepts, experiment with security data, and develop practical cybersecurity skills.</p>
+    </div>
   </section>
 
   <!-- 00 ABOUT -->
-  <section id="about">
+  <section id="about" class="anim-reveal">
     <div class="sec-head"><span class="sec-tag">00</span><h2>About Me</h2></div>
     <div class="about-card">
       <p class="about-p">I'm a cybersecurity learner focused on the <strong>blue-team side of security</strong>, with interests in SOC operations, threat intelligence, network security, endpoint security, and malware. I learn through hands-on projects by building controlled home-lab environments to explore cybersecurity concepts, work with security data, and develop practical skills. I have foundational hands-on experience with <strong>Python, Splunk/SPL, Sysmon, Wireshark, Linux, Windows, and threat-intelligence tools and platforms</strong>, along with knowledge of <strong>MITRE ATT&amp;CK, the Cyber Kill Chain, malware fundamentals, Indicators of Compromise (IoCs), network security, endpoint security, threat intelligence, and incident investigation concepts</strong>. I hold the <strong>TryHackMe SOC Level 1</strong> certification and continue developing my cybersecurity skills through personal projects, security labs, and practical experimentation.</p>
@@ -91,7 +106,7 @@
   </section>
 
   <!-- 01 EDUCATION -->
-  <section id="education">
+  <section id="education" class="anim-reveal">
     <div class="sec-head"><span class="sec-tag">01</span><h2>Education</h2></div>
     <div class="cert-row">
       <div class="cert-info">
@@ -102,7 +117,7 @@
   </section>
 
   <!-- 02 SKILLS -->
-  <section id="skills">
+  <section id="skills" class="anim-reveal">
     <div class="sec-head"><span class="sec-tag">02</span><h2>Skills &amp; Knowledge</h2></div>
     <div class="skill-grid">
       <div class="skill-cat">
@@ -136,7 +151,7 @@
   </section>
 
   <!-- 03 CERTS -->
-  <section id="certs">
+  <section id="certs" class="anim-reveal">
     <div class="sec-head"><span class="sec-tag">03</span><h2>Certifications</h2></div>
     <div class="cert-row">
       <div class="cert-info">
@@ -145,15 +160,17 @@
       </div>
       <div class="cert-actions">
         <a class="btn-cert" href="https://tryhackme.com/certificate/THM-BOBFF5XOHL" target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
           view certificate
         </a>
       </div>
     </div>
+    <p class="about-p" style="margin-top:20px; font-size:15px; color:var(--muted);">
+      Currently completing additional rooms and labs on TryHackMe to gain advanced technical knowledge in Splunk, Wazuh, Elastic, Wireshark, and other security tools.
+    </p>
   </section>
 
   <!-- 04 PROJECTS & 05 HOME LABS (SIDE BY SIDE GRID) -->
-  <section class="work-section">
+  <section class="work-section anim-reveal">
     <div class="work-grid">
 
       <!-- Column 1: Projects -->
@@ -165,40 +182,23 @@
           <div class="proj-head">
             <div class="proj-meta-row">
               <span class="proj-tag">// 01 · THREAT INTEL PLATFORM</span>
-              <span class="proj-status status-active"><span class="status-pulse"></span>ACTIVE BUILD · v3.5 IN DEV</span>
+              <span class="proj-status status-active"><span class="status-pulse"></span>LATEST BUILD · v2.1.1</span>
             </div>
             <div class="proj-title">ThreatScan</div>
-            <div class="proj-desc">A privacy-first Threat Intelligence Platform — one dashboard to query URLs, IPs, domains and files across VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar and ThreatFox, then export unified SOC reports. <strong>v3.5 is currently in development.</strong></div>
+            <div class="proj-desc">A privacy-first Threat Intelligence Platform — multi-engine correlation across URLs, IPs, domains, and files with zero-disk storage, 24h purge policy, and unified SOC report exports. v3.5 in active development.</div>
           </div>
           <div class="stack-row">
-            <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Vanilla JS/HTML/CSS</span>
-            <span class="chip">VirusTotal API</span><span class="chip">AbuseIPDB</span><span class="chip">Shodan</span>
-            <span class="chip">AlienVault OTX</span><span class="chip">YARA</span><span class="chip">URLScan.io</span>
+            <span class="chip">Python / FastAPI</span><span class="chip">VirusTotal</span>
+            <span class="chip">AbuseIPDB</span><span class="chip">Shodan</span>
+            <span class="chip">abuse.ch (ThreatFox)</span><span class="chip">AlienVault OTX</span>
+            <span class="chip">URLhaus</span><span class="chip">MalwareBazaar</span>
             <span class="chip">ReportLab (PDF/DOCX)</span>
           </div>
           <div class="proj-links">
-            <a class="btn-live" href="https://threat-intelligence-7eza.onrender.com/" target="_blank" rel="noopener">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="20 6 9 17 4 12"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              visit the site
+            <a class="btn-source" href="/pages/threatscan.html">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              case study
             </a>
-            <a class="btn-source" href="https://github.com/forbidden402/Threat-Intelligence" target="_blank" rel="noopener">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              source
-            </a>
-          </div>
-          <button class="toggle-btn" data-target="d1">
-            <span>▸ Expand build &amp; architecture spec</span>
-            <span class="btn-arrow">↗</span>
-          </button>
-          <div class="proj-detail" id="d1">
-            <h4>WHAT IT DOES</h4>
-            <p>ThreatScan is a unified TIP for SOC analysts and incident responders. It runs four analysis engines from one dashboard: a <strong>URL Analyzer</strong> for phishing/malicious link triage and dynamic URLScan.io sandbox analysis, an <strong>Infrastructure Analyzer</strong> for IP/DNS/domain perimeter checks and Shodan/AbuseIPDB intelligence, a <strong>File &amp; Hash Analyzer</strong> for uploads up to 32MB with local YARA matching, MD5/SHA256 hashing, and MalwareBazaar/ThreatFox IOC verification, and a <strong>Reports</strong> module that consolidates scan telemetry into exportable PDF/DOCX records.</p>
-            <h4>HOW I BUILT IT</h4>
-            <p>Built with a modular FastAPI backend orchestrating dedicated engines for URL inspection, infrastructure profiling, file and hash analysis, threat-feed polling (URLhaus, Feodo Tracker, OpenPhish), and automated report exports (ReportLab, python-docx). Frontend is dependency-free vanilla HTML/CSS/JS calling FastAPI endpoints with per-request header-based key delivery.</p>
-            <h4>PRIVACY / SECURITY MODEL</h4>
-            <p>Built zero-trust and ephemeral: user sessions, cached scan data, and temporary files are automatically wiped 24 hours after creation. Third-party API keys (VirusTotal, AbuseIPDB, Shodan) live strictly in the client's local storage and travel temporarily via <code>X-Api-Keys</code> request headers — never written to server disk.</p>
-            <h4>VERSIONING &amp; ROADMAP</h4>
-            <p><strong>v3.5 is currently in active development</strong> — expanding on the v2.1 baseline with upgraded intelligence feeds, deeper telemetry correlation, and automated SOC investigation summaries.</p>
           </div>
         </article>
 
@@ -217,27 +217,10 @@
             <span class="chip">SQLite</span><span class="chip">Chart.js</span><span class="chip">HTML5/CSS3</span>
           </div>
           <div class="proj-links">
-            <a class="btn-source" href="https://github.com/forbidden402/Network-Intrusion-Detection-System" target="_blank" rel="noopener">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              source
+            <a class="btn-source" href="/pages/nids.html">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              case study
             </a>
-          </div>
-          <button class="toggle-btn" data-target="d2">
-            <span>▸ Expand build &amp; architecture spec</span>
-            <span class="btn-arrow">↗</span>
-          </button>
-          <div class="proj-detail" id="d2">
-            <h4>WHAT IT DOES</h4>
-            <p>Monitors a live network segment and flags suspicious activity in real time. Ships with a live telemetry dashboard, network topology map, per-IP forensic entity profiles, threat-intel IP lookup, and CSV export for SIEM ingestion.</p>
-            <h4>THE DETECTION ENGINE</h4>
-            <ul>
-              <li><strong>Capture (L2–L3):</strong> raw frames via Scapy with optional promiscuous mode.</li>
-              <li><strong>Dissection (L4):</strong> TCP/UDP/ICMP headers parsed for port-based anomalies — stealth scans and sensitive-port access flagged here.</li>
-              <li><strong>Inspection (L7):</strong> application payload opened to extract DNS queries, HTTP URIs, ICMP content — real DPI, not just header stats.</li>
-              <li>Every IP gets its own entity profile: geolocation, ISP, abuse score, risk level, and full telemetry history.</li>
-            </ul>
-            <h4>LIMITATIONS</h4>
-            <p>Can't inspect TLS payloads without SSL-stripping, needs root for raw sockets, throughput bound by host CPU — scoped to LAN / home-lab monitoring.</p>
           </div>
         </article>
       </div>
@@ -262,47 +245,10 @@
             <span class="chip">Splunk</span><span class="chip">Wireshark</span>
           </div>
           <div class="proj-links">
-            <a class="btn-source" href="https://github.com/forbidden402/SOC-Home_lab-s" target="_blank" rel="noopener">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <a class="btn-source" href="/pages/soc-home-lab.html">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
               full lab guide
             </a>
-          </div>
-          <button class="toggle-btn" data-target="d3">
-            <span>▸ Expand attack &amp; detection walkthrough</span>
-            <span class="btn-arrow">↗</span>
-          </button>
-          <div class="proj-detail" id="d3">
-            <h4>ENVIRONMENT &amp; LAB TOPOLOGY</h4>
-            <table class="ioc-table">
-              <tr><td>Attacker VM</td><td>Kali Linux (192.168.133.142) — Python3 http.server, Metasploit Framework</td></tr>
-              <tr><td>Victim VM</td><td>Windows 10 Pro Build 19045 (192.168.133.136), VMware Workstation</td></tr>
-              <tr><td>SIEM / SOC</td><td>Splunk Enterprise on Host via Universal Forwarder (index=main)</td></tr>
-              <tr><td>Payload &amp; C2</td><td>stageless.exe (Meterpreter x64 reverse-TCP) on Port 4444</td></tr>
-              <tr><td>Delivery</td><td>HTTP GET on Port 8080 (Python http.server)</td></tr>
-            </table>
-
-            <h4>ATTACK SIMULATION</h4>
-            <p>Simulated a multi-stage adversary campaign: staged and delivered a stageless Meterpreter reverse-TCP payload over HTTP, established an active C2 session on port 4444, staged <code>mimikatz.exe</code> into <code>C:\Users\Public\</code>, executed Kiwi (<code>sekurlsa::logonpasswords</code>) to harvest NTLM credential hashes, and spawned post-exploitation command shells.</p>
-
-            <h4>DETECTION, SPLUNK HUNTING &amp; RESPONSE</h4>
-            <ul>
-              <li><strong>Wireshark (L4 Traffic):</strong> Analyzed <code>payload.pcapng</code> (TCP stream 24) capturing the HTTP binary transfer and C2 three-way handshake on port 4444.</li>
-              <li><strong>Sysmon Event ID 15 (MOTW):</strong> Edge tagged download with Mark-of-the-Web Zone.Identifier ADS (<code>ZoneId=3</code>) confirming external web delivery.</li>
-              <li><strong>Sysmon Event ID 1 (Process Lineage):</strong> Rebuilt malicious execution tree: <code>explorer.exe → stageless.exe → cmd.exe</code>.</li>
-              <li><strong>Sysmon Event ID 3 &amp; 22 (Network &amp; DNS):</strong> Correlated instant outbound callback and DNS query to <code>192.168.133.142:4444</code>.</li>
-              <li><strong>Sysmon Event ID 11 (File Creation):</strong> Flagged dropper staging secondary tool <code>mimikatz.exe</code> into <code>C:\Users\Public\</code>.</li>
-              <li><strong>Splunk Threat Hunting:</strong> Built SPL timeline queries across <code>WinEventLog:Microsoft-Windows-Sysmon/Operational</code> correlating all 15 events into a complete attack timeline.</li>
-              <li><strong>Endpoint Containment &amp; Verification:</strong> Executed live incident containment via <code>taskkill /F /IM stageless.exe</code> (PID 3836) and verified cessation of C2 beacons via Sysmon Event ID 5 (Process Terminated).</li>
-            </ul>
-
-            <h4>KEY IOCs</h4>
-            <table class="ioc-table">
-              <tr><td>SHA256</td><td>DB33E46C6ADFC98F5D834F727C087E112BBFA9CBAA805458D127387BE01E97</td></tr>
-              <tr><td>MD5</td><td>159C042FB623521A77C2C16CCC524DD8</td></tr>
-              <tr><td>Delivery URL</td><td>http://192.168.133.142:8080/stageless.exe</td></tr>
-              <tr><td>C2 Endpoint</td><td>192.168.133.142:4444 (windows/x64/meterpreter_reverse_tcp)</td></tr>
-              <tr><td>Dropped Tool</td><td>C:\Users\Public\mimikatz.exe (Kiwi credential dumper)</td></tr>
-            </table>
           </div>
         </article>
 
@@ -314,30 +260,17 @@
               <span class="proj-status status-config"><span class="status-pulse"></span>PERSONAL CONFIG</span>
             </div>
             <div class="proj-title">niri + Noctalia Dotfiles</div>
-            <div class="proj-desc">My personal Linux workstation configuration — a hardened, tiling-window-manager setup for Fedora used as my day-to-day analysis and lab-building environment.</div>
+            <div class="proj-desc">My personal Linux workstation configuration — a hardened, tiling-window-manager setup for Fedora.</div>
           </div>
           <div class="stack-row">
             <span class="chip">Fedora Linux</span><span class="chip">niri (Wayland)</span><span class="chip">Noctalia shell</span>
             <span class="chip">Ghostty</span><span class="chip">systemd-resolved</span><span class="chip">ProtonVPN / WireGuard</span>
           </div>
           <div class="proj-links">
-            <a class="btn-source" href="https://github.com/forbidden402/niri_V4_noctalia-dotfiles" target="_blank" rel="noopener">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-              source
+            <a class="btn-source" href="/pages/niri-dotfiles.html">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              configuration details
             </a>
-          </div>
-          <button class="toggle-btn" data-target="d4">
-            <span>▸ Expand configuration detail</span>
-            <span class="btn-arrow">↗</span>
-          </button>
-          <div class="proj-detail" id="d4">
-            <h4>WHAT IT IS</h4>
-            <p>Full dotfiles for Fedora running <strong>niri</strong> (scrollable-tiling Wayland compositor), <strong>Noctalia</strong> shell, <strong>Ghostty</strong> terminal, fastfetch, Bibata cursors — the environment I actually work and build labs in.</p>
-            <h4>NETWORK HARDENING</h4>
-            <ul>
-              <li><strong>DNS-over-TLS:</strong> systemd-resolved with Quad9 primary, Cloudflare fallback.</li>
-              <li><strong>ProtonVPN fix:</strong> NetworkManager dispatcher script sets MTU 1400 + 25s WireGuard keepalive on <code>proton0</code>.</li>
-            </ul>
           </div>
         </article>
       </div>
@@ -346,7 +279,7 @@
   </section>
 
   <!-- 06 CONTACT -->
-  <section id="contact" style="border-bottom:none">
+  <section id="contact" class="anim-reveal" style="border-bottom:none">
     <div class="sec-head"><span class="sec-tag">06</span><h2>Contact</h2></div>
     <div class="contact-box">
       <p>Open to SOC / blue-team opportunities and always building something in the home lab. Reach me on any of the platforms below.</p>
@@ -355,35 +288,25 @@
           <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <span>GitHub</span>
         </a>
+        <a class="contact-link contact-li" href="https://www.linkedin.com/in/manojmohan404/" target="_blank" rel="noopener">
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          <span>LinkedIn</span>
+        </a>
         <a class="contact-link contact-tg" href="https://t.me/network_error403" target="_blank" rel="noopener">
           <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
           <span>Telegram</span>
         </a>
-        <a class="contact-link contact-dc" href="https://discord.com/users/1202244509967056957" target="_blank" rel="noopener">
+        <span class="contact-link contact-dc" title="Discord: @network_error_403">
           <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.04.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.078.078 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
           <span>Discord</span>
-        </a>
+        </span>
       </div>
     </div>
   </section>
 
 </div>
 
-<!-- SPEC & DETAIL INSPECTOR MODAL -->
-<div class="modal-backdrop" id="detail-modal" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title-group">
-        <span class="modal-sec-tag">// SPEC INSPECTION</span>
-        <div class="modal-title" id="modal-title"></div>
-        <span class="modal-status" id="modal-status"></span>
-      </div>
-      <button class="modal-close" id="modal-close-btn" aria-label="Close modal">✕ ESC</button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
-
-<script src="/static/script.js" defer fetchpriority="low"></script>
+<script src="/static/loader.js?v=1.1" defer fetchpriority="low"></script>
+<script src="/static/script.js?v=2.7" defer fetchpriority="low"></script>
 </body>
 </html>

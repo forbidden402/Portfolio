@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Network Intrusion Detection System | forbidden402</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=5.1" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=1.4" fetchpriority="high">
+</head>
+<body>
+
+<!-- CYBER PAGE PRELOADER -->
+<div class="cs-loader-overlay" id="page-loader" aria-hidden="true">
+  <div class="cs-loader-box">
+    <div class="cs-loader-header">
+      <span class="cs-loader-tag">// TELEMETRY FEED · NIDS ENGINE</span>
+      <span class="cs-loader-status"><span class="status-pulse"></span>INITIALIZING</span>
+    </div>
+    <div class="cs-loader-body">
+      <div class="cs-loader-cmd"><span class="cs-prompt">$</span> load dossier --sensor network-ids</div>
+      <div class="cs-progress-track">
+        <div class="cs-progress-fill" id="loader-progress-bar"></div>
+      </div>
+      <div class="cs-loader-meta">
+        <span class="cs-loader-detail" id="loader-status-text">STATUS: 200 OK · VERIFYING INTEGRITY</span>
+        <span class="cs-loader-pct" id="loader-pct-text">100%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-wrap">
+
+  <!-- TOP NAV -->
+  <nav class="cs-nav" aria-label="Breadcrumb navigation">
+    <a href="/#projects" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to portfolio
+    </a>
+    <span class="cs-nav-tag">// PROJECT 02 · NETWORK DETECTION &amp; DPI</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="cs-meta-row">
+      <span class="cs-tag">// REAL-TIME PACKET DISSECTION &amp; DPI</span>
+      <span class="proj-status status-alpha"><span class="status-pulse"></span>ALPHA / POC</span>
+    </div>
+    <h1 class="cs-title">Network Intrusion Detection System (NIDS)</h1>
+    <p class="cs-subtitle">
+      A self-hosted, lightweight network intrusion detection system featuring multi-layer deep packet inspection, real-time SOC alerting, automated IP forensic profiling, and OSINT threat lookups. Built to monitor a home-lab segment the way a Tier-1 SOC analyst watches live sensor telemetry.
+    </p>
+    <div class="cs-actions">
+      <a class="btn-source" href="https://github.com/forbidden402/Network-Intrusion-Detection-System" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        view github repository
+      </a>
+    </div>
+  </header>
+
+  <!-- METADATA GRID -->
+  <div class="attr-grid">
+    <div class="attr-item">
+      <span class="attr-label">Language &amp; Runtime</span>
+      <span class="attr-value">Python 3.10+ / Flask</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Packet Engine</span>
+      <span class="attr-value">Scapy (L2-L7 Dissection)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Database</span>
+      <span class="attr-value">SQLite (WAL Mode)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Telemetry UI</span>
+      <span class="attr-value">Chart.js / HTML5 / CSS3</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Threat Lookups</span>
+      <span class="attr-value">AbuseIPDB &amp; IP-API Geolocation</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Target Scenarios</span>
+      <span class="attr-value">Port Scans, DNS Tunnels, HTTP Tampering</span>
+    </div>
+  </div>
+
+  <main class="cs-content">
+
+    <!-- 01 ARCHITECTURE -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">01</span>
+        <h2>Multi-Layer Detection Engine</h2>
+      </div>
+      <p>
+        The detection pipeline is organized hierarchically through the network stack:
+      </p>
+      <ul>
+        <li><strong>L2–L3 Frame Capture:</strong> Asynchronous packet sniffing powered by Scapy, binding to network interfaces with optional promiscuous mode for raw frame capture.</li>
+        <li><strong>L4 Transport Dissection:</strong> Deep parsing of TCP, UDP, and ICMP headers. Detects stealth port scans (SYN/FIN/XMAS), abnormal flag combinations, and sensitive port sweeps.</li>
+        <li><strong>L7 Deep Packet Inspection (DPI):</strong> Extracts application layer payloads: DNS query names, HTTP methods/URIs/User-Agents, and suspicious ICMP payload data.</li>
+      </ul>
+    </section>
+
+    <!-- 02 FORENSIC ENTITY PROFILES -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">02</span>
+        <h2>Forensic Entity Profiles &amp; SOC Dashboard</h2>
+      </div>
+      <p>
+        Every internal and external IP address communicating on the wire is assigned a dedicated forensic entity profile. The system aggregates packet volume, conversation pairs, geolocation coordinates, ISP ownership, and AbuseIPDB reputation scores to compute an immediate threat score.
+      </p>
+      <div class="callout">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Technical Design &amp; Scope
+        </div>
+        <p>
+          The engine is specifically optimized for home-lab and small subnet monitoring. Encrypted TLS traffic is analyzed through metadata (SNI, certificates, traffic flow patterns) without requiring invasive SSL interception.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <a href="/#projects" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to overview
+    </a>
+    <a href="/pages/niri-dotfiles.html" class="btn-back">
+      next case study: niri Dotfiles →
+    </a>
+  </footer>
+
+</div>
+
+<script src="/static/loader.js?v=1.1" defer></script>
+</body>
+</html>

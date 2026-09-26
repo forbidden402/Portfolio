@@ -1,4 +1,20 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Backup and temp files
 *.bak
+backups/
+
+# Environments
 venv/
+env/
+.env
+
+# Testing & IDE
 .pytest_cache/
+.vscode/
+.DS_Store
+*.zip

@@ -1,66 +1,109 @@
 (function() {
+  'use strict';
 
-  /* ── MODAL LOGIC ─────────────────────────────────────── */
-  const modal       = document.getElementById('detail-modal');
-  const modalTitle  = document.getElementById('modal-title');
-  const modalStatus = document.getElementById('modal-status');
-  const modalBody   = document.getElementById('modal-body');
-  const closeBtn    = document.getElementById('modal-close-btn');
-
-  let activeTrigger = null;
-
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    if (activeTrigger) { activeTrigger.focus(); activeTrigger = null; }
+  /* ── 00. SCROLL RESTORATION & RELOAD HANDLING ────────── */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
   }
 
-  function openModal(btn) {
-    const card = btn.closest('.proj');
-    if (!card) return;
-    const targetContent = document.getElementById(btn.getAttribute('data-target'));
-    if (!targetContent) return;
+  const navEntries = window.performance && performance.getEntriesByType ? performance.getEntriesByType('navigation') : [];
+  const isReload = navEntries.length > 0 ? navEntries[0].type === 'reload' : (window.performance && performance.navigation && performance.navigation.type === 1);
 
-    const titleEl  = card.querySelector('.proj-title');
-    const statusEl = card.querySelector('.proj-status');
+  if (isReload) {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  }
 
-    if (modalTitle)  modalTitle.textContent = titleEl ? titleEl.textContent : '';
-    if (modalStatus) {
-      if (statusEl) {
-        modalStatus.textContent   = statusEl.textContent;
-        modalStatus.style.display = 'inline-block';
+  /* ── 01. TYPEWRITER & SEQUENTIAL CASCADE ─────────────── */
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const whoamiEl = document.getElementById('whoami-text');
+  const cursorEl = document.getElementById('whoami-cursor');
+  const commandText = 'whoami';
+
+  const revealSections = [
+    document.getElementById('hero-body'),
+    document.getElementById('about'),
+    document.getElementById('education'),
+    document.getElementById('skills'),
+    document.getElementById('certs'),
+    document.querySelector('.work-section'),
+    document.getElementById('contact')
+  ].filter(Boolean);
+
+  let cascadeStarted = false;
+
+  function revealAllImmediately() {
+    cascadeStarted = true;
+    revealSections.forEach(function(el) {
+      el.classList.add('is-visible');
+    });
+    // Remove js-anim immediately so DOM is 100% native with zero transform or GPU layer overhead
+    document.documentElement.classList.remove('js-anim');
+  }
+
+  function startWebsiteCascade() {
+    if (cascadeStarted) return;
+    cascadeStarted = true;
+
+    // Stagger-reveal each section smoothly down the page
+    const staggerStep = 90;
+    revealSections.forEach(function(el, idx) {
+      setTimeout(function() {
+        el.classList.add('is-visible');
+      }, idx * staggerStep);
+    });
+
+    // Once all sections are revealed, cleanly remove js-anim to free compositor memory
+    const totalDuration = (revealSections.length * staggerStep) + 500;
+    setTimeout(function() {
+      document.documentElement.classList.remove('js-anim');
+    }, totalDuration);
+  }
+
+  // Fast-scroll trigger: if visitor scrolls at all, immediately reveal and release DOM
+  function handleEarlyScroll() {
+    if (window.scrollY > 10) {
+      revealAllImmediately();
+      window.removeEventListener('scroll', handleEarlyScroll);
+    }
+  }
+  window.addEventListener('scroll', handleEarlyScroll, { passive: true });
+
+  // Safety net: ensure everything is visible even if background tab throttled
+  setTimeout(revealAllImmediately, 2200);
+
+  // Check if visitor arrived via anchor hash or already scrolled (ignore if reloading)
+  const isScrolledOrAnchored = !isReload && Boolean(window.location.hash || window.scrollY > 20);
+
+  if (prefersReducedMotion || isScrolledOrAnchored) {
+    if (whoamiEl) whoamiEl.textContent = commandText;
+    revealAllImmediately();
+  } else if (whoamiEl) {
+    whoamiEl.textContent = '';
+    if (cursorEl) cursorEl.classList.remove('blink');
+
+    let charIdx = 0;
+    function typeNextChar() {
+      if (charIdx < commandText.length) {
+        whoamiEl.textContent += commandText.charAt(charIdx);
+        charIdx++;
+        const delay = Math.floor(Math.random() * 20) + 55;
+        setTimeout(typeNextChar, delay);
       } else {
-        modalStatus.style.display = 'none';
+        if (cursorEl) cursorEl.classList.add('blink');
+        setTimeout(startWebsiteCascade, 160);
       }
     }
-    if (modalBody) { modalBody.innerHTML = targetContent.innerHTML; modalBody.scrollTop = 0; }
 
-    activeTrigger = btn;
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    if (closeBtn) closeBtn.focus();
+    setTimeout(typeNextChar, 160);
+  } else {
+    revealAllImmediately();
   }
 
-  document.querySelectorAll('.toggle-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) { e.preventDefault(); openModal(btn); });
-  });
 
-  if (closeBtn) closeBtn.addEventListener('click', function(e) { e.preventDefault(); closeModal(); });
-
-  if (modal) modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      if (modal && modal.classList.contains('active')) closeModal();
-      else closeSidebar();
-    }
-  });
-
-
-  /* ── SIDEBAR / HAMBURGER LOGIC ───────────────────────── */
+  /* ── 02. SIDEBAR / HAMBURGER LOGIC ───────────────────── */
   const sidebar        = document.getElementById('sidebar');
   const overlay        = document.getElementById('sidebar-overlay');
   const hamburgerBtn   = document.getElementById('hamburger-btn');
@@ -110,5 +153,54 @@
       link.addEventListener('click', closeSidebar);
     });
   }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeSidebar();
+    }
+  });
+
+
+  /* ── 03. SMOOTH ANCHOR SCROLLING (OFFSET FOR FIXED TOPBAR) ── */
+  const brandLink = document.querySelector('.brand');
+  if (brandLink) {
+    brandLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeSidebar();
+      revealAllImmediately();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    });
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      const hash = this.getAttribute('href');
+      if (!hash || hash === '#') return;
+      const targetEl = document.querySelector(hash);
+      if (targetEl) {
+        e.preventDefault();
+        revealAllImmediately();
+        const topbarEl = document.querySelector('.topbar');
+        const topbarHeight = topbarEl ? topbarEl.getBoundingClientRect().height : 52;
+        const targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: Math.max(0, targetPos - topbarHeight - 10),
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  window.addEventListener('beforeunload', function() {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  });
 
 })();
