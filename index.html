@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=3.3" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=3.4" fetchpriority="high">
 </head>
 <body>
 
@@ -77,7 +77,7 @@
   <!-- HERO -->
   <section class="hero" style="border-bottom:1px solid var(--line)">
     <div class="prompt-line">$ whoami<span class="cursor"></span></div>
-    <h1>SOC Analyst / Blue Team &amp; Threat Intel</h1>
+    <h1>Aspiring SOC Analyst | Blue Team &amp; Threat Intelligence</h1>
     <div class="role">Cybersecurity learner — home-lab attack simulation, endpoint &amp; network detection, threat intel tooling</div>
     <p class="tagline">I build security tools and controlled home-lab environments to learn blue-team concepts, experiment with security data, and develop practical cybersecurity skills.</p>
   </section>
@@ -194,7 +194,7 @@
             <h4>WHAT IT DOES</h4>
             <p>ThreatScan is a unified TIP for SOC analysts and incident responders. It runs four analysis engines from one dashboard: a <strong>URL Analyzer</strong> for phishing/malicious link triage and dynamic URLScan.io sandbox analysis, an <strong>Infrastructure Analyzer</strong> for IP/DNS/domain perimeter checks and Shodan/AbuseIPDB intelligence, a <strong>File &amp; Hash Analyzer</strong> for uploads up to 32MB with local YARA matching, MD5/SHA256 hashing, and MalwareBazaar/ThreatFox IOC verification, and a <strong>Reports</strong> module that consolidates scan telemetry into exportable PDF/DOCX records.</p>
             <h4>HOW I BUILT IT</h4>
-            <p>Backend is FastAPI split into modular engine routers: <code>file_analyzer/</code>, <code>ip_dns_domain_analyzer/</code>, <code>url_analyzer/</code>, plus shared <code>core/</code>, <code>auth/</code>, <code>threat_feeds/</code> (URLhaus, Feodo Tracker, OpenPhish) and <code>reports/</code> (ReportLab, python-docx). Frontend is dependency-free vanilla HTML/CSS/JS calling FastAPI endpoints with per-request header-based key delivery.</p>
+            <p>Built with a modular FastAPI backend orchestrating dedicated engines for URL inspection, infrastructure profiling, file and hash analysis, threat-feed polling (URLhaus, Feodo Tracker, OpenPhish), and automated report exports (ReportLab, python-docx). Frontend is dependency-free vanilla HTML/CSS/JS calling FastAPI endpoints with per-request header-based key delivery.</p>
             <h4>PRIVACY / SECURITY MODEL</h4>
             <p>Built zero-trust and ephemeral: user sessions, cached scan data, and temporary files are automatically wiped 24 hours after creation. Third-party API keys (VirusTotal, AbuseIPDB, Shodan) live strictly in the client's local storage and travel temporarily via <code>X-Api-Keys</code> request headers — never written to server disk.</p>
             <h4>VERSIONING &amp; ROADMAP</h4>
@@ -305,7 +305,7 @@
               <span class="proj-tag">// LAB 02 · WORKSTATION HARDENING</span>
               <span class="proj-status status-config"><span class="status-pulse"></span>PERSONAL CONFIG</span>
             </div>
-            <div class="proj-title">niri + Noctalia Dotfiles &amp; Fedora config</div>
+            <div class="proj-title">niri + Noctalia Dotfiles</div>
             <div class="proj-desc">My personal Linux workstation configuration — a hardened, tiling-window-manager setup for Fedora used as my day-to-day analysis and lab-building environment.</div>
           </div>
           <div class="stack-row">
