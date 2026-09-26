@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=3.2" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=3.3" fetchpriority="high">
 </head>
 <body>
 
@@ -165,19 +165,20 @@
           <div class="proj-head">
             <div class="proj-meta-row">
               <span class="proj-tag">// 01 · THREAT INTEL PLATFORM</span>
-              <span class="proj-status status-active"><span class="status-pulse"></span>ACTIVE BUILD</span>
+              <span class="proj-status status-active"><span class="status-pulse"></span>ACTIVE BUILD · v3.5 IN DEV</span>
             </div>
             <div class="proj-title">ThreatScan</div>
-            <div class="proj-desc">A privacy-first Threat Intelligence Platform — one dashboard to query URLs, IPs, domains and files across VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar and ThreatFox, then export unified SOC reports.</div>
+            <div class="proj-desc">A privacy-first Threat Intelligence Platform — one dashboard to query URLs, IPs, domains and files across VirusTotal, AbuseIPDB, Shodan, OTX, MalwareBazaar and ThreatFox, then export unified SOC reports. <strong>v3.5 is currently in development.</strong></div>
           </div>
           <div class="stack-row">
             <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Vanilla JS/HTML/CSS</span>
             <span class="chip">VirusTotal API</span><span class="chip">AbuseIPDB</span><span class="chip">Shodan</span>
-            <span class="chip">OTX</span><span class="chip">YARA</span><span class="chip">PE parsing</span>
+            <span class="chip">AlienVault OTX</span><span class="chip">YARA</span><span class="chip">URLScan.io</span>
+            <span class="chip">ReportLab (PDF/DOCX)</span>
           </div>
           <div class="proj-links">
             <a class="btn-live" href="https://threat-intelligence-7eza.onrender.com/" target="_blank" rel="noopener">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="20 6 9 17 4 12"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               visit the site
             </a>
             <a class="btn-source" href="https://github.com/forbidden402/Threat-Intelligence" target="_blank" rel="noopener">
@@ -191,11 +192,13 @@
           </button>
           <div class="proj-detail" id="d1">
             <h4>WHAT IT DOES</h4>
-            <p>ThreatScan is a unified TIP for SOC analysts and incident responders. It runs four analysis engines from one dashboard: a <strong>URL Analyzer</strong> for phishing/malicious link triage, an <strong>Infrastructure Analyzer</strong> for IP/DNS/domain perimeter checks, a <strong>File &amp; Hash Analyzer</strong> for uploads up to 32MB or hash lookups, and a <strong>Reports</strong> module that consolidates every scan into exportable PDF/DOCX records.</p>
+            <p>ThreatScan is a unified TIP for SOC analysts and incident responders. It runs four analysis engines from one dashboard: a <strong>URL Analyzer</strong> for phishing/malicious link triage and dynamic URLScan.io sandbox analysis, an <strong>Infrastructure Analyzer</strong> for IP/DNS/domain perimeter checks and Shodan/AbuseIPDB intelligence, a <strong>File &amp; Hash Analyzer</strong> for uploads up to 32MB with local YARA matching, MD5/SHA256 hashing, and MalwareBazaar/ThreatFox IOC verification, and a <strong>Reports</strong> module that consolidates scan telemetry into exportable PDF/DOCX records.</p>
             <h4>HOW I BUILT IT</h4>
-            <p>Backend is FastAPI split into engine-specific routers: <code>file_analyzer/</code>, <code>ip_dns_domain_analyzer/</code>, <code>url_analyzer/</code>, plus shared <code>core/</code>, <code>auth/</code>, <code>threat_feeds/</code> and <code>reports/</code> modules. Frontend is dependency-free plain HTML/CSS/JS calling the FastAPI backend directly.</p>
+            <p>Backend is FastAPI split into modular engine routers: <code>file_analyzer/</code>, <code>ip_dns_domain_analyzer/</code>, <code>url_analyzer/</code>, plus shared <code>core/</code>, <code>auth/</code>, <code>threat_feeds/</code> (URLhaus, Feodo Tracker, OpenPhish) and <code>reports/</code> (ReportLab, python-docx). Frontend is dependency-free vanilla HTML/CSS/JS calling FastAPI endpoints with per-request header-based key delivery.</p>
             <h4>PRIVACY / SECURITY MODEL</h4>
-            <p>Built zero-trust and ephemeral: sessions, cached scan data and temp files are wiped 24 hours after creation. Third-party API keys live only in the browser's local storage — never written to server disk.</p>
+            <p>Built zero-trust and ephemeral: user sessions, cached scan data, and temporary files are automatically wiped 24 hours after creation. Third-party API keys (VirusTotal, AbuseIPDB, Shodan) live strictly in the client's local storage and travel temporarily via <code>X-Api-Keys</code> request headers — never written to server disk.</p>
+            <h4>VERSIONING &amp; ROADMAP</h4>
+            <p><strong>v3.5 is currently in active development</strong> — expanding on the v2.1 baseline with upgraded intelligence feeds, deeper telemetry correlation, and automated SOC investigation summaries.</p>
           </div>
         </article>
 
