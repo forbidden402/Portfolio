@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/static/style.css?v=2.2">
+<link rel="stylesheet" href="/static/style.css?v=2.3">
 </head>
 <body>
 
@@ -17,8 +17,11 @@
 <!-- SIDEBAR DRAWER (mobile) -->
 <nav class="sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
   <div class="sidebar-header">
+    <button class="sidebar-close" id="sidebar-close" aria-label="Go back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>back</span>
+    </button>
     <span class="sidebar-sec-label">// NAVIGATION</span>
-    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">✕</button>
   </div>
   <div class="sidebar-nav">
     <a href="#about" class="sidebar-link">
@@ -111,7 +114,7 @@
     <div class="sec-head"><span class="sec-tag">02</span><h2>Certifications</h2></div>
     <div class="cert-row">
       <div class="cert-info">
-        <div class="cname"><a href="https://tryhackme.com/certificate/THM-BOBFF5XOHL" target="_blank" rel="noopener">TryHackMe — SOC Level 1 Path</a></div>
+        <div class="cname">TryHackMe — SOC Level 1 Path</div>
         <div class="cdesc">Covers log analysis, SIEM fundamentals, phishing triage, and network/endpoint monitoring for a Tier-1 SOC analyst role.</div>
       </div>
       <div class="cert-actions">

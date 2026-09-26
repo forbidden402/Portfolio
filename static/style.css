@@ -174,18 +174,26 @@ a:hover{text-decoration:underline}
   letter-spacing:.08em;
 }
 .sidebar-close{
-  background:none;
-  border:1px solid var(--line);
+  background:rgba(232,163,61,.08);
+  border:1px solid rgba(232,163,61,.3);
   border-radius:4px;
-  color:var(--muted);
-  font-size:13px;
-  padding:5px 9px;
+  color:var(--amber);
+  font-size:12px;
+  font-weight:500;
+  padding:5px 10px;
   cursor:pointer;
-  font-family:'IBM Plex Mono';
+  font-family:'IBM Plex Mono',monospace;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
   transition:all .15s ease;
   line-height:1;
 }
-.sidebar-close:hover{color:var(--amber);border-color:var(--amber)}
+.sidebar-close:hover{
+  background:var(--amber);
+  color:#0a0e13;
+  border-color:var(--amber);
+}
 .sidebar-nav{
   flex:1;
   padding:12px 0;
@@ -742,22 +750,24 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .contact-box{
   border:1px solid var(--line);
   border-radius:6px;
-  padding:24px 28px;
-  text-align:left;
+  padding:28px 28px;
+  text-align:center;
   background:var(--panel);
 }
 .contact-box p{
   color:var(--muted);
-  margin-bottom:18px;
+  margin:0 auto 18px;
   max-width:600px;
   font-size:15px;
   line-height:1.65;
+  text-align:center;
 }
 .contact-links{
   display:flex;
   flex-direction:row;
   align-items:center;
-  gap:24px;
+  justify-content:center;
+  gap:28px;
   flex-wrap:nowrap;
 }
 .contact-link{
@@ -955,19 +965,22 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   .btn-icon{ width:12px !important; height:12px !important }
   .toggle-btn{ padding:8px 14px !important; font-size:10.5px !important; min-height:32px !important }
 
-  /* --- CONTACT BOX: SOCIAL MEDIA LINKS IN SAME LINE, NO BOXES --- */
+  /* --- CONTACT BOX: SOCIAL MEDIA LINKS IN SAME LINE, NO BOXES, IN MIDDLE --- */
   .contact-box{
-    padding:14px 14px !important;
+    padding:16px 14px !important;
     border-radius:5px !important;
+    text-align:center !important;
   }
   .contact-box p{
     font-size:13px !important;
-    margin-bottom:12px !important;
+    margin:0 auto 12px !important;
+    text-align:center !important;
   }
   .contact-links{
     display:flex !important;
     flex-direction:row !important;
     align-items:center !important;
+    justify-content:center !important;
     gap:18px !important;
     flex-wrap:nowrap !important;
   }
