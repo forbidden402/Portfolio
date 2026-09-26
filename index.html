@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=3.5" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=3.6" fetchpriority="high">
 </head>
 <body>
 
@@ -272,28 +272,36 @@
             <span class="btn-arrow">↗</span>
           </button>
           <div class="proj-detail" id="d3">
-            <h4>ENVIRONMENT</h4>
+            <h4>ENVIRONMENT &amp; LAB TOPOLOGY</h4>
             <table class="ioc-table">
-              <tr><td>Attacker</td><td>Kali Linux — Python3 http.server, Metasploit v6.5.3-dev</td></tr>
-              <tr><td>Victim</td><td>Windows 10 Pro Build 19045, VMware Virtual Platform</td></tr>
-              <tr><td>Payload</td><td>stageless.exe — x64 Meterpreter reverse-TCP, stageless</td></tr>
-              <tr><td>C2 port</td><td>4444 (windows/x64/meterpreter_reverse_tcp)</td></tr>
-              <tr><td>Delivery port</td><td>8080 (Python http.server)</td></tr>
+              <tr><td>Attacker VM</td><td>Kali Linux (192.168.133.142) — Python3 http.server, Metasploit Framework</td></tr>
+              <tr><td>Victim VM</td><td>Windows 10 Pro Build 19045 (192.168.133.136), VMware Workstation</td></tr>
+              <tr><td>SIEM / SOC</td><td>Splunk Enterprise on Host via Universal Forwarder (index=main)</td></tr>
+              <tr><td>Payload &amp; C2</td><td>stageless.exe (Meterpreter x64 reverse-TCP) on Port 4444</td></tr>
+              <tr><td>Delivery</td><td>HTTP GET on Port 8080 (Python http.server)</td></tr>
             </table>
-            <h4>DETECTION — HOW I FOUND IT</h4>
+
+            <h4>ATTACK SIMULATION</h4>
+            <p>Simulated a multi-stage adversary campaign: staged and delivered a stageless Meterpreter reverse-TCP payload over HTTP, established an active C2 session on port 4444, staged <code>mimikatz.exe</code> into <code>C:\Users\Public\</code>, executed Kiwi (<code>sekurlsa::logonpasswords</code>) to harvest NTLM credential hashes, and spawned post-exploitation command shells.</p>
+
+            <h4>DETECTION, SPLUNK HUNTING &amp; RESPONSE</h4>
             <ul>
-              <li><strong>Sysmon Event ID 15</strong> — Edge tagged the download with Zone.Identifier ADS, ZoneId=3.</li>
-              <li><strong>Sysmon Event ID 1</strong> — rebuilt process tree: <code>explorer.exe → stageless.exe → cmd.exe</code>.</li>
-              <li><strong>Sysmon Event ID 3/22</strong> — confirmed reverse-TCP callback to Kali IP on port 4444.</li>
-              <li><strong>Sysmon Event ID 11</strong> — caught <code>stageless.exe</code> writing <code>mimikatz.exe</code> into <code>C:\Users\Public</code>.</li>
-              <li><strong>VirusTotal</strong> — flagged by 45/71 vendors.</li>
+              <li><strong>Wireshark (L4 Traffic):</strong> Analyzed <code>payload.pcapng</code> (TCP stream 24) capturing the HTTP binary transfer and C2 three-way handshake on port 4444.</li>
+              <li><strong>Sysmon Event ID 15 (MOTW):</strong> Edge tagged download with Mark-of-the-Web Zone.Identifier ADS (<code>ZoneId=3</code>) confirming external web delivery.</li>
+              <li><strong>Sysmon Event ID 1 (Process Lineage):</strong> Rebuilt malicious execution tree: <code>explorer.exe → stageless.exe → cmd.exe</code>.</li>
+              <li><strong>Sysmon Event ID 3 &amp; 22 (Network &amp; DNS):</strong> Correlated instant outbound callback and DNS query to <code>192.168.133.142:4444</code>.</li>
+              <li><strong>Sysmon Event ID 11 (File Creation):</strong> Flagged dropper staging secondary tool <code>mimikatz.exe</code> into <code>C:\Users\Public\</code>.</li>
+              <li><strong>Splunk Threat Hunting:</strong> Built SPL timeline queries across <code>WinEventLog:Microsoft-Windows-Sysmon/Operational</code> correlating all 15 events into a complete attack timeline.</li>
+              <li><strong>Endpoint Containment &amp; Verification:</strong> Executed live incident containment via <code>taskkill /F /IM stageless.exe</code> (PID 3836) and verified cessation of C2 beacons via Sysmon Event ID 5 (Process Terminated).</li>
             </ul>
+
             <h4>KEY IOCs</h4>
             <table class="ioc-table">
               <tr><td>SHA256</td><td>DB33E46C6ADFC98F5D834F727C087E112BBFA9CBAA805458D127387BE01E97</td></tr>
+              <tr><td>MD5</td><td>159C042FB623521A77C2C16CCC524DD8</td></tr>
               <tr><td>Delivery URL</td><td>http://192.168.133.142:8080/stageless.exe</td></tr>
-              <tr><td>C2</td><td>192.168.133.142:4444</td></tr>
-              <tr><td>Dropped tool</td><td>C:\Users\Public\mimikatz.exe</td></tr>
+              <tr><td>C2 Endpoint</td><td>192.168.133.142:4444 (windows/x64/meterpreter_reverse_tcp)</td></tr>
+              <tr><td>Dropped Tool</td><td>C:\Users\Public\mimikatz.exe (Kiwi credential dumper)</td></tr>
             </table>
           </div>
         </article>
