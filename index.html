@@ -11,6 +11,40 @@
 </head>
 <body>
 
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+<!-- SIDEBAR DRAWER (mobile) -->
+<nav class="sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
+  <div class="sidebar-header">
+    <div class="brand">forbidden<span>402</span>@soc:~$</div>
+    <button class="sidebar-close" id="sidebar-close" aria-label="Close menu">✕</button>
+  </div>
+  <div class="sidebar-nav">
+    <a href="#about" class="sidebar-link">
+      <span class="sidebar-num">00</span>about
+    </a>
+    <a href="#skills" class="sidebar-link">
+      <span class="sidebar-num">01</span>skills
+    </a>
+    <a href="#certs" class="sidebar-link">
+      <span class="sidebar-num">02</span>certs
+    </a>
+    <a href="#projects" class="sidebar-link">
+      <span class="sidebar-num">03</span>projects
+    </a>
+    <a href="#homelabs" class="sidebar-link">
+      <span class="sidebar-num">04</span>home labs
+    </a>
+    <a href="#contact" class="sidebar-link">
+      <span class="sidebar-num">05</span>contact
+    </a>
+  </div>
+  <div class="sidebar-footer">
+    <span class="sidebar-hint">$ navigate --section</span>
+  </div>
+</nav>
+
 <div class="topbar">
   <div class="topbar-in">
     <div class="brand">forbidden<span>402</span>@soc:~$</div>
@@ -22,6 +56,10 @@
       <a href="#homelabs">home labs</a>
       <a href="#contact">contact</a>
     </nav>
+    <!-- Hamburger button — only visible on mobile -->
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </div>
 
