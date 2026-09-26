@@ -13,6 +13,10 @@ app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), na
 async def index():
     return FileResponse(os.path.join(BASE_DIR, "index.html"))
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse(os.path.join(BASE_DIR, "static", "favicon.svg"), media_type="image/svg+xml")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
