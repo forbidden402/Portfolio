@@ -236,7 +236,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 
 /* SKILLS 4-COL FULL WIDTH — UNIFORM BOX SIZE */
 .skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.skill-cat{background:var(--panel);padding:22px 24px;min-height:180px;display:flex;flex-direction:column}
+.skill-cat{background:var(--panel);padding:22px 24px;min-height:160px;display:flex;flex-direction:column}
 .skill-cat h3{font-family:'IBM Plex Mono';font-size:13px;color:var(--amber);margin-bottom:12px}
 .skill-cat ul{list-style:none;font-size:14px;color:var(--text);flex:1}
 .skill-cat li{padding:4px 0;color:var(--muted)}
@@ -684,7 +684,7 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 /* CONTACT — UNIFORM BOX SIZE */
 .contact-box{border:1px solid var(--line);border-radius:6px;padding:32px;text-align:left;background:var(--panel)}
 .contact-box p{color:var(--muted);margin-bottom:24px;max-width:100%;font-size:15px}
-.contact-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.contact-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 .contact-btn{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:18px 24px;min-height:86px;line-height:1.4;background:var(--panel2);border:1px solid var(--line);border-radius:4px;transition:border-color .15s ease}
 .contact-btn:hover{border-color:var(--amber)}
 .contact-icon-row{display:flex;align-items:center;gap:8px}
@@ -696,206 +696,158 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .contact-handle{font-size:13px;color:var(--text);font-family:'IBM Plex Mono'}
 .contact-btn:hover .contact-handle{color:var(--amber)}
 
-/* ============================================================
-   RESPONSIVE DESIGN (SMALLER & BIGGER SCREENS)
-   ============================================================ */
+/* ================================================================
+   RESPONSIVE DESIGN — SMALL / MEDIUM / LARGE / 4K
+   ================================================================ */
 
-/* TABLETS (<= 1024px) */
+/* ── TABLETS (≤ 1024px) ──────────────────────────── */
 @media(max-width:1024px){
-  .skill-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-  .skill-cat{
-    min-height:auto;
-  }
+  .skill-grid{ grid-template-columns:repeat(2,1fr) }
+  .skill-cat{ min-height:auto }
 }
 
-/* TABLETS & MEDIUM SCREENS (<= 960px) */
+/* ── MEDIUM / TABLET LANDSCAPE (≤ 960px) ─────────── */
 @media(max-width:960px){
-  .work-grid{
-    grid-template-columns:1fr;
-    gap:28px;
-  }
-  .proj{
-    min-height:auto;
-  }
-  .proj-head{
-    min-height:auto;
-  }
-  .proj-desc{
-    min-height:auto;
-  }
-  .stack-row{
-    min-height:auto;
-  }
-  .proj-links{
-    min-height:auto;
-  }
+  .work-grid{ grid-template-columns:1fr; gap:24px }
+  /* Kill all fixed min-heights so cards fit their content */
+  .proj,.proj-head,.proj-desc,.stack-row,.proj-links{ min-height:0 }
 }
 
-/* MOBILE PHONES & COMPACT SCREENS (<= 768px) */
+/* ── MOBILE (≤ 768px) ────────────────────────────── */
 @media(max-width:768px){
-  html{ scroll-padding-top:52px }
 
-  /* Compact single-row topbar with hamburger on left */
+  /* --- TOPBAR: single compact row, hamburger left, brand right --- */
+  html{ scroll-padding-top:48px }
   .topbar-in{
     flex-direction:row;
     align-items:center;
     justify-content:space-between;
-    padding:9px 14px;
+    padding:8px 14px;
     gap:0;
+    height:44px;          /* fixed topbar height — nothing overlaps body */
   }
   .nav{ display:none }
   .hamburger{ display:flex }
-  .brand{ font-size:13px }
+  .brand{ font-size:12.5px; white-space:nowrap }
 
-  /* Tighter section spacing */
-  section{ padding:22px 0 }
-  .work-section{ padding:22px 0 }
-  .sec-head{ margin-bottom:12px }
-  h2{ font-size:16px }
+  /* --- WRAP padding --- */
+  .wrap{ padding:0 14px }
 
-  /* Hero — very compact */
-  .hero{ padding:22px 0 16px }
-  h1{ font-size:clamp(19px,5vw,26px); margin-bottom:6px }
-  .role{ font-size:13px; margin-bottom:10px }
-  .tagline{ font-size:13px; line-height:1.55; margin-bottom:14px }
+  /* --- SECTION spacing --- */
+  section{ padding:24px 0 }
+  .work-section{ padding:24px 0 }
+  .sec-head{ margin-bottom:14px }
+  h2{ font-size:17px }
+  .sec-tag{ font-size:11px }
+
+  /* --- HERO --- */
+  .hero{ padding:24px 0 18px }
+  h1{ font-size:clamp(20px,5.5vw,28px); margin-bottom:8px; line-height:1.2 }
+  .role{ font-size:13.5px; margin-bottom:10px }
+  .tagline{ font-size:13.5px; line-height:1.6; margin-bottom:16px }
   .prompt-line{ font-size:13px; margin-bottom:10px }
 
-  /* About */
-  .about-card{ padding:14px 13px; border-radius:4px }
-  .about-p{ font-size:13px; margin-bottom:8px; line-height:1.6 }
+  /* --- ABOUT --- */
+  .about-card{ padding:16px 14px }
+  .about-p{ font-size:13.5px; margin-bottom:10px; line-height:1.65 }
 
-  /* ── SKILLS — 2-col compact grid ── */
-  .skill-grid{
-    grid-template-columns:1fr 1fr;
-    gap:1px;
-    border-radius:4px;
-  }
-  .skill-cat{
-    min-height:auto;
-    padding:12px 12px;
-  }
-  .skill-cat h3{
-    font-size:10.5px;
-    letter-spacing:.06em;
-    margin-bottom:7px;
-  }
-  .skill-cat ul{ font-size:12px }
-  .skill-cat li{
-    padding:2px 0;
-    font-size:12px;
-    color:var(--muted);
-  }
-  .skill-cat li::before{ content:"▸ "; font-size:10px }
+  /* --- SKILLS: 2-col compact --- */
+  .skill-grid{ grid-template-columns:1fr 1fr }
+  .skill-cat{ min-height:auto; padding:14px 14px }
+  .skill-cat h3{ font-size:11px; margin-bottom:8px }
+  .skill-cat li{ font-size:12px; padding:3px 0 }
 
-  /* Certs */
+  /* --- CERTS --- */
   .cert-row{
-    padding:11px 12px;
+    padding:12px 14px;
     flex-direction:column;
     align-items:flex-start;
     gap:8px;
-    border-radius:4px;
   }
   .cert-row .cname{ font-size:14px }
-  .cert-row .cdesc{ font-size:12px; margin-top:2px }
-  .badge{ font-size:10px; padding:3px 8px }
+  .cert-row .cdesc{ font-size:12.5px }
 
-  /* Project cards — compact */
+  /* --- PROJECT CARDS --- */
   .proj{
-    min-height:auto;
-    margin-bottom:12px;
-    border-radius:4px;
+    min-height:0;
+    margin-bottom:14px;
+    /* Disable hover lift on touch — prevents layout jump */
+    transition:border-color .2s ease, box-shadow .2s ease;
   }
-  .proj-meta-row{ gap:5px; flex-wrap:wrap; margin-bottom:7px }
-  .proj-tag{ font-size:9.5px }
-  .proj-status{ font-size:9px; padding:2px 6px; gap:4px }
-  .status-pulse{ width:5px; height:5px }
-  .proj-head{ min-height:auto; padding:12px 12px 8px }
-  .proj-title{ font-size:14px; margin-bottom:5px }
-  .proj-desc{ min-height:auto; font-size:12.5px; line-height:1.5 }
-  .stack-row{ min-height:auto; padding:0 12px 10px; gap:4px }
-  .chip{ font-size:9.5px; padding:2px 5px }
-  .proj-links{ min-height:auto; padding:0 12px 10px; gap:6px }
-  .btn-live,.btn-source{
-    font-size:11px; padding:5px 9px; gap:4px
-  }
-  .btn-icon{ width:12px; height:12px }
-  .toggle-btn{ padding:9px 12px; font-size:10.5px; min-height:34px }
+  .proj:hover{ transform:none }
+  .proj-meta-row{ gap:6px; flex-wrap:wrap; margin-bottom:8px }
+  .proj-tag{ font-size:10px }
+  .proj-status{ font-size:9.5px; padding:2px 7px }
+  .proj-head{ min-height:0; padding:14px 14px 10px }
+  .proj-title{ font-size:14.5px; margin-bottom:6px }
+  .proj-desc{ min-height:0; font-size:13px; line-height:1.55 }
+  .stack-row{ min-height:0; padding:0 14px 12px; gap:5px }
+  .chip{ font-size:10px; padding:2px 6px }
+  .proj-links{ min-height:0; padding:0 14px 12px; gap:6px; flex-wrap:wrap }
+  .btn-live,.btn-source{ font-size:11.5px; padding:5px 10px; gap:5px }
+  .btn-icon{ width:13px; height:13px }
+  .toggle-btn{ padding:10px 14px; font-size:11px; min-height:36px }
 
-  /* ── CONTACT — horizontal icon+label rows ── */
-  .contact-box{ padding:14px 13px; border-radius:4px }
-  .contact-box p{ font-size:13px; margin-bottom:12px }
+  /* --- CONTACT: horizontal rows stacked --- */
+  .contact-box{ padding:18px 14px }
+  .contact-box p{ font-size:13.5px; margin-bottom:14px }
   .contact-links{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
+    grid-template-columns:1fr;   /* stack all 3 vertically */
+    gap:10px;
   }
   .contact-btn{
     flex-direction:row;
     align-items:center;
-    justify-content:flex-start;
-    gap:12px;
-    padding:11px 14px;
+    gap:14px;
+    padding:12px 14px;
     min-height:auto;
-    border-radius:4px;
   }
-  .contact-icon-row{
-    gap:8px;
-    flex-shrink:0;
-    width:80px;
-  }
+  .contact-icon-row{ flex-shrink:0; width:76px }
   .contact-icon{ width:15px; height:15px }
-  .contact-platform{ font-size:10px; letter-spacing:.04em }
-  .contact-handle{ font-size:12px }
+  .contact-platform{ font-size:10px }
+  .contact-handle{ font-size:12.5px }
 
-  /* Modal */
-  .modal-backdrop{ padding:6px }
-  .modal-box{ max-height:96vh; border-radius:5px }
-  .modal-header{ padding:10px 12px; gap:6px }
-  .modal-title{ font-size:13.5px }
+  /* --- MODAL --- */
+  .modal-backdrop{ padding:8px }
+  .modal-box{ max-height:95vh; border-radius:6px; width:calc(100% - 0px) }
+  .modal-header{ padding:12px 14px; gap:8px }
+  .modal-title{ font-size:14px }
   .modal-sec-tag{ display:none }
-  .modal-body{ padding:12px 12px; font-size:12.5px }
+  .modal-body{ padding:14px 14px; font-size:13px }
 }
 
-/* VERY SMALL SCREENS & PHONES (<= 420px) */
-@media(max-width:420px){
-  .wrap{ padding:0 11px }
+/* ── SMALL PHONES (≤ 480px) ──────────────────────── */
+@media(max-width:480px){
+  .wrap{ padding:0 12px }
+  h2{ font-size:16px }
 
-  /* ── SKILLS — stacked single col on tiny phones ── */
+  /* Skills: 1-col on very small phones */
   .skill-grid{ grid-template-columns:1fr }
-  .skill-cat{
-    padding:10px 11px;
-    /* show items inline to save vertical space */
-  }
-  .skill-cat h3{ font-size:10px; margin-bottom:5px }
-  .skill-cat ul{
-    display:flex;
-    flex-wrap:wrap;
-    gap:2px 10px;
-  }
-  .skill-cat li{
-    padding:1px 0;
-    font-size:11px;
-  }
+  .skill-cat{ padding:12px 13px }
+  .skill-cat h3{ font-size:10.5px }
+  .skill-cat li{ font-size:11.5px }
 
-  /* Project cards */
-  .proj-head{ padding:10px 11px 7px }
-  .proj-title{ font-size:13.5px }
-  .proj-desc{ font-size:12px }
-  .stack-row{ padding:0 11px 8px; gap:3px }
-  .chip{ font-size:9px; padding:1px 5px }
-  .proj-links{ padding:0 11px 8px }
-  .btn-live,.btn-source{ font-size:10.5px; padding:4px 8px }
-  .toggle-btn{ padding:8px 11px; font-size:10px; min-height:32px }
+  /* Cards */
+  .proj-head{ padding:12px 12px 8px }
+  .proj-title{ font-size:14px }
+  .proj-desc{ font-size:12.5px }
+  .stack-row{ padding:0 12px 10px; gap:4px }
+  .chip{ font-size:9.5px; padding:2px 5px }
+  .proj-links{ padding:0 12px 10px; gap:8px; flex-direction:column }
+  .btn-live,.btn-source{
+    width:100%;
+    justify-content:center;
+    padding:7px 12px;
+  }
+  .toggle-btn{ padding:9px 12px; font-size:10.5px }
 
-  /* Contact — single col stacked full width */
-  .contact-links{ gap:7px }
-  .contact-btn{ padding:10px 12px }
-  .contact-icon-row{ width:72px }
-  .contact-handle{ font-size:11.5px }
+  /* Contact: tighter */
+  .contact-box{ padding:14px 12px }
+  .contact-btn{ padding:10px 12px; gap:10px }
+  .contact-icon-row{ width:68px }
+  .contact-handle{ font-size:12px }
 
-  /* Tables in modal */
+  /* Modal tables → stacked card rows */
   .modal-body .ioc-table,
   .modal-body .ioc-table tbody,
   .modal-body .ioc-table tr,
@@ -905,23 +857,16 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
     border-bottom:1px solid var(--line);
     padding-bottom:6px;
   }
-  .modal-body .ioc-table td{
-    border-bottom:none;
-    padding:2px 0;
-  }
+  .modal-body .ioc-table td{ border-bottom:none; padding:2px 0 }
   .modal-body .ioc-table td:first-child{
     font-size:10.5px;
     text-transform:uppercase;
     letter-spacing:.06em;
     color:var(--amber);
     margin-bottom:2px;
-    width:100% !important;
     white-space:normal;
   }
-  .modal-body .ioc-table td:last-child{
-    font-size:11.5px;
-    color:var(--text);
-  }
+  .modal-body .ioc-table td:last-child{ font-size:12px; color:var(--text) }
 }
 
 /* ULTRA-WIDE & 4K DISPLAYS (>= 1600px) */
