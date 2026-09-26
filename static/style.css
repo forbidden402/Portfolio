@@ -61,7 +61,7 @@ a:hover{text-decoration:underline}
 .nav a{color:var(--muted);transition:color .15s ease}
 .nav a:hover{color:var(--amber);text-decoration:none}
 
-/* HAMBURGER — hidden on desktop, shown on mobile */
+/* HAMBURGER / BACK-ARROW — hidden on desktop, shown on mobile */
 .hamburger{
   display:none;
   flex-direction:column;
@@ -74,6 +74,7 @@ a:hover{text-decoration:underline}
   cursor:pointer;
   flex-shrink:0;
   transition:border-color .15s ease;
+  order:-1; /* always first in flex row */
 }
 .hamburger:hover{border-color:var(--amber)}
 .hamburger span{
@@ -82,9 +83,33 @@ a:hover{text-decoration:underline}
   height:2px;
   background:var(--text);
   border-radius:2px;
-  transition:background .15s ease;
+  transition:transform .22s ease, width .22s ease, background .15s ease;
+  transform-origin:left center;
 }
 .hamburger:hover span{background:var(--amber)}
+
+/* ← BACK ARROW state when sidebar is open */
+.hamburger.is-open{
+  border-color:var(--amber);
+}
+.hamburger.is-open span{
+  background:var(--amber);
+}
+/* Top bar → upper diagonal of arrowhead */
+.hamburger.is-open span:nth-child(1){
+  width:11px;
+  transform:rotate(-38deg) translate(1px, 1px);
+}
+/* Middle bar → horizontal shaft (unchanged width) */
+.hamburger.is-open span:nth-child(2){
+  width:18px;
+  transform:none;
+}
+/* Bottom bar → lower diagonal of arrowhead */
+.hamburger.is-open span:nth-child(3){
+  width:11px;
+  transform:rotate(38deg) translate(1px, -1px);
+}
 
 /* SIDEBAR OVERLAY */
 .sidebar-overlay{
