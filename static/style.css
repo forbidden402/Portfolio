@@ -268,23 +268,23 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
 .skill-cat li{padding:4px 0;color:var(--muted)}
 .skill-cat li::before{content:"▸ ";color:var(--green)}
 
-/* CERTS */
+/* CERTS & EDUCATION (NO BOX) */
 .cert-row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border:1px solid var(--line);
-  border-radius:6px;
-  padding:20px 28px;
+  border:none;
+  background:transparent;
+  padding:0;
   gap:16px;
   flex-wrap:wrap;
-  background:var(--panel);
 }
 .cert-info{
   flex:1 1 300px;
 }
-.cert-row .cname{font-weight:600;font-size:16.5px}
-.cert-row .cdesc{color:var(--muted);font-size:14px;margin-top:4px}
+.cert-row .cname{font-weight:600;font-size:16.5px;color:var(--text)}
+.cert-row .cdesc{color:var(--muted);font-size:14px;margin-top:4px;line-height:1.55}
+.cert-row .cdesc strong{color:var(--amber)}
 .cert-actions{
   display:inline-flex;
   align-items:center;
@@ -902,23 +902,25 @@ h2{font-family:'IBM Plex Mono';font-size:22px;font-weight:600}
   .skill-cat h3{ font-size:11px !important; margin-bottom:6px !important }
   .skill-cat li{ font-size:12px !important; padding:2px 0 !important }
 
-  /* --- CERTS BOX: VIEW CERTIFICATE AND COMPLETED SIDE BY SIDE --- */
+  /* --- CERTS & EDUCATION (NO BOX) --- */
   .cert-row{
-    padding:12px 14px !important;
+    padding:0 !important;
+    border:none !important;
+    background:transparent !important;
+    border-radius:0 !important;
     flex-direction:column !important;
     align-items:flex-start !important;
-    gap:8px !important;
-    border-radius:5px !important;
+    gap:10px !important;
   }
-  .cert-row .cname{ font-size:14px !important }
-  .cert-row .cdesc{ font-size:12px !important }
+  .cert-row .cname{ font-size:14.5px !important }
+  .cert-row .cdesc{ font-size:12.5px !important; margin-top:3px !important; line-height:1.5 !important }
   .cert-actions{
     display:flex !important;
     flex-direction:row !important;
     align-items:center !important;
     gap:10px !important;
     width:auto !important;
-    margin-top:2px !important;
+    margin-top:4px !important;
   }
   .badge{ font-size:10px !important; padding:3px 8px !important }
   .btn-cert{ font-size:11.5px !important; padding:4px 10px !important }
