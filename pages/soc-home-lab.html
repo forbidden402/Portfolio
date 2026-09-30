@@ -288,10 +288,69 @@ SUCCESS: The process "stageless.exe" with PID 3836 has been terminated.
       </p>
     </section>
 
-    <!-- 06 IOC TABLE -->
+    <!-- 06 CONSOLIDATED TIMELINE -->
     <section class="cs-sec">
       <div class="cs-sec-head">
         <span class="cs-sec-tag">06</span>
+        <h2>Consolidated Timeline</h2>
+      </div>
+      <p>
+        I connected the attack-side activity with the detection-side evidence to show how the same activity appeared across Wireshark, Sysmon, and Splunk. (Timestamps align with Sysmon UTC events).
+      </p>
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Time (UTC)</th>
+              <th>Attack Activity</th>
+              <th>Detection / Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>13:20:37</td>
+              <td>Victim requested <code>stageless.exe</code> from Kali server.</td>
+              <td>Kali HTTP log recorded <code>GET /stageless.exe</code>.</td>
+            </tr>
+            <tr>
+              <td>13:21:20</td>
+              <td>Downloaded file was present on Windows.</td>
+              <td><strong>Sysmon Event ID 15</strong> recorded Zone.Identifier.</td>
+            </tr>
+            <tr>
+              <td>13:22:20</td>
+              <td>Victim executed <code>stageless.exe</code>.</td>
+              <td><strong>Sysmon Event ID 1</strong> showed <code>explorer.exe → stageless.exe</code>.</td>
+            </tr>
+            <tr>
+              <td>13:22:21</td>
+              <td>Reverse connection started back to Kali.</td>
+              <td><strong>Sysmon Event ID 3</strong> recorded TCP connection to port 4444.</td>
+            </tr>
+            <tr>
+              <td>13:22:38</td>
+              <td>Session used to drop <code>mimikatz.exe</code> on victim.</td>
+              <td><strong>Sysmon Event ID 11</strong> recorded file creation in <code>\Public\</code>.</td>
+            </tr>
+            <tr>
+              <td>13:23:03</td>
+              <td>Attacker opened shell for basic host reconnaissance.</td>
+              <td><strong>Sysmon Event ID 1</strong> showed <code>stageless.exe → cmd.exe</code>.</td>
+            </tr>
+            <tr>
+              <td>13:50:08</td>
+              <td>The malicious process was terminated during response.</td>
+              <td><strong>Sysmon Event ID 5</strong> recorded process termination.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 07 IOC TABLE -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">07</span>
         <h2>Indicators of Compromise (IOC) Matrix</h2>
       </div>
       <div class="cs-table-wrap">
@@ -337,6 +396,22 @@ SUCCESS: The process "stageless.exe" with PID 3836 has been terminated.
           </tbody>
         </table>
       </div>
+    </section>
+
+    <!-- 08 DETECTION & RESPONSE RECOMMENDATIONS -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">08</span>
+        <h2>Detection &amp; Response Recommendations</h2>
+      </div>
+      <p>Based on the activity observed, I compiled several practical detection and response ideas focusing on network connections, suspicious file creation, and credential hygiene.</p>
+      <ul>
+        <li><strong>Network Controls:</strong> Block or alert on outbound connections to port <code>4444</code> (classic Metasploit default) from workstation subnets.</li>
+        <li><strong>Behavioral Alerting:</strong> Alert on any process executing from <code>\Downloads\</code> that subsequently writes an executable to <code>C:\Users\Public\</code> (Sysmon Event ID 11) — a strong indicator of secondary dropper activity.</li>
+        <li><strong>Endpoint Blocking:</strong> Deploy Application Allow-listing or Attack Surface Reduction (ASR) rules to block execution of unsigned binaries launched directly from Downloads with <code>Zone.Identifier = 3</code> (Internet zone).</li>
+        <li><strong>Threat Intel:</strong> Add the payload's MD5 and SHA-256 hashes to EDR and AV blocklists.</li>
+        <li><strong>Credential Hygiene:</strong> Ensure WDigest is disabled, enable Credential Guard, and mandate a password rotation for the compromised local account.</li>
+      </ul>
     </section>
 
   </main>
