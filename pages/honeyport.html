@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Honeyport SOC — Deception &amp; Threat Intelligence | forbidden402</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=6.7" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=2.8" fetchpriority="high">
+</head>
+<body>
+
+<!-- CYBER PAGE PRELOADER -->
+<div class="cs-loader-overlay" id="page-loader" aria-hidden="true">
+  <div class="cs-loader-box">
+    <div class="cs-loader-header">
+      <span class="cs-loader-tag">// TELEMETRY FEED · HONEYPORT SOC</span>
+      <span class="cs-loader-status"><span class="status-pulse"></span>INITIALIZING</span>
+    </div>
+    <div class="cs-loader-body">
+      <div class="cs-loader-cmd"><span class="cs-prompt">$</span> load dossier --deception honeypot-soc</div>
+      <div class="cs-progress-track">
+        <div class="cs-progress-fill" id="loader-progress-bar"></div>
+      </div>
+      <div class="cs-loader-meta">
+        <span class="cs-loader-detail" id="loader-status-text">STATUS: 200 OK · VERIFYING INTEGRITY</span>
+        <span class="cs-loader-pct" id="loader-pct-text">100%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-wrap">
+
+  <!-- TOP NAV -->
+  <nav class="cs-nav" aria-label="Breadcrumb navigation">
+    <a href="/#projects" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to portfolio
+    </a>
+    <span class="cs-nav-tag">// PROJECT 03 · DECEPTION &amp; THREAT INTEL</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="cs-meta-row">
+      <span class="cs-tag">// LOW-INTERACTION HONEYPOT &amp; TELEMETRY</span>
+      <span class="proj-status status-active"><span class="status-pulse"></span>ACTIVE BUILD</span>
+    </div>
+    <h1 class="cs-title">Honeyport SOC — Deception &amp; Threat Intelligence</h1>
+    <p class="cs-subtitle">
+      A lightweight, modular low-interaction honeypot with a live SOC monitoring dashboard. Built to expose unprivileged mock services (SSH, HTTP, FTP, Telnet), trap opportunistic network scans, auto-tag events with MITRE ATT&amp;CK techniques, and correlate attacker infrastructure against AbuseIPDB, VirusTotal, and Shodan in real time.
+    </p>
+    <div class="cs-actions">
+      <a class="btn-source" href="https://github.com/forbidden402/honeyport" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        view github repository
+      </a>
+    </div>
+  </header>
+
+  <!-- METADATA GRID -->
+  <div class="attr-grid">
+    <div class="attr-item">
+      <span class="attr-label">Language &amp; Framework</span>
+      <span class="attr-value">Python 3.10+ / Flask</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Emulated Services</span>
+      <span class="attr-value">SSH (2222), HTTP (8080), FTP (2121), Telnet (2323)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Concurrency Model</span>
+      <span class="attr-value">Threaded Sockets (Worker per connection)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Database Storage</span>
+      <span class="attr-value">SQLite (Events &amp; Threat Intel Cache)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Threat Intel Lookups</span>
+      <span class="attr-value">AbuseIPDB, VirusTotal, Shodan</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Deployment Modes</span>
+      <span class="attr-value">Native Python CLI / Docker / Docker Compose</span>
+    </div>
+  </div>
+
+  <main class="cs-content">
+
+    <!-- 01 ARCHITECTURE & DECEPTION MECHANICS -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">01</span>
+        <h2>Architecture &amp; Deception Mechanics</h2>
+      </div>
+      <p>
+        The core defensive principle of Honeyport is simple: real services carry real risk, while fake services collect pure intelligence. Honeyport runs entirely as an unprivileged process listening on ports above 1024. In production environments, standard service ports (22, 80, 21, 23) can be redirected to these listeners via firewall NAT rules.
+      </p>
+      <p>
+        Every listener operates as a standalone threaded TCP socket server that simulates service handshakes and captures interaction payloads without executing arbitrary code or forwarding traffic:
+      </p>
+
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Port</th>
+              <th>Emulated Behavior &amp; Interaction Trap</th>
+              <th>Forensic Data Logged</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">Fake SSH</td>
+              <td class="mono">2222</td>
+              <td>Sends realistic OpenSSH banner, accepts client version string and protocol handshake.</td>
+              <td>Client software version, raw SSH payload, timestamp, source IP/port.</td>
+            </tr>
+            <tr>
+              <td class="mono">Fake HTTP</td>
+              <td class="mono">8080</td>
+              <td>Renders an administrative gateway login page; accepts and parses authentication attempts.</td>
+              <td>Submitted usernames, passwords, HTTP User-Agents, request URIs, headers.</td>
+            </tr>
+            <tr>
+              <td class="mono">Fake FTP</td>
+              <td class="mono">2121</td>
+              <td>Simulates FTP server greeting; responds with RFC-compliant prompts to USER and PASS commands.</td>
+              <td>Captured plaintext credentials, anonymous login attempts, probe sequences.</td>
+            </tr>
+            <tr>
+              <td class="mono">Fake Telnet</td>
+              <td class="mono">2323</td>
+              <td>Emulates legacy embedded terminal challenge; prompts for username and login passwords.</td>
+              <td>Automated botnet brute-force dictionaries, default credential sweeps.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Sensor &amp; SIEM Architectural Separation
+        </div>
+        <p>
+          Following production security engineering practices, listeners strictly write events into the SQLite data tier, while the Flask API and frontend dashboard only execute read queries. This strict unidirectional boundary ensures that sensor ingestion performance and dashboard interactions remain completely isolated.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 THREAT INTEL PIPELINE -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">02</span>
+        <h2>Automated Threat Intelligence Enrichment</h2>
+      </div>
+      <p>
+        When an external IP triggers a listener trap for the first time, Honeyport dispatches an asynchronous background worker to enrich the event across three distinct threat intelligence providers, turning opportunistic scanner encounters into actionable SOC indicators:
+      </p>
+      <ul>
+        <li><strong>AbuseIPDB:</strong> Checks historical reputation, community reports, confidence scores, and ISP network ownership.</li>
+        <li><strong>VirusTotal:</strong> Queries multi-vendor security engine detections associated with the attacker's origin address.</li>
+        <li><strong>Shodan:</strong> Turns the tables by scanning the attacker IP's own open ports, exposed vulnerabilities, and running software banners.</li>
+      </ul>
+
+      <p>
+        <strong>Defensive API Architecture:</strong> Each external API call is wrapped in strict timeout protections and error handlers. Missing API keys, network dropouts, or exceeded quota limits gracefully downgrade to an <code>unavailable</code> status in the UI, ensuring third-party dependencies never block event ingestion or crash the application.
+      </p>
+
+      <div class="callout">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Quota Preservation Caching
+        </div>
+        <p>
+          Enrichment responses are cached in a dedicated SQLite table for <strong>6 hours</strong>. Repeat probes from high-volume automated scanners reuse cached intelligence, preserving API limits while maintaining responsive dashboard telemetry. Private and loopback IPs (RFC 1918) bypass external lookups automatically.
+        </p>
+      </div>
+    </section>
+
+    <!-- 03 MITRE ATT&CK & ABUSE DETECTION -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">03</span>
+        <h2>MITRE ATT&amp;CK Mapping &amp; Abuse Detection</h2>
+      </div>
+      <p>
+        Every security event is evaluated against a deterministic local MITRE ATT&amp;CK technique lookup table. Because the mapping is evaluated locally in-process without network calls, tagging is instantaneous and immune to external service outages:
+      </p>
+      <ul>
+        <li><strong>T1110 (Brute Force):</strong> Triggered by repetitive credential attempts across SSH, FTP, Telnet, or HTTP POST handlers.</li>
+        <li><strong>T1046 (Network Service Discovery):</strong> Correlated when single IP sources probe multiple distinct ports in rapid succession.</li>
+        <li><strong>T1078 (Valid Accounts):</strong> Flagged during dictionary sweeps attempting common default administrative credentials.</li>
+      </ul>
+      <p>
+        A sliding-window abuse counter actively tracks hit rates per source IP. When interaction frequency exceeds configured thresholds (e.g. 10 hits within a 60-second window), the IP is flagged with an abuse badge on the dashboard, signaling an indicator ready for automated firewall drop rules or SIEM blocklisting.
+      </p>
+    </section>
+
+    <!-- 04 DEPLOYMENT & VERIFICATION -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">04</span>
+        <h2>Deployment &amp; Live Verification</h2>
+      </div>
+      <p>
+        Honeyport supports both local Python execution and containerized deployment via Docker and Docker Compose with persistent data volumes:
+      </p>
+
+      <div class="terminal-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">bash — Docker Container Deployment</span>
+        </div>
+        <div class="terminal-code">
+<span class="comment"># Build and launch isolated container with persistent volume</span>
+$ <span class="cmd">docker build -t honeypot-soc .</span>
+$ <span class="cmd">docker run -d --name honeypot-soc --restart unless-stopped \
+    -p 5000:5000 -p 2222:2222 -p 8080:8080 -p 2121:2121 -p 2323:2323 \
+    -v honeypot-data:/app/data \
+    -e ABUSEIPDB_API_KEY="$ABUSEIPDB_API_KEY" \
+    -e VIRUSTOTAL_API_KEY="$VIRUSTOTAL_API_KEY" \
+    -e SHODAN_API_KEY="$SHODAN_API_KEY" \
+    honeypot-soc</span>
+        </div>
+      </div>
+
+      <p>
+        Testing the trap from an external endpoint confirms instantaneous socket logging and automated dashboard ingestion:
+      </p>
+
+      <div class="terminal-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">bash — Simulated Adversary Probes</span>
+        </div>
+        <div class="terminal-code">
+<span class="comment"># 1. Trigger SSH banner grab and credential logging</span>
+$ <span class="cmd">ssh -p 2222 admin@target-ip</span>
+
+<span class="comment"># 2. Trigger Fake HTTP Admin credential capture</span>
+$ <span class="cmd">curl -X POST http://target-ip:8080/ -d "username=admin&amp;password=P@ssw0rd123"</span>
+
+<span class="comment"># 3. Simulate FTP and Telnet sweeps</span>
+$ <span class="cmd">ftp -p target-ip 2121</span>
+$ <span class="cmd">telnet target-ip 2323</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <a href="/#projects" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to overview
+    </a>
+    <a href="/pages/soc-home-lab.html" class="btn-back">
+      next case study: SOC Home Lab →
+    </a>
+  </footer>
+
+</div>
+
+<!-- SCROLL PROGRESS INDICATOR -->
+<div class="scroll-progress-line" id="scroll-progress-line" aria-hidden="true"></div>
+
+<script src="/static/loader.js?v=2.3" defer></script>
+</body>
+</html>

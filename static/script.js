@@ -16,88 +16,114 @@
     window.scrollTo(0, 0);
   }
 
-  /* ── 01. TYPEWRITER & SEQUENTIAL CASCADE ─────────────── */
-  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ── 01. TYPEWRITER & SMOOTH SCROLL REVEALS ─────────── */
   const whoamiEl = document.getElementById('whoami-text');
   const cursorEl = document.getElementById('whoami-cursor');
+  const heroBodyEl = document.getElementById('hero-body');
+  const animElements = document.querySelectorAll('.anim-reveal');
   const commandText = 'whoami';
 
-  const revealSections = [
-    document.getElementById('hero-body'),
-    document.getElementById('about'),
-    document.getElementById('education'),
-    document.getElementById('skills'),
-    document.getElementById('certs'),
-    document.querySelector('.work-section'),
-    document.getElementById('contact')
-  ].filter(Boolean);
+  let whoamiFinished = false;
+  let scrollObserver = null;
 
-  let cascadeStarted = false;
+  function initScrollObserver() {
+    if (scrollObserver) return;
+    if ('IntersectionObserver' in window) {
+      scrollObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            // Remove is-visible when scrolling out so it reveals smoothly in both directions
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.04,
+        rootMargin: '10px 0px 10px 0px'
+      });
 
-  function revealAllImmediately() {
-    cascadeStarted = true;
-    revealSections.forEach(function(el) {
-      el.classList.add('is-visible');
-    });
-    // Remove js-anim immediately so DOM is 100% native with zero transform or GPU layer overhead
-    document.documentElement.classList.remove('js-anim');
-  }
-
-  function startWebsiteCascade() {
-    if (cascadeStarted) return;
-    cascadeStarted = true;
-
-    // Stagger-reveal each section smoothly down the page
-    const staggerStep = 90;
-    revealSections.forEach(function(el, idx) {
-      setTimeout(function() {
+      animElements.forEach(function(el) {
+        scrollObserver.observe(el);
+      });
+    } else {
+      animElements.forEach(function(el) {
         el.classList.add('is-visible');
-      }, idx * staggerStep);
-    });
-
-    // Once all sections are revealed, cleanly remove js-anim to free compositor memory
-    const totalDuration = (revealSections.length * staggerStep) + 500;
-    setTimeout(function() {
-      document.documentElement.classList.remove('js-anim');
-    }, totalDuration);
-  }
-
-  // Fast-scroll trigger: if visitor scrolls at all, immediately reveal and release DOM
-  function handleEarlyScroll() {
-    if (window.scrollY > 10) {
-      revealAllImmediately();
-      window.removeEventListener('scroll', handleEarlyScroll);
+      });
     }
   }
-  window.addEventListener('scroll', handleEarlyScroll, { passive: true });
 
-  // Safety net: ensure everything is visible even if background tab throttled
-  setTimeout(revealAllImmediately, 2200);
+  function revealAfterWhoami() {
+    if (whoamiFinished) return;
+    whoamiFinished = true;
 
-  // Check if visitor arrived via anchor hash or already scrolled (ignore if reloading)
-  const isScrolledOrAnchored = !isReload && Boolean(window.location.hash || window.scrollY > 20);
+    if (cursorEl) cursorEl.classList.add('blink');
 
-  if (prefersReducedMotion || isScrolledOrAnchored) {
-    if (whoamiEl) whoamiEl.textContent = commandText;
-    revealAllImmediately();
-  } else if (whoamiEl) {
-    whoamiEl.textContent = '';
-    if (cursorEl) cursorEl.classList.remove('blink');
+    // 1. Reveal hero content immediately after whoami completes typing
+    if (heroBodyEl) {
+      heroBodyEl.classList.add('is-visible');
+    }
 
-    let charIdx = 0;
-    function typeNextChar() {
-      if (charIdx < commandText.length) {
-        whoamiEl.textContent += commandText.charAt(charIdx);
-        charIdx++;
-        const delay = Math.floor(Math.random() * 20) + 55;
-        setTimeout(typeNextChar, delay);
-      } else {
-        if (cursorEl) cursorEl.classList.add('blink');
-        setTimeout(startWebsiteCascade, 160);
+    // 2. If #about is in view at page load, reveal it with a gentle stagger
+    const aboutEl = document.getElementById('about');
+    if (aboutEl) {
+      const rect = aboutEl.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 20) {
+        setTimeout(function() {
+          aboutEl.classList.add('is-visible');
+        }, 140);
       }
     }
 
-    setTimeout(typeNextChar, 160);
+    // 3. Start observing for top-to-bottom and bottom-to-top scroll reveals
+    setTimeout(initScrollObserver, 180);
+  }
+
+  function revealAllImmediately() {
+    whoamiFinished = true;
+    if (whoamiEl) whoamiEl.textContent = commandText;
+    if (cursorEl) cursorEl.classList.add('blink');
+    animElements.forEach(function(el) {
+      el.classList.add('is-visible');
+    });
+    initScrollObserver();
+  }
+
+  // Handle early scroll: if user scrolls before whoami finishes, reveal immediately
+  function onEarlyScroll() {
+    if (!whoamiFinished) {
+      if (whoamiEl) whoamiEl.textContent = commandText;
+      revealAfterWhoami();
+    }
+    window.removeEventListener('scroll', onEarlyScroll);
+  }
+  window.addEventListener('scroll', onEarlyScroll, { passive: true, once: true });
+
+  // Typewriter effect in Hero prompt
+  if (whoamiEl) {
+    whoamiEl.textContent = '';
+    if (cursorEl) cursorEl.classList.remove('blink');
+
+    // If page is loaded with an in-page anchor hash, reveal immediately without waiting
+    if (window.location.hash) {
+      revealAllImmediately();
+    } else {
+      let charIdx = 0;
+      function typeNextChar() {
+        if (whoamiFinished) return;
+        if (charIdx < commandText.length) {
+          whoamiEl.textContent += commandText.charAt(charIdx);
+          charIdx++;
+          const delay = Math.floor(Math.random() * 20) + 55;
+          setTimeout(typeNextChar, delay);
+        } else {
+          // Finished typing whoami -> trigger smooth reveal!
+          revealAfterWhoami();
+        }
+      }
+      setTimeout(typeNextChar, 140);
+    }
   } else {
     revealAllImmediately();
   }
@@ -203,4 +229,37 @@
     }
   });
 
+
+  /* ── 04. SCROLL PROGRESS INDICATOR ─────────────────────── */
+  const scrollProgressLine = document.getElementById('scroll-progress-line');
+
+  if (scrollProgressLine) {
+    function updateScrollProgress() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const docHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+      );
+      const winHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+      const scrollMax = Math.max(1, docHeight - winHeight);
+      const progress = Math.min(100, Math.max(0, Math.round((scrollTop / scrollMax) * 100)));
+      scrollProgressLine.style.width = progress + '%';
+    }
+
+    let scrollTicking = false;
+    window.addEventListener('scroll', function() {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(function() {
+          updateScrollProgress();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+
+    updateScrollProgress();
+  }
+
 })();
+

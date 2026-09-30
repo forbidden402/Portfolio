@@ -86,4 +86,86 @@
       }
     }
   });
+
+  // 5. Scroll Progress Line for Case Studies
+  function initScrollProgress() {
+    const scrollProgressLine = document.getElementById('scroll-progress-line');
+    if (!scrollProgressLine) return;
+
+    function updateProgress() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const docHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+      );
+      const winHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+      const scrollMax = Math.max(1, docHeight - winHeight);
+      const progress = Math.min(100, Math.max(0, Math.round((scrollTop / scrollMax) * 100)));
+      scrollProgressLine.style.width = progress + '%';
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          updateProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateProgress();
+  }
+
+  // 6. Smooth On-Scroll Reveal for Case Studies (Bi-directional)
+  function initCaseStudyReveals() {
+    const targets = document.querySelectorAll('.cs-sec, .attr-grid');
+    if (!targets.length) return;
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            // Reset when leaving viewport so it reveals again in both directions
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.04,
+        rootMargin: '10px 0px 10px 0px'
+      });
+
+      // Initial stagger for top elements in viewport
+      let stagger = 0;
+      targets.forEach(function(el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 20) {
+          setTimeout(function() {
+            el.classList.add('is-visible');
+          }, stagger * 80 + 100);
+          stagger++;
+        }
+        observer.observe(el);
+      });
+    } else {
+      targets.forEach(function(el) {
+        el.classList.add('is-visible');
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initScrollProgress();
+      initCaseStudyReveals();
+    });
+  } else {
+    initScrollProgress();
+    initCaseStudyReveals();
+  }
 })();
