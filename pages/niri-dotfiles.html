@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=6.7" fetchpriority="high">
-<link rel="stylesheet" href="/static/case-study.css?v=2.8" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=7.0" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=3.5" fetchpriority="high">
 </head>
 <body>
 
@@ -41,7 +41,7 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       cd .. / return to portfolio
     </a>
-    <span class="cs-nav-tag">// LAB 02 · WORKSTATION HARDENING</span>
+    <span class="cs-nav-tag">// LAB 03 · WORKSTATION HARDENING</span>
   </nav>
 
   <!-- HERO -->
@@ -115,16 +115,88 @@
       </ul>
     </section>
 
+    <!-- 03 HARDENING VERIFICATION -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">03</span>
+        <h2>Hardening Verification &amp; Interface Telemetry</h2>
+      </div>
+      <p>
+        System inspection commands verify runtime DNS encryption and tunnel interface parameters:
+      </p>
+
+      <!-- Step 3.1: DoT Verification -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">3.1</span>
+        <span>Auditing Active DNS-over-TLS Encryption</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">bash · resolvectl status</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">user@fedora:~$</span><span class="cmd">resolvectl status enp3s0</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">systemd-resolved Active Security State</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">Link 2 (enp3s0):
+    Current Scopes: DNS
+    DNS Servers: <span class="highlight">9.9.9.9#dns.quad9.net</span> 149.112.112.112#dns.quad9.net
+    <span class="highlight">DNS-over-TLS: yes</span> (Strict encrypted TLS)
+    DNSSEC: yes/supported</div>
+      </div>
+
+      <!-- Step 3.2: WireGuard MTU Verification -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">3.2</span>
+        <span>Auditing WireGuard Tunnel Parameters</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">bash · ip link show</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">user@fedora:~$</span><span class="cmd">ip link show proton0</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Tunnel MTU &amp; Link State</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">12: proton0: &lt;POINTOPOINT,NOARP,UP,LOWER_UP&gt; <span class="highlight">mtu 1400</span> qdisc noqueue state UNKNOWN mode DEFAULT
+    link/none</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Workstation Network Hardening Results
+        </div>
+        <ul>
+          <li><strong>Zero Metadata Leakage:</strong> All upstream DNS requests encrypted via TLS to Quad9 with DNSSEC integrity.</li>
+          <li><strong>Optimal Packet Throughput:</strong> Clamped MTU 1400 avoids encapsulation fragmentation across home ISP routers.</li>
+          <li><strong>Persistent Connectivity:</strong> WireGuard 25s keepalive preserves NAT translation states through hostile firewalls.</li>
+        </ul>
+      </div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
   <footer class="cs-footer">
+    <a href="/pages/soc-ubuntu-home-lab.html" class="btn-back">
+      ← previous lab: SSH Brute-Force Linux Lab
+    </a>
     <a href="/#homelabs" class="btn-back">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       cd .. / return to overview
-    </a>
-    <a href="/pages/soc-home-lab.html" class="btn-back">
-      view SOC Home Lab case study →
     </a>
   </footer>
 

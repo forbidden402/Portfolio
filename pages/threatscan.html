@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=6.7" fetchpriority="high">
-<link rel="stylesheet" href="/static/case-study.css?v=2.8" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=7.0" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=3.5" fetchpriority="high">
 </head>
 <body>
 
@@ -154,10 +154,67 @@
       </ul>
     </section>
 
-    <!-- 02 ROADMAP: v3.5 -->
+    <!-- 02 API ORCHESTRATION & TELEMETRY -->
     <section class="cs-sec">
       <div class="cs-sec-head">
         <span class="cs-sec-tag">02</span>
+        <h2>API Orchestration &amp; Telemetry Execution</h2>
+      </div>
+      <p>
+        Analysts trigger concurrent investigation pipelines through the FastAPI backend interface:
+      </p>
+
+      <!-- Step 2.1: API Scan Execution -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">2.1</span>
+        <span>Asynchronous Multi-Source Threat Query</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">curl · ThreatScan REST API Detonation</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">analyst@soc:~$</span><span class="cmd">curl -s -X POST "https://threat-intelligence-7eza.onrender.com/api/v1/scan" \
+  -H "Content-Type: application/json" \
+  -d '{"target": "http://malicious-c2-domain.xyz"}'</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Consolidated Correlated Threat Report</span>
+          <span class="terminal-badge terminal-badge-out">JSON STDOUT</span>
+        </div>
+        <div class="terminal-code">{
+  "target": "http://malicious-c2-domain.xyz",
+  "verdict": <span class="highlight-err">"CRITICAL"</span>,
+  "risk_score": <span class="log-penalty">92</span>,
+  "detections": {
+    "virustotal": <span class="highlight">"14/72 vendors flagged malicious"</span>,
+    "urlhaus": <span class="highlight-err">"Active payload dropper (Emotet C2)"</span>,
+    "shodan_ports": [80, 443, 8080]
+  },
+  "dns_records": { "A": ["185.220.101.5"], "MX": [] }
+}</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Correlated Intelligence Findings
+        </div>
+        <ul>
+          <li><strong>Zero Latency Bottlenecks:</strong> Fan-out async requests complete full enrichment in under 1.8 seconds.</li>
+          <li><strong>Dynamic Heuristic Scoring:</strong> Combined VirusTotal + URLhaus active C2 flags triggered automatic 92/100 risk score.</li>
+          <li><strong>Ephemeral Data Lifecycle:</strong> Results retained in 10-minute cache with zero persistent disk footprint.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 03 ROADMAP: v3.5 -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">03</span>
         <h2>Roadmap · v3.5 — Next Release</h2>
       </div>
       <p>
@@ -215,8 +272,8 @@
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       cd .. / return to overview
     </a>
-    <a href="/pages/soc-home-lab.html" class="btn-back">
-      next case study: SOC Home Lab →
+    <a href="/pages/soc-windows-home-lab.html" class="btn-back">
+      next case study: Windows SOC Lab →
     </a>
   </footer>
 

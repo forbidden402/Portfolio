@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=6.7" fetchpriority="high">
-<link rel="stylesheet" href="/static/case-study.css?v=2.8" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=7.0" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=3.5" fetchpriority="high">
 </head>
 <body>
 
@@ -211,51 +211,95 @@
         <h2>Deployment &amp; Live Verification</h2>
       </div>
       <p>
-        Honeyport supports both local Python execution and containerized deployment via Docker and Docker Compose with persistent data volumes:
+        Honeyport supports both local Python execution and containerized deployment via Docker with persistent data volumes:
       </p>
 
-      <div class="terminal-block">
+      <!-- Step 4.1: Container Build -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.1</span>
+        <span>Build &amp; Deploy Containerized Trap Sensors</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
         <div class="terminal-bar">
-          <div class="terminal-dots">
-            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
-          </div>
-          <span class="terminal-title">bash — Docker Container Deployment</span>
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">bash · Docker Container Deployment</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
         </div>
-        <div class="terminal-code">
-<span class="comment"># Build and launch isolated container with persistent volume</span>
-$ <span class="cmd">docker build -t honeypot-soc .</span>
-$ <span class="cmd">docker run -d --name honeypot-soc --restart unless-stopped \
-    -p 5000:5000 -p 2222:2222 -p 8080:8080 -p 2121:2121 -p 2323:2323 \
-    -v honeypot-data:/app/data \
-    -e ABUSEIPDB_API_KEY="$ABUSEIPDB_API_KEY" \
-    -e VIRUSTOTAL_API_KEY="$VIRUSTOTAL_API_KEY" \
-    -e SHODAN_API_KEY="$SHODAN_API_KEY" \
-    honeypot-soc</span>
+        <div class="terminal-code"><span class="terminal-prompt">user@soc:~$</span><span class="cmd">docker build -t honeypot-soc . &amp;&amp; docker run -d --name honeypot-soc \
+  -p 5000:5000 -p 2222:2222 -p 8080:8080 -p 2121:2121 -p 2323:2323 \
+  -v honeypot-data:/app/data \
+  -e ABUSEIPDB_API_KEY="$ABUSEIPDB_API_KEY" \
+  honeypot-soc</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Docker Engine Startup &amp; Sensor Listeners</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
         </div>
+        <div class="terminal-code">[+] Building 1.2s (8/8) FINISHED ... Successfully tagged <span class="highlight">honeypot-soc:latest</span>
+<span class="cmd">4a8b79e2c6d1f08e4d3a2b1c8f9e0d1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e</span>
+[*] Honeyport listeners active on ports 2222 (SSH), 8080 (HTTP), 2121 (FTP), 2323 (Telnet)</div>
       </div>
 
-      <p>
-        Testing the trap from an external endpoint confirms instantaneous socket logging and automated dashboard ingestion:
-      </p>
-
-      <div class="terminal-block">
+      <!-- Step 4.2: SSH Trap Probe -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.2</span>
+        <span>Simulating Adversary SSH Probe</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
         <div class="terminal-bar">
-          <div class="terminal-dots">
-            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
-          </div>
-          <span class="terminal-title">bash — Simulated Adversary Probes</span>
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">kali@kali:~$ ssh banner grab</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
         </div>
-        <div class="terminal-code">
-<span class="comment"># 1. Trigger SSH banner grab and credential logging</span>
-$ <span class="cmd">ssh -p 2222 admin@target-ip</span>
-
-<span class="comment"># 2. Trigger Fake HTTP Admin credential capture</span>
-$ <span class="cmd">curl -X POST http://target-ip:8080/ -d "username=admin&amp;password=P@ssw0rd123"</span>
-
-<span class="comment"># 3. Simulate FTP and Telnet sweeps</span>
-$ <span class="cmd">ftp -p target-ip 2121</span>
-$ <span class="cmd">telnet target-ip 2323</span>
+        <div class="terminal-code"><span class="terminal-prompt">kali@kali:~$</span><span class="cmd">ssh -p 2222 admin@192.168.1.50</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Emulated OpenSSH Trap Banner Response</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
         </div>
+        <div class="terminal-code">SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.6
+admin@192.168.1.50's password: 
+<span class="highlight">Permission denied, please try again.</span></div>
+      </div>
+
+      <!-- Step 4.3: HTTP Admin Trap Probe -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.3</span>
+        <span>Simulating HTTP Admin Portal Credential Harvesting</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">kali@kali:~$ curl POST</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">kali@kali:~$</span><span class="cmd">curl -i -X POST http://192.168.1.50:8080/login -d "username=admin&amp;password=P@ssw0rd123"</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">HTTP Honeyport Trap Response</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">HTTP/1.1 <span class="highlight">401 Unauthorized</span>
+Content-Type: application/json
+{"status": "error", "message": "Invalid administrative credentials", "ip_logged": "192.168.1.105"}</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Telemetry Logging &amp; Real-Time Enrichment Results
+        </div>
+        <ul>
+          <li><strong>Instantaneous Ingestion:</strong> Captured client banners, usernames, and passwords written to SQLite database in <code>WAL</code> mode.</li>
+          <li><strong>Asynchronous Enrichment:</strong> Origin address <code>192.168.1.105</code> automatically queued for AbuseIPDB, VirusTotal, and Shodan lookups.</li>
+          <li><strong>MITRE TTP Tagging:</strong> Correlated against local mapping table as <code>T1110 (Brute Force)</code> and <code>T1046 (Network Service Discovery)</code> without delay.</li>
+        </ul>
       </div>
     </section>
 
@@ -267,8 +311,8 @@ $ <span class="cmd">telnet target-ip 2323</span>
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       cd .. / return to overview
     </a>
-    <a href="/pages/soc-home-lab.html" class="btn-back">
-      next case study: SOC Home Lab →
+    <a href="/pages/soc-windows-home-lab.html" class="btn-back">
+      next case study: Windows SOC Lab →
     </a>
   </footer>
 

@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" fetchpriority="high">
-<link rel="stylesheet" href="/static/style.css?v=6.7" fetchpriority="high">
-<link rel="stylesheet" href="/static/case-study.css?v=2.8" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=7.0" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=3.5" fetchpriority="high">
 </head>
 <body>
 
@@ -125,6 +125,78 @@
         <p>
           The engine is specifically optimized for home-lab and small subnet monitoring. Encrypted TLS traffic is analyzed through metadata (SNI, certificates, traffic flow patterns) without requiring invasive SSL interception.
         </p>
+      </div>
+    </section>
+
+    <!-- 03 LIVE TELEMETRY & VERIFICATION -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">03</span>
+        <h2>Live Telemetry &amp; Detection Verification</h2>
+      </div>
+      <p>
+        Executing live network scans against monitored interfaces confirms real-time DPI parsing, threshold evaluation, and automated alert dispatch:
+      </p>
+
+      <!-- Step 3.1: Sniffer Daemon -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">3.1</span>
+        <span>Initializing Promiscuous Packet Capture Engine</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">python3 · NIDS Engine Daemon</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">user@ids:~$</span><span class="cmd">sudo python3 -m nids.engine --interface eth0 --promisc</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Sniffer Engine Startup Telemetry</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">[+] Raw socket bound to interface <span class="highlight">'eth0'</span> (Promiscuous Mode ON)
+[+] Multi-layer packet filter active (L2 Ethernet -&gt; L4 TCP/UDP/ICMP -&gt; L7 DPI)
+[+] SQLite WAL ring buffer initialized at <span class="cmd">/var/log/nids/telemetry.db</span>
+[*] Listening for stealth scans, DNS tunneling, and abnormal flag heuristics...</div>
+      </div>
+
+      <!-- Step 3.2: Stealth Port Scan Detection -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">3.2</span>
+        <span>Adversary SYN Stealth Probe Detection</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">kali@kali:~$ nmap SYN scan</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">kali@kali:~$</span><span class="cmd">nmap -sS -p 21,22,80,443,8080 192.168.1.100</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">NIDS Engine Real-Time Alert Event</span>
+          <span class="terminal-badge terminal-badge-out">DETECTION EVENT</span>
+        </div>
+        <div class="terminal-code"><span class="highlight">[ALERT]</span> 2026-10-05 14:10:02 | Port Scan Detected | Src: <span class="log-ip-src">192.168.1.105</span> -&gt; Dst: <span class="log-ip-dst">192.168.1.100</span>
+[*] Probed 5 distinct ports within 1.2s | Flag Pattern: SYN-only
+[*] <span class="log-penalty">Threat Score: 85 (HIGH)</span> | Geolocation: RFC 1918 (Private) | Action: Correlated to Entity Profile</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Sensor Detection Capabilities
+        </div>
+        <ul>
+          <li><strong>Zero Packet Drops:</strong> Scapy worker ingests wire traffic asynchronously into SQLite WAL ring buffer.</li>
+          <li><strong>Deterministic Threshold Scoring:</strong> 5 rapid SYN connections tripped threshold (&gt;3 ports / 5s), classifying source as scanner.</li>
+          <li><strong>Entity Profile Updated:</strong> Instantaneous dashboard alert dispatched with IP entity timeline updated.</li>
+        </ul>
       </div>
     </section>
 

